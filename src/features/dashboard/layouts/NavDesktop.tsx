@@ -36,8 +36,6 @@ export function NavDesktop({
 
   return (
     <Box
-      justifyContent="center"
-      alignItems="center"
       sx={{
         pt: 2.5,
         px: 2.5,
