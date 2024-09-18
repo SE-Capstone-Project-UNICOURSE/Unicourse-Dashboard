@@ -1,30 +1,6 @@
-import type { BoxProps } from '@mui/material/Box';
-import type { Breakpoint } from '@mui/material/styles';
-
-import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
-
+import type { BoxProps, Breakpoint } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { layoutClasses } from '../classes';
-
-// ----------------------------------------------------------------------
-
-export function Main({ children, sx, ...other }: BoxProps) {
-  return (
-    <Box
-      component="main"
-      className={layoutClasses.main}
-      sx={{
-        display: 'flex',
-        flex: '1 1 auto',
-        flexDirection: 'column',
-        ...sx,
-      }}
-      {...other}
-    >
-      {children}
-    </Box>
-  );
-}
 
 // ----------------------------------------------------------------------
 

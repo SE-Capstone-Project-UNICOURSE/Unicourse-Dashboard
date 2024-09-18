@@ -1,7 +1,9 @@
 import { Router } from '@routes/Router';
+import { Provider } from 'react-redux';
 import 'src/global.css';
 import { useScrollToTop } from 'src/hooks/useScrollToTop';
-import { ThemeProvider } from 'src/theme/theme-provider';
+import { ThemeProvider } from 'src/theme/ThemeProvider';
+import store from './stores';
 
 // ----------------------------------------------------------------------
 
@@ -9,8 +11,10 @@ export default function App() {
   useScrollToTop();
 
   return (
-    <ThemeProvider>
-      <Router />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <Router />
+      </ThemeProvider>
+    </Provider>
   );
 }

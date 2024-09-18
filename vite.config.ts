@@ -3,9 +3,8 @@ import checker from 'vite-plugin-checker';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 
-// ----------------------------------------------------------------------
-
-const PORT = 3039;
+// Load environment variables
+const PORT = parseInt(process.env.VITE_PORT) || 3039;
 
 export default defineConfig({
   plugins: [
@@ -32,7 +31,7 @@ export default defineConfig({
         find: /^src(.+)/,
         replacement: path.join(process.cwd(), 'src/$1'),
       },
-      // Thêm các alias
+      // Additional aliases
       { find: '@components', replacement: path.resolve(__dirname, './src/components') },
       { find: '@features', replacement: path.resolve(__dirname, './src/features') },
       { find: '@hooks', replacement: path.resolve(__dirname, './src/hooks') },

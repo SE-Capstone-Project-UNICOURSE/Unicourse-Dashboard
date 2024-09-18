@@ -26,6 +26,7 @@ module.exports = {
    */
   rules: {
     // general
+    'arrow-body-style': 0,
     'no-alert': 0,
     camelcase: 0,
     'no-console': 0,
@@ -76,5 +77,9 @@ module.exports = {
     // import/extensions (Tắt yêu cầu về file extension)
     'import/extensions': 0,
     'import/no-unresolved': 0,
+    'import/no-extraneous-dependencies': 0,
+
+    //
+    'class-methods-use-this': 0,
   },
 };
