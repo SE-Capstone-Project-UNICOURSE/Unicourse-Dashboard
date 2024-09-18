@@ -1,21 +1,16 @@
-import { layoutClasses } from 'src/layouts/classes';
-import { navData } from 'src/layouts/config-nav-dashboard';
-import { _workspaces } from 'src/layouts/config-nav-workspace';
-import { HeaderSection } from 'src/layouts/core/HeaderSection';
-import { LayoutSection } from 'src/layouts/core/LayoutSection';
+import { Iconify } from '@app/components/iconify';
+import { layoutClasses } from '@app/layouts/classes';
+import { navData } from '@app/layouts/config-nav-dashboard';
+import { HeaderSection } from '@app/layouts/core/HeaderSection';
+import { LayoutSection } from '@app/layouts/core/LayoutSection';
+import { Main } from '@app/layouts/simple';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import type { Breakpoint, SxProps, Theme } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { useState } from 'react';
-import { _langs, _notifications } from 'src/_mock';
-import { Iconify } from 'src/components/iconify';
-import { Main } from 'src/layouts/simple';
-import { AccountPopover } from '../components/AccountPopover';
-import { LanguagePopover } from '../components/LanguagePopover';
-import { MenuButton } from '../components/MenuButton';
-import { NotificationsPopover } from '../components/NotificationsPopover';
-import { Searchbar } from '../components/Searchbar';
+import { _langs, _notifications, _workspaces } from '../_mockData';
+import DashboardUI from '../components';
 import { NavDesktop } from './NavDesktop';
 import { NavMobile } from './NavMobile';
 
@@ -57,7 +52,7 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
             ),
             leftArea: (
               <>
-                <MenuButton
+                <DashboardUI.MenuButton
                   onClick={() => setNavOpen(true)}
                   sx={{
                     ml: -1,
@@ -74,10 +69,10 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
             ),
             rightArea: (
               <Box gap={1} display="flex" alignItems="center">
-                <Searchbar />
-                <LanguagePopover data={_langs} />
-                <NotificationsPopover data={_notifications} />
-                <AccountPopover
+                <DashboardUI.Searchbar />
+                <DashboardUI.LanguagePopover data={_langs} />
+                <DashboardUI.NotificationsPopover data={_notifications} />
+                <DashboardUI.AccountPopover
                   data={[
                     {
                       label: 'Home',

@@ -78,6 +78,8 @@ module.exports = {
     'import/extensions': 0,
     'import/no-unresolved': 0,
     'import/no-extraneous-dependencies': 0,
+    'import/no-cycle': 0,
+    'import/no-named-as-default': 0,
 
     //
     'class-methods-use-this': 0,

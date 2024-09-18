@@ -1,5 +1,6 @@
-import { useCallback, useState } from 'react';
-
+import { Iconify } from '@components/iconify';
+import { Scrollbar } from '@components/scrollbar';
+import { DashboardContent } from '@features/dashboard';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -8,22 +9,65 @@ import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import Typography from '@mui/material/Typography';
-
-import { Iconify } from '@components/iconify';
-import { Scrollbar } from '@components/scrollbar';
-import { DashboardContent } from '@features/dashboard';
-import { _users } from 'src/_mock';
+import { useState } from 'react';
 import { TableEmptyRows } from '../components/TableEmptyRows';
 import { TableNoData } from '../components/TableNoData';
 import { UserTableHead } from '../components/UserTableHead';
 import { UserTableRow, type UserProps } from '../components/UserTableRow';
 import { UserTableToolbar } from '../components/UserTableToolbar';
 import { applyFilter, emptyRows, getComparator } from '../utils';
+import { useUserTable } from './useUserTable';
 
-// ----------------------------------------------------------------------
+const _users = [
+  {
+    id: '1',
+    name: 'John Doe',
+    company: 'Tech Solutions',
+    role: 'Admin',
+    isVerified: true,
+    status: 'active',
+    avatarUrl: 'https://via.placeholder.com/150', // Thêm avatarUrl
+  },
+  {
+    id: '2',
+    name: 'Jane Smith',
+    company: 'Innovative Inc.',
+    role: 'User',
+    isVerified: false,
+    status: 'pending',
+    avatarUrl: 'https://via.placeholder.com/150', // Thêm avatarUrl
+  },
+  {
+    id: '3',
+    name: 'Alice Johnson',
+    company: 'Acme Corp',
+    role: 'Manager',
+    isVerified: true,
+    status: 'inactive',
+    avatarUrl: 'https://via.placeholder.com/150', // Thêm avatarUrl
+  },
+  {
+    id: '4',
+    name: 'Bob Williams',
+    company: 'Creative Agency',
+    role: 'User',
+    isVerified: false,
+    status: 'active',
+    avatarUrl: 'https://via.placeholder.com/150', // Thêm avatarUrl
+  },
+  {
+    id: '5',
+    name: 'Charlie Brown',
+    company: 'StartUp X',
+    role: 'Admin',
+    isVerified: true,
+    status: 'pending',
+    avatarUrl: 'https://via.placeholder.com/150', // Thêm avatarUrl
+  },
+];
 
 export function UserView() {
-  const table = useTable();
+  const table = useUserTable();
 
   const [filterName, setFilterName] = useState('');
 
@@ -122,72 +166,4 @@ export function UserView() {
       </Card>
     </DashboardContent>
   );
-}
-
-// ----------------------------------------------------------------------
-
-export function useTable() {
-  const [page, setPage] = useState(0);
-  const [orderBy, setOrderBy] = useState('name');
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [selected, setSelected] = useState<string[]>([]);
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-
-  const onSort = useCallback(
-    (id: string) => {
-      const isAsc = orderBy === id && order === 'asc';
-      setOrder(isAsc ? 'desc' : 'asc');
-      setOrderBy(id);
-    },
-    [order, orderBy]
-  );
-
-  const onSelectAllRows = useCallback((checked: boolean, newSelecteds: string[]) => {
-    if (checked) {
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  }, []);
-
-  const onSelectRow = useCallback(
-    (inputValue: string) => {
-      const newSelected = selected.includes(inputValue)
-        ? selected.filter((value) => value !== inputValue)
-        : [...selected, inputValue];
-
-      setSelected(newSelected);
-    },
-    [selected]
-  );
-
-  const onResetPage = useCallback(() => {
-    setPage(0);
-  }, []);
-
-  const onChangePage = useCallback((event: unknown, newPage: number) => {
-    setPage(newPage);
-  }, []);
-
-  const onChangeRowsPerPage = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setRowsPerPage(parseInt(event.target.value, 10));
-      onResetPage();
-    },
-    [onResetPage]
-  );
-
-  return {
-    page,
-    order,
-    onSort,
-    orderBy,
-    selected,
-    rowsPerPage,
-    onSelectRow,
-    onResetPage,
-    onChangePage,
-    onSelectAllRows,
-    onChangeRowsPerPage,
-  };
 }
