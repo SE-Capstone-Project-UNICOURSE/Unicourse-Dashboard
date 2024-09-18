@@ -4,16 +4,27 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
 
-import type { PostItemProps } from './PostItem';
-
 // ----------------------------------------------------------------------
 
+type Post = {
+  id: number;
+  title: string;
+};
+
 type PostSearchProps = {
-  posts: PostItemProps[];
   sx?: SxProps<Theme>;
 };
 
-export function PostSearch({ posts, sx }: PostSearchProps) {
+// Hardcoded posts data
+const posts: Post[] = [
+  { id: 1, title: 'How to use React' },
+  { id: 2, title: 'Understanding TypeScript' },
+  { id: 3, title: 'Material UI Customization' },
+  { id: 4, title: 'React Router v6 Guide' },
+  { id: 5, title: 'State Management in React' },
+];
+
+export function PostSearch({ sx }: PostSearchProps) {
   return (
     <Autocomplete
       sx={{ width: 280 }}

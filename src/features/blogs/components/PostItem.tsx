@@ -1,35 +1,27 @@
 import type { CardProps } from '@mui/material/Card';
-
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-
 import { fDate } from 'src/utils/format-time';
 import { fShortenNumber } from 'src/utils/format-number';
-
 import { varAlpha } from 'src/theme/styles';
-
 import { Iconify } from 'src/components/iconify';
 import { SvgColor } from 'src/components/svg-color';
 
-// ----------------------------------------------------------------------
-
-export type PostItemProps = {
-  id: string;
+type Post = {
+  id: number;
   title: string;
-  coverUrl: string;
-  totalViews: number;
-  description: string;
-  totalShares: number;
-  totalComments: number;
-  totalFavorites: number;
-  postedAt: string | number | null;
   author: {
     name: string;
     avatarUrl: string;
   };
+  coverUrl: string;
+  totalComments: number;
+  totalViews: number;
+  totalShares: number;
+  postedAt: string;
 };
 
 export function PostItem({
@@ -39,7 +31,7 @@ export function PostItem({
   latestPostLarge,
   ...other
 }: CardProps & {
-  post: PostItemProps;
+  post: Post;
   latestPost: boolean;
   latestPostLarge: boolean;
 }) {

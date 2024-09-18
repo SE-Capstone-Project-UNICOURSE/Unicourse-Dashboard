@@ -7,12 +7,54 @@ import Button from '@mui/material/Button';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
-import { _posts } from 'src/_mock';
 import { PostItem } from '../components/PostItem';
 import { PostSearch } from '../components/PostSearch';
 import { PostSort } from '../components/PostSort';
 
 // ----------------------------------------------------------------------
+
+const hardcodedPosts = [
+  {
+    id: 1,
+    title: 'Hardcoded Post 1',
+    author: { name: 'John Doe', avatarUrl: 'path-to-avatar-1.jpg' },
+    coverUrl: 'path-to-cover-1.jpg',
+    totalComments: 12,
+    totalViews: 100,
+    totalShares: 50,
+    postedAt: '2023-09-18',
+  },
+  {
+    id: 2,
+    title: 'Hardcoded Post 2',
+    author: { name: 'Jane Smith', avatarUrl: 'path-to-avatar-2.jpg' },
+    coverUrl: 'path-to-cover-2.jpg',
+    totalComments: 5,
+    totalViews: 80,
+    totalShares: 30,
+    postedAt: '2023-09-17',
+  },
+  {
+    id: 3,
+    title: 'Hardcoded Post 3',
+    author: { name: 'Alice Johnson', avatarUrl: 'path-to-avatar-3.jpg' },
+    coverUrl: 'path-to-cover-3.jpg',
+    totalComments: 20,
+    totalViews: 150,
+    totalShares: 70,
+    postedAt: '2023-09-16',
+  },
+  {
+    id: 4,
+    title: 'Hardcoded Post 4',
+    author: { name: 'Bob Williams', avatarUrl: 'path-to-avatar-4.jpg' },
+    coverUrl: 'path-to-cover-4.jpg',
+    totalComments: 8,
+    totalViews: 90,
+    totalShares: 40,
+    postedAt: '2023-09-15',
+  },
+];
 
 export function BlogView() {
   const [sortBy, setSortBy] = useState('latest');
@@ -37,7 +79,7 @@ export function BlogView() {
       </Box>
 
       <Box display="flex" alignItems="center" justifyContent="space-between" sx={{ mb: 5 }}>
-        <PostSearch posts={_posts} />
+        <PostSearch />
         <PostSort
           sortBy={sortBy}
           onSort={handleSort}
@@ -50,7 +92,7 @@ export function BlogView() {
       </Box>
 
       <Grid container spacing={3}>
-        {_posts.map((post, index) => {
+        {hardcodedPosts.map((post, index) => {
           const latestPostLarge = index === 0;
           const latestPost = index === 1 || index === 2;
 

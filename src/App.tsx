@@ -5,8 +5,6 @@ import { useScrollToTop } from 'src/hooks/useScrollToTop';
 import { ThemeProvider } from 'src/theme/ThemeProvider';
 import store from './stores';
 
-// ----------------------------------------------------------------------
-
 export default function App() {
   useScrollToTop();
 

@@ -32,6 +32,7 @@ export default defineConfig({
         replacement: path.join(process.cwd(), 'src/$1'),
       },
       // Additional aliases
+      { find: '@app', replacement: path.resolve(__dirname, './src') },
       { find: '@components', replacement: path.resolve(__dirname, './src/components') },
       { find: '@features', replacement: path.resolve(__dirname, './src/features') },
       { find: '@hooks', replacement: path.resolve(__dirname, './src/hooks') },

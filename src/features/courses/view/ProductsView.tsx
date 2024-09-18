@@ -1,19 +1,13 @@
 import { useCallback, useState } from 'react';
-
 import Box from '@mui/material/Box';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
-
 import { DashboardContent } from '@features/dashboard';
-
-import { _products } from 'src/_mock';
-
 import { CartIcon } from '../components/CartIcon';
 import { ProductFilters } from '../components/ProductFilters';
 import { ProductItem } from '../components/ProductItem';
 import { ProductSort } from '../components/ProductSort';
-
 import type { FiltersProps } from '../components/ProductFilters';
 
 // ----------------------------------------------------------------------
@@ -58,11 +52,49 @@ const defaultFilters = {
   category: CATEGORY_OPTIONS[0].value,
 };
 
+// Mock products data
+const _products = [
+  {
+    id: '1',
+    name: 'Nike Air Max',
+    price: 199.99,
+    priceSale: 149.99,
+    status: 'sale',
+    coverUrl: 'https://via.placeholder.com/400x400?text=Nike+Air+Max',
+    colors: ['#000000', '#FF4842'],
+  },
+  {
+    id: '2',
+    name: 'Adidas Ultraboost',
+    price: 179.99,
+    priceSale: null,
+    status: 'new',
+    coverUrl: 'https://via.placeholder.com/400x400?text=Adidas+Ultraboost',
+    colors: ['#1890FF', '#FFFFFF'],
+  },
+  {
+    id: '3',
+    name: 'Puma Running Shoes',
+    price: 129.99,
+    priceSale: 99.99,
+    status: 'sale',
+    coverUrl: 'https://via.placeholder.com/400x400?text=Puma+Running+Shoes',
+    colors: ['#00AB55', '#FFC107'],
+  },
+  {
+    id: '4',
+    name: 'Reebok Classic',
+    price: 99.99,
+    priceSale: null,
+    status: 'outOfStock',
+    coverUrl: 'https://via.placeholder.com/400x400?text=Reebok+Classic',
+    colors: ['#FFFFFF', '#000000'],
+  },
+];
+
 export function ProductsView() {
   const [sortBy, setSortBy] = useState('featured');
-
   const [openFilter, setOpenFilter] = useState(false);
-
   const [filters, setFilters] = useState<FiltersProps>(defaultFilters);
 
   const handleOpenFilter = useCallback(() => {

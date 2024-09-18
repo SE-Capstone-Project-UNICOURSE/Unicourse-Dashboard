@@ -1,18 +1,9 @@
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
 
-import { _posts, _tasks, _timeline } from 'src/_mock';
-
 import { DashboardContent } from '@features/dashboard';
-import { AnalyticsConversionRates } from '../components/AnalyticsConversionRates';
-import { AnalyticsCurrentSubject } from '../components/AnalyticsCurrentSubject';
-import { AnalyticsCurrentVisits } from '../components/AnalyticsCurrentVisits';
-import { AnalyticsNews } from '../components/AnalyticsNews';
-import { AnalyticsOrderTimeline } from '../components/AnalyticsOrderTimeline';
-import { AnalyticsTasks } from '../components/AnalyticsTasks';
-import { AnalyticsTrafficBySite } from '../components/AnalyticsTrafficBySite';
-import { AnalyticsWebsiteVisits } from '../components/AnalyticsWebsiteVisits';
-import { AnalyticsWidgetSummary } from '../components/AnalyticsWidgetSummary';
+import { _posts, _tasks, _timeline } from '../_mockData';
+import AnalyticsUI from '../components';
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +16,7 @@ export function OverviewAnalyticsView() {
 
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3}>
-          <AnalyticsWidgetSummary
+          <AnalyticsUI.AnalyticsWidgetSummary
             title="Weekly sales"
             percent={2.6}
             total={714000}
@@ -38,7 +29,7 @@ export function OverviewAnalyticsView() {
         </Grid>
 
         <Grid xs={12} sm={6} md={3}>
-          <AnalyticsWidgetSummary
+          <AnalyticsUI.AnalyticsWidgetSummary
             title="New users"
             percent={-0.1}
             total={1352831}
@@ -52,7 +43,7 @@ export function OverviewAnalyticsView() {
         </Grid>
 
         <Grid xs={12} sm={6} md={3}>
-          <AnalyticsWidgetSummary
+          <AnalyticsUI.AnalyticsWidgetSummary
             title="Purchase orders"
             percent={2.8}
             total={1723315}
@@ -66,7 +57,7 @@ export function OverviewAnalyticsView() {
         </Grid>
 
         <Grid xs={12} sm={6} md={3}>
-          <AnalyticsWidgetSummary
+          <AnalyticsUI.AnalyticsWidgetSummary
             title="Messages"
             percent={3.6}
             total={234}
@@ -80,7 +71,7 @@ export function OverviewAnalyticsView() {
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
-          <AnalyticsCurrentVisits
+          <AnalyticsUI.AnalyticsCurrentVisits
             title="Current visits"
             chart={{
               series: [
@@ -94,7 +85,7 @@ export function OverviewAnalyticsView() {
         </Grid>
 
         <Grid xs={12} md={6} lg={8}>
-          <AnalyticsWebsiteVisits
+          <AnalyticsUI.AnalyticsWebsiteVisits
             title="Website visits"
             subheader="(+43%) than last year"
             chart={{
@@ -108,7 +99,7 @@ export function OverviewAnalyticsView() {
         </Grid>
 
         <Grid xs={12} md={6} lg={8}>
-          <AnalyticsConversionRates
+          <AnalyticsUI.AnalyticsConversionRates
             title="Conversion rates"
             subheader="(+43%) than last year"
             chart={{
@@ -122,7 +113,7 @@ export function OverviewAnalyticsView() {
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
-          <AnalyticsCurrentSubject
+          <AnalyticsUI.AnalyticsCurrentSubject
             title="Current subject"
             chart={{
               categories: ['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math'],
@@ -136,15 +127,15 @@ export function OverviewAnalyticsView() {
         </Grid>
 
         <Grid xs={12} md={6} lg={8}>
-          <AnalyticsNews title="News" list={_posts.slice(0, 5)} />
+          <AnalyticsUI.AnalyticsNews title="News" list={_posts.slice(0, 5)} />
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
-          <AnalyticsOrderTimeline title="Order timeline" list={_timeline} />
+          <AnalyticsUI.AnalyticsOrderTimeline title="Order timeline" list={_timeline} />
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
-          <AnalyticsTrafficBySite
+          <AnalyticsUI.AnalyticsTrafficBySite
             title="Traffic by site"
             list={[
               { value: 'facebook', label: 'Facebook', total: 323234 },
@@ -156,7 +147,7 @@ export function OverviewAnalyticsView() {
         </Grid>
 
         <Grid xs={12} md={6} lg={8}>
-          <AnalyticsTasks title="Tasks" list={_tasks} />
+          <AnalyticsUI.AnalyticsTasks title="Tasks" list={_tasks} />
         </Grid>
       </Grid>
     </DashboardContent>
