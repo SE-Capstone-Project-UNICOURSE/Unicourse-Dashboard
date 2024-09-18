@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------
 
-import { layoutClasses } from '@features/layouts/classes';
+import { layoutClasses } from 'src/layouts/classes';
 import { Box, BoxProps, Breakpoint, useTheme } from '@mui/material';
 
 type MainProps = BoxProps & {

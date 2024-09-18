@@ -1,8 +1,8 @@
-import { layoutClasses } from '@features/layouts/classes';
-import { navData } from '@features/layouts/config-nav-dashboard';
-import { _workspaces } from '@features/layouts/config-nav-workspace';
-import { HeaderSection } from '@features/layouts/core/header-section';
-import { LayoutSection } from '@features/layouts/core/layout-section';
+import { layoutClasses } from 'src/layouts/classes';
+import { navData } from 'src/layouts/config-nav-dashboard';
+import { _workspaces } from 'src/layouts/config-nav-workspace';
+import { HeaderSection } from 'src/layouts/core/HeaderSection';
+import { LayoutSection } from 'src/layouts/core/LayoutSection';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import type { Breakpoint, SxProps, Theme } from '@mui/material/styles';
@@ -10,7 +10,7 @@ import { useTheme } from '@mui/material/styles';
 import { useState } from 'react';
 import { _langs, _notifications } from 'src/_mock';
 import { Iconify } from 'src/components/iconify';
-import { Main } from 'src/features/layouts/simple';
+import { Main } from 'src/layouts/simple';
 import { AccountPopover } from '../components/AccountPopover';
 import { LanguagePopover } from '../components/LanguagePopover';
 import { MenuButton } from '../components/MenuButton';
@@ -31,9 +31,7 @@ export type DashboardLayoutProps = {
 
 export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) {
   const theme = useTheme();
-
   const [navOpen, setNavOpen] = useState(false);
-
   const layoutQuery: Breakpoint = 'lg';
 
   return (

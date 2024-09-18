@@ -1,16 +1,12 @@
 import type { Breakpoint, SxProps, Theme } from '@mui/material/styles';
-
 import Alert from '@mui/material/Alert';
 import Link from '@mui/material/Link';
-
 import { RouterLink } from 'src/routes/components';
-
 import { Logo } from '@components/logo';
-import { HeaderSection } from '../core/header-section';
-import { LayoutSection } from '../core/layout-section';
-import { CompactContent, Main } from './Main';
-
-// ----------------------------------------------------------------------
+import { HeaderSection } from '../core/HeaderSection';
+import { LayoutSection } from '../core/LayoutSection';
+import { CompactContent } from './CompactContent';
+import { Main } from './Main';
 
 export type SimpleLayoutProps = {
   sx?: SxProps<Theme>;
