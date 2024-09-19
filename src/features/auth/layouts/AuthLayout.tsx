@@ -1,12 +1,6 @@
 import type { Breakpoint, SxProps, Theme } from '@mui/material/styles';
-
-import { Logo } from '@components/logo';
-import { HeaderSection } from 'src/layouts/core/HeaderSection';
-import { LayoutSection } from 'src/layouts/core/LayoutSection';
-import Alert from '@mui/material/Alert';
-import Link from '@mui/material/Link';
-import { RouterLink } from '@routes/components';
 import { stylesMode } from '@theme/styles';
+import { LayoutSection } from '@app/features/dashboard/layouts/core/LayoutSection';
 import { AuthMain } from './AuthMain';
 
 // ----------------------------------------------------------------------
@@ -19,46 +13,11 @@ export type AuthLayoutProps = {
   };
 };
 
-export function AuthLayout({ sx, children, header }: AuthLayoutProps) {
+const AuthLayout = ({ sx, children, header }: AuthLayoutProps) => {
   const layoutQuery: Breakpoint = 'md';
 
   return (
     <LayoutSection
-      /** **************************************
-       * Header
-       *************************************** */
-      headerSection={
-        <HeaderSection
-          layoutQuery={layoutQuery}
-          slotProps={{
-            container: { maxWidth: false },
-            toolbar: { sx: { bgcolor: 'transparent', backdropFilter: 'unset' } },
-          }}
-          sx={{
-            position: { [layoutQuery]: 'fixed' },
-
-            ...header?.sx,
-          }}
-          slots={{
-            topArea: (
-              <Alert severity="info" sx={{ display: 'none', borderRadius: 0 }}>
-                This is an info Alert.
-              </Alert>
-            ),
-            leftArea: <Logo />,
-            rightArea: (
-              <Link
-                component={RouterLink}
-                href="#"
-                color="inherit"
-                sx={{ typography: 'subtitle2' }}
-              >
-                Need help?
-              </Link>
-            ),
-          }}
-        />
-      }
       /** **************************************
        * Footer
        *************************************** */
@@ -87,4 +46,6 @@ export function AuthLayout({ sx, children, header }: AuthLayoutProps) {
       <AuthMain layoutQuery={layoutQuery}>{children}</AuthMain>
     </LayoutSection>
   );
-}
+};
+
+export default AuthLayout;

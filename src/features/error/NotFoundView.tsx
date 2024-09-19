@@ -1,4 +1,4 @@
-import { SimpleLayout } from 'src/layouts/simple';
+import { SimpleLayout } from '@app/features/dashboard/layouts/simple';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';

@@ -1,10 +1,10 @@
-// ----------------------------------------------------------------------
-
+import usePathname from '@app/routes/hooks/usePathname';
 import { Drawer, drawerClasses } from '@mui/material';
-import { usePathname } from '@routes/hooks';
 import { useEffect } from 'react';
-import { NavContent } from './NavContent';
-import { NavContentProps } from './NavDesktop';
+import { NavContentProps } from '../types';
+import NavContent from './NavContent';
+
+// ----------------------------------------------------------------------
 
 export function NavMobile({
   sx,
@@ -12,16 +12,14 @@ export function NavMobile({
   open,
   slots,
   onClose,
-  workspaces,
 }: NavContentProps & { open: boolean; onClose: () => void }) {
   const pathname = usePathname();
 
   useEffect(() => {
     if (open) {
-      onClose();
+      onClose(); // Close drawer on navigation change
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
+  }, [pathname, open, onClose]);
 
   return (
     <Drawer
@@ -33,12 +31,14 @@ export function NavMobile({
           px: 2.5,
           overflow: 'unset',
           bgcolor: 'var(--layout-nav-bg)',
-          width: 'var(--layout-nav-mobile-width)',
+          width: 'var(--layout-nav-mobile-width)', // Adjust to ensure correct width on mobile
+          transition: 'width 0.3s ease-in-out', // Smooth transition for opening/closing
           ...sx,
         },
       }}
     >
-      <NavContent data={data} slots={slots} workspaces={workspaces} />
+      {/* Pass data to NavContent */}
+      <NavContent data={data} slots={slots} />
     </Drawer>
   );
 }

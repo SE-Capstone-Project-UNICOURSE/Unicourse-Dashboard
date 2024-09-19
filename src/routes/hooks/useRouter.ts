@@ -1,9 +1,7 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// ----------------------------------------------------------------------
-
-export function useRouter() {
+const useRouter = () => {
   const navigate = useNavigate();
 
   const router = useMemo(
@@ -18,4 +16,6 @@ export function useRouter() {
   );
 
   return router;
-}
+};
+
+export default useRouter;

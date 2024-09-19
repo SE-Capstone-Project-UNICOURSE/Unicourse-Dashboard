@@ -1,4 +1,4 @@
-import { Iconify } from '@components/iconify';
+import Iconify from '@app/components/iconify/Iconify';
 import { Scrollbar } from '@components/scrollbar';
 import { DashboardContent } from '@features/dashboard';
 import Box from '@mui/material/Box';

@@ -1,17 +1,17 @@
-import type { IconButtonProps } from '@mui/material/IconButton';
-import { useCallback, useState } from 'react';
-import { Iconify } from '@components/iconify';
+import Iconify from '@app/components/iconify/Iconify';
 import { Scrollbar } from '@components/scrollbar';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import type { IconButtonProps } from '@mui/material/IconButton';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListSubheader from '@mui/material/ListSubheader';
 import Popover from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import { useCallback, useState } from 'react';
 import NotificationItem from './NotificationItem';
 
 export type NotificationItemProps = {

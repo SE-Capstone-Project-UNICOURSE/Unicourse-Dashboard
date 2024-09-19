@@ -3,14 +3,13 @@ import type { BoxProps } from '@mui/material/Box';
 import { forwardRef, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import ButtonBase from '@mui/material/ButtonBase';
+import Stack from '@mui/material/Stack';
 import { alpha as hexAlpha } from '@mui/material/styles';
 
 import { varAlpha } from 'src/theme/styles';
 
-import { Iconify } from '../iconify';
-
+import Iconify from '../iconify/Iconify';
 import type { ColorPickerProps } from './types';
 
 // ----------------------------------------------------------------------

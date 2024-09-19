@@ -26,11 +26,11 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
     );
 
     const baseSize = {
-      width: width ?? 80,
-      height: height ?? 80,
+      width: width ?? 100, // Increase the width for a larger logo
+      height: height ?? 100, // Increase the height for a larger logo
       ...(!isSingle && {
-        width: width ?? 120,
-        height: height ?? 40,
+        width: width ?? 200,
+        height: height ?? 80,
       }),
     };
 
@@ -46,6 +46,8 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
           flexShrink: 0,
           display: 'inline-flex',
           verticalAlign: 'middle',
+          justifyContent: 'center', // Center horizontally
+          alignItems: 'center', // Center vertically
           ...(disableLink && { pointerEvents: 'none' }),
           ...sx,
         }}

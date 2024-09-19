@@ -56,6 +56,7 @@ module.exports = {
     'react/jsx-no-duplicate-props': [1, { ignoreCase: false }],
     'react/jsx-no-useless-fragment': [1, { allowExpressions: true }],
     'react/no-unstable-nested-components': [1, { allowAsProps: true }],
+    'react/jsx-curly-brace-presence': 0,
 
     // jsx-a11y
     'jsx-a11y/anchor-is-valid': 0,

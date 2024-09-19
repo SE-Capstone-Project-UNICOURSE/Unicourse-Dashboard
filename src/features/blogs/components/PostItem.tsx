@@ -1,14 +1,14 @@
-import type { CardProps } from '@mui/material/Card';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Card from '@mui/material/Card';
+import Iconify from '@app/components/iconify/Iconify';
 import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import type { CardProps } from '@mui/material/Card';
+import Card from '@mui/material/Card';
+import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { fDate } from 'src/utils/format-time';
-import { fShortenNumber } from 'src/utils/format-number';
-import { varAlpha } from 'src/theme/styles';
-import { Iconify } from 'src/components/iconify';
 import { SvgColor } from 'src/components/svg-color';
+import { varAlpha } from 'src/theme/styles';
+import { fShortenNumber } from 'src/utils/format-number';
+import { fDate } from 'src/utils/format-time';
 
 type Post = {
   id: number;

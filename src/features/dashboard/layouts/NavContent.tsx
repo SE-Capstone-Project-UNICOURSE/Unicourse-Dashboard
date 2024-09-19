@@ -1,21 +1,24 @@
+import usePathname from '@app/routes/hooks/usePathname';
 import { Logo } from '@components/logo';
 import { Scrollbar } from '@components/scrollbar';
 import { Box, ListItem, ListItemButton } from '@mui/material';
 import { RouterLink } from '@routes/components';
-import { usePathname } from '@routes/hooks';
 import DashboardUI from '../components';
 import type { NavContentProps } from './NavDesktop';
 
-export function NavContent({ data, slots, workspaces, sx }: NavContentProps) {
+const NavContent = ({ data, slots, sx }: NavContentProps) => {
   const pathname = usePathname();
 
   return (
-    <>
-      <Logo />
+    <Box width={'100%'}>
+      {/* Centering the logo */}
+      <Box display="flex" justifyContent="center" alignItems="center" py={2}>
+        <Logo />
+      </Box>
 
       {slots?.topArea}
 
-      <DashboardUI.WorkspacesPopover data={workspaces} sx={{ my: 2 }} />
+      <DashboardUI.WorkspacesPopover sx={{ my: 2 }} />
 
       <Scrollbar fillContent>
         <Box component="nav" display="flex" flex="1 1 auto" flexDirection="column" sx={sx}>
@@ -67,6 +70,8 @@ export function NavContent({ data, slots, workspaces, sx }: NavContentProps) {
       </Scrollbar>
 
       {slots?.bottomArea}
-    </>
+    </Box>
   );
-}
+};
+
+export default NavContent;

@@ -1,3 +1,4 @@
+import Iconify from '@app/components/iconify/Iconify';
 import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
@@ -7,7 +8,6 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Popover from '@mui/material/Popover';
 import { useCallback, useState } from 'react';
-import { Iconify } from 'src/components/iconify';
 
 type TaskItemProps = BoxProps & {
   checked: boolean;

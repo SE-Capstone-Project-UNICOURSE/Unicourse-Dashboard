@@ -1,86 +1,18 @@
-import { useCallback, useState } from 'react';
-import { Iconify } from '@components/iconify';
-import LoadingButton from '@mui/lab/LoadingButton';
+import Iconify from '@app/components/iconify/Iconify';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import Link from '@mui/material/Link';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { useRouter } from '@routes/hooks';
+import SignInForm from './SignInForm';
 
-// ----------------------------------------------------------------------
-
-export function SignInView() {
-  const router = useRouter();
-
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleSignIn = useCallback(() => {
-    router.push('/');
-  }, [router]);
-
-  const renderForm = (
-    <Box display="flex" flexDirection="column" alignItems="flex-end">
-      <TextField
-        fullWidth
-        name="email"
-        label="Email address"
-        defaultValue="hello@gmail.com"
-        InputLabelProps={{ shrink: true }}
-        sx={{ mb: 3 }}
-      />
-
-      <Link variant="body2" color="inherit" sx={{ mb: 1.5 }}>
-        Forgot password?
-      </Link>
-
-      <TextField
-        fullWidth
-        name="password"
-        label="Password"
-        defaultValue="@demo1234"
-        InputLabelProps={{ shrink: true }}
-        type={showPassword ? 'text' : 'password'}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                <Iconify icon={showPassword ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-        sx={{ mb: 3 }}
-      />
-
-      <LoadingButton
-        fullWidth
-        size="large"
-        type="submit"
-        color="inherit"
-        variant="contained"
-        onClick={handleSignIn}
-      >
-        Sign in
-      </LoadingButton>
-    </Box>
-  );
-
+const SignInView = () => {
   return (
     <>
       <Box gap={1.5} display="flex" flexDirection="column" alignItems="center" sx={{ mb: 5 }}>
-        <Typography variant="h5">Sign in</Typography>
-        <Typography variant="body2" color="text.secondary">
-          Don’t have an account?
-          <Link variant="subtitle2" sx={{ ml: 0.5 }}>
-            Get started
-          </Link>
-        </Typography>
+        <Typography variant="h5">Admin Sign In</Typography>
       </Box>
 
-      {renderForm}
+      <SignInForm />
 
       <Divider sx={{ my: 3, '&::before, &::after': { borderTopStyle: 'dashed' } }}>
         <Typography
@@ -104,4 +36,6 @@ export function SignInView() {
       </Box>
     </>
   );
-}
+};
+
+export default SignInView;
