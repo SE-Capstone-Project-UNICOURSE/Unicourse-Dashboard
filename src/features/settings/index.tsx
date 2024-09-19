@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
 import { CONFIG } from 'src/utils/config-global';
-import CourseView from './views/CoursesView';
+import SettingView from './views/SettingView';
 
 // ----------------------------------------------------------------------
 
@@ -9,10 +9,10 @@ export default function CoursePages() {
   return (
     <>
       <Helmet>
-        <title> {`Products - ${CONFIG.appName}`}</title>
+        <title> {`Settings - ${CONFIG.appName}`}</title>
       </Helmet>
 
-      <CourseView />
+      <SettingView />
     </>
   );
 }

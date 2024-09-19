@@ -1,6 +1,6 @@
 import { CONFIG } from '@app/utils/config-global';
 import { Helmet } from 'react-helmet-async';
-import { BlogView } from './view/BlogView';
+import { BlogView } from './views/BlogView';
 
 // ----------------------------------------------------------------------
 

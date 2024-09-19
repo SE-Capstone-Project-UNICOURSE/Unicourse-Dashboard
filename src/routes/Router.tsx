@@ -25,7 +25,7 @@ export function Router() {
       children: [
         { element: <MainPages.HomePage />, index: true },
         { path: 'user', element: <MainPages.UserPage /> },
-        { path: 'products', element: <MainPages.ProductsPage /> },
+        { path: 'courses', element: <MainPages.CoursePage /> },
         { path: 'blog', element: <MainPages.BlogPage /> },
       ],
     },

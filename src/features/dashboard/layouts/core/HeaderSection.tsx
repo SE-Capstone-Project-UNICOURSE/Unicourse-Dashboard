@@ -1,13 +1,13 @@
-import type { Breakpoint } from '@mui/material/styles';
 import type { AppBarProps } from '@mui/material/AppBar';
-import type { ToolbarProps } from '@mui/material/Toolbar';
 import type { ContainerProps } from '@mui/material/Container';
+import type { Breakpoint } from '@mui/material/styles';
+import type { ToolbarProps } from '@mui/material/Toolbar';
 
-import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
+import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { useTheme } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
 
 import { bgBlur, varAlpha } from 'src/theme/styles';
 import { layoutClasses } from '../classes';
@@ -29,13 +29,13 @@ export type HeaderSectionProps = AppBarProps & {
   };
 };
 
-export function HeaderSection({
+const HeaderSection = ({
   sx,
   slots,
   slotProps,
   layoutQuery = 'md',
   ...other
-}: HeaderSectionProps) {
+}: HeaderSectionProps) => {
   const theme = useTheme();
 
   const toolbarStyles = {
@@ -100,4 +100,6 @@ export function HeaderSection({
       {slots?.bottomArea}
     </AppBar>
   );
-}
+};
+
+export default HeaderSection;

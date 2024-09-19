@@ -1,11 +1,11 @@
-import type { Theme, SxProps, CSSObject } from '@mui/material/styles';
+import type { CSSObject, SxProps, Theme } from '@mui/material/styles';
 
 import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';
+import { useTheme } from '@mui/material/styles';
 
-import { baseVars } from '../config-vars';
 import { layoutClasses } from '../classes';
+import { baseVars } from '../config-vars';
 
 // ----------------------------------------------------------------------
 
@@ -18,14 +18,14 @@ export type LayoutSectionProps = {
   sidebarSection?: React.ReactNode;
 };
 
-export function LayoutSection({
+const LayoutSection = ({
   sx,
   cssVars,
   children,
   footerSection,
   headerSection,
   sidebarSection,
-}: LayoutSectionProps) {
+}: LayoutSectionProps) => {
   const theme = useTheme();
 
   const inputGlobalStyles = (
@@ -58,4 +58,6 @@ export function LayoutSection({
       </Box>
     </>
   );
-}
+};
+
+export default LayoutSection;

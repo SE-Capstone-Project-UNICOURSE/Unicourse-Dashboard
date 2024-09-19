@@ -4,17 +4,12 @@ export const _langs = [
   {
     value: 'en',
     label: 'English',
-    icon: '/assets/icons/flags/ic_flag_en.svg',
+    icon: '/assets/icons/flags/ic-flag-en.svg',
   },
   {
-    value: 'fr',
-    label: 'French',
-    icon: '/assets/icons/flags/ic_flag_fr.svg',
-  },
-  {
-    value: 'de',
-    label: 'German',
-    icon: '/assets/icons/flags/ic_flag_de.svg',
+    value: 'vi',
+    label: 'Viet Nam',
+    icon: '/assets/icons/flags/ic-flag-vn.svg',
   },
 ];
 
