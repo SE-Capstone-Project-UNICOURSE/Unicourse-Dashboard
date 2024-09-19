@@ -14,7 +14,7 @@ import { _langs, _notifications } from '../_mockData';
 import DashboardUI from '../components';
 import type { DashboardLayoutProps } from '../types';
 import NavDesktop from './NavDesktop';
-import { NavMobile } from './NavMobile';
+import NavMobile from './NavMobile';
 
 const icon = (name: string) => (
   <SvgColor width="100%" height="100%" src={`/assets/icons/navbar/${name}.svg`} />
@@ -35,6 +35,10 @@ const DashboardLayout = ({ sx, children, header }: DashboardLayoutProps) => {
       title: 'User',
       path: '/user',
       icon: icon('ic-user'),
+      children: [
+        { title: 'User List', path: '/user/list', icon: icon('ic-list') },
+        { title: 'User Profile', path: '/user/profile', icon: icon('ic-profile') },
+      ],
     },
     {
       title: 'Product',
@@ -65,9 +69,6 @@ const DashboardLayout = ({ sx, children, header }: DashboardLayoutProps) => {
 
   return (
     <LayoutSection
-      /** **************************************
-       * Header
-       *************************************** */
       headerSection={
         <HeaderSection
           layoutQuery={layoutQuery}

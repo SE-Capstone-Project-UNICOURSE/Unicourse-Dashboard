@@ -1,18 +1,16 @@
-import usePathname from '@app/routes/hooks/usePathname';
 import { Drawer, drawerClasses } from '@mui/material';
 import { useEffect } from 'react';
-import { NavContentProps } from '../types';
+import usePathname from '@app/routes/hooks/usePathname';
 import NavContent from './NavContent';
+import type { NavContentProps } from '../types';
 
-// ----------------------------------------------------------------------
-
-export function NavMobile({
+const NavMobile = ({
   sx,
   data,
   open,
   slots,
   onClose,
-}: NavContentProps & { open: boolean; onClose: () => void }) {
+}: NavContentProps & { open: boolean; onClose: () => void }) => {
   const pathname = usePathname();
 
   useEffect(() => {
@@ -37,8 +35,9 @@ export function NavMobile({
         },
       }}
     >
-      {/* Pass data to NavContent */}
       <NavContent data={data} slots={slots} />
     </Drawer>
   );
-}
+};
+
+export default NavMobile;

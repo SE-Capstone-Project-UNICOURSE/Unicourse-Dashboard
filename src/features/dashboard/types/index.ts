@@ -4,36 +4,25 @@ import type { Theme } from '@mui/material/styles';
 import type { ReactNode } from 'react';
 
 export type NavItem = {
-  path: string;
+  path?: string; // For collapsible groups, there may be no direct path
   title: string;
   icon: ReactNode;
   info?: ReactNode;
-};
-
-export type NavGroup = {
-  title: string;
-  icon: ReactNode;
-  group: true;
-  items: NavItem[];
+  children?: NavItem[]; // Allow sub-items
 };
 
 export type NavContentProps = {
-  data: {
-    path: string;
-    title: string;
-    icon: React.ReactNode;
-    info?: React.ReactNode;
-  }[];
+  data: NavItem[]; // Each nav item can either be a link or a collapsible group with sub-items
   slots?: {
-    topArea?: React.ReactNode;
-    bottomArea?: React.ReactNode;
+    topArea?: ReactNode;
+    bottomArea?: ReactNode;
   };
   sx?: SxProps<Theme>;
 };
 
 export type DashboardLayoutProps = {
   sx?: SxProps<Theme>;
-  children: React.ReactNode;
+  children: ReactNode;
   header?: {
     sx?: SxProps<Theme>;
   };
