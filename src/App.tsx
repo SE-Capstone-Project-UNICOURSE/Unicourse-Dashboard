@@ -8,6 +8,8 @@ import store from './stores';
 export default function App() {
   useScrollToTop();
 
+  const baseUrl = import.meta.env.VITE_BASE_URL;
+
   return (
     <Provider store={store}>
       <ThemeProvider>

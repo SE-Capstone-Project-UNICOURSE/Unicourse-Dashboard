@@ -1,6 +1,4 @@
-// ----------------------------------------------------------------------
-
-import { Iconify } from '@components/iconify';
+import Iconify from '@app/components/iconify/Iconify';
 import { Avatar, ListItemAvatar, ListItemButton, ListItemText, Typography } from '@mui/material';
 import { fToNow } from '@utils/format-time';
 import { NotificationItemProps } from '.';

@@ -4,12 +4,15 @@ import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 
+import { BASE_URL } from '@app/constants/appConstants';
 import { AuthLayout } from '@features/auth';
 import { DashboardLayout } from '@features/dashboard';
 import { varAlpha } from '@theme/styles';
 import MainPages from './pages';
 
 export function Router() {
+  console.log(BASE_URL);
+
   return useRoutes([
     {
       element: (

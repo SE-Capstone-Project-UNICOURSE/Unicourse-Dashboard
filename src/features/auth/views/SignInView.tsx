@@ -1,5 +1,4 @@
-import { useCallback, useState } from 'react';
-import { Iconify } from '@components/iconify';
+import Iconify from '@app/components/iconify/Iconify';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -9,6 +8,7 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useRouter } from '@routes/hooks';
+import { useCallback, useState } from 'react';
 
 // ----------------------------------------------------------------------
 

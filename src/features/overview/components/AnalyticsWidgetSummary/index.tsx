@@ -1,14 +1,14 @@
-import type { CardProps } from '@mui/material/Card';
-import type { ColorType } from 'src/theme/core/palette';
-import type { ChartOptions } from 'src/components/chart';
+import Iconify from '@app/components/iconify/Iconify';
 import Box from '@mui/material/Box';
+import type { CardProps } from '@mui/material/Card';
 import Card from '@mui/material/Card';
 import { useTheme } from '@mui/material/styles';
-import { fNumber, fPercent, fShortenNumber } from 'src/utils/format-number';
-import { varAlpha, bgGradient } from 'src/theme/styles';
-import { Iconify } from 'src/components/iconify';
-import { SvgColor } from 'src/components/svg-color';
+import type { ChartOptions } from 'src/components/chart';
 import { Chart, useChart } from 'src/components/chart';
+import { SvgColor } from 'src/components/svg-color';
+import type { ColorType } from 'src/theme/core/palette';
+import { bgGradient, varAlpha } from 'src/theme/styles';
+import { fNumber, fPercent, fShortenNumber } from 'src/utils/format-number';
 
 // ----------------------------------------------------------------------
 

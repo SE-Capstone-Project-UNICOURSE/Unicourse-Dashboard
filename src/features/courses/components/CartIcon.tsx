@@ -1,11 +1,8 @@
-import type { BoxProps } from '@mui/material/Box';
-
-import Box from '@mui/material/Box';
+import Iconify from '@app/components/iconify/Iconify';
 import Badge from '@mui/material/Badge';
-
+import type { BoxProps } from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import { RouterLink } from 'src/routes/components';
-
-import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 

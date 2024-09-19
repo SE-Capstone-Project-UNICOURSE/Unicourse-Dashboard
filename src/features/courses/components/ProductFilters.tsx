@@ -1,21 +1,20 @@
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Radio from '@mui/material/Radio';
+import { ColorPicker } from '@app/components/color-utils';
+import Iconify from '@app/components/iconify/Iconify';
+import { Scrollbar } from '@app/components/scrollbar';
+import { FormControlLabel } from '@mui/material';
 import Badge from '@mui/material/Badge';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Drawer from '@mui/material/Drawer';
-import Rating from '@mui/material/Rating';
-import Divider from '@mui/material/Divider';
 import Checkbox from '@mui/material/Checkbox';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
 import FormGroup from '@mui/material/FormGroup';
-import RadioGroup from '@mui/material/RadioGroup';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import FormControlLabel from '@mui/material/FormControlLabel';
-
-import { Iconify } from 'src/components/iconify';
-import { Scrollbar } from 'src/components/scrollbar';
-import { ColorPicker } from 'src/components/color-utils';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 // ----------------------------------------------------------------------
 

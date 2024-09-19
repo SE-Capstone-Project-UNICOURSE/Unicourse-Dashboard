@@ -1,9 +1,9 @@
+import Iconify from '@app/components/iconify/Iconify';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import type { CardProps } from '@mui/material/Card';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 import NewsPostItem from './NewsPostItem'; // Import the PostItem component
 

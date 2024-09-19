@@ -1,4 +1,4 @@
-import { Iconify } from '@app/components/iconify';
+import Iconify from '@app/components/iconify/Iconify';
 import { layoutClasses } from '@app/layouts/classes';
 import { navData } from '@app/layouts/config-nav-dashboard';
 import { HeaderSection } from '@app/layouts/core/HeaderSection';

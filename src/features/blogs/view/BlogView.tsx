@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { Iconify } from '@components/iconify';
+import Iconify from '@app/components/iconify/Iconify';
 import { DashboardContent } from '@features/dashboard';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';

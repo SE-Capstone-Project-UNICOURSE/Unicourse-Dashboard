@@ -1,12 +1,12 @@
-import { forwardRef } from 'react';
 import { Icon, disableCache } from '@iconify/react';
 import Box from '@mui/material/Box';
+import { forwardRef } from 'react';
 import { iconifyClasses } from './classes';
 import type { IconifyProps } from './types';
 
 // ----------------------------------------------------------------------
 
-export const Iconify = forwardRef<SVGElement, IconifyProps>(
+const Iconify = forwardRef<SVGElement, IconifyProps>(
   ({ className, width = 20, sx, ...other }, ref) => (
     <Box
       ssr
@@ -26,3 +26,5 @@ export const Iconify = forwardRef<SVGElement, IconifyProps>(
 );
 
 disableCache('local');
+
+export default Iconify;
