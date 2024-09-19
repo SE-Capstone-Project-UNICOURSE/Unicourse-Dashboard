@@ -1,6 +1,4 @@
-// src/_mock/mockData.ts
-
-import { NotificationItemProps } from './components/NotificationsPopover';
+import type { NotificationItemProps } from './components/NotificationsPopover';
 
 export const _langs = [
   {
@@ -53,26 +51,14 @@ export const _notifications: NotificationItemProps[] = [
 export const _workspaces = [
   {
     id: 'workspace-1',
-    name: 'Tech Innovators',
-    logo: '/assets/logos/tech-innovators.svg',
+    name: 'Website',
+    logo: '/assets/icons/logo.png',
     plan: 'Premium',
   },
   {
     id: 'workspace-2',
-    name: 'Design Creators',
-    logo: '/assets/logos/design-creators.svg',
+    name: 'Mobile App',
+    logo: '/assets/icons/logo.png',
     plan: 'Basic',
-  },
-  {
-    id: 'workspace-3',
-    name: 'Finance Gurus',
-    logo: '/assets/logos/finance-gurus.svg',
-    plan: 'Business',
-  },
-  {
-    id: 'workspace-4',
-    name: 'Health Advocates',
-    logo: '/assets/logos/health-advocates.svg',
-    plan: 'Enterprise',
   },
 ];

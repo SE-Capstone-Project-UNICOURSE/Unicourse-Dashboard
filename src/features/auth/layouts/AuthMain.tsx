@@ -1,7 +1,8 @@
 // ----------------------------------------------------------------------
 
-import { layoutClasses } from 'src/layouts/classes';
-import { Box, BoxProps, Breakpoint, useTheme } from '@mui/material';
+import { layoutClasses } from '@app/features/dashboard/layouts/classes';
+import type { BoxProps, Breakpoint } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 
 type MainProps = BoxProps & {
   layoutQuery: Breakpoint;

@@ -1,33 +1,67 @@
 import Iconify from '@app/components/iconify/Iconify';
-import { layoutClasses } from '@app/layouts/classes';
-import { navData } from '@app/layouts/config-nav-dashboard';
-import { HeaderSection } from '@app/layouts/core/HeaderSection';
-import { LayoutSection } from '@app/layouts/core/LayoutSection';
-import { Main } from '@app/layouts/simple';
+import { Label } from '@app/components/label';
+import { SvgColor } from '@app/components/svg-color';
+import { layoutClasses } from '@app/features/dashboard/layouts/classes';
+import { HeaderSection } from '@app/features/dashboard/layouts/core/HeaderSection';
+import { LayoutSection } from '@app/features/dashboard/layouts/core/LayoutSection';
+import { Main } from '@app/features/dashboard/layouts/simple';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
-import type { Breakpoint, SxProps, Theme } from '@mui/material/styles';
+import type { Breakpoint } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { useState } from 'react';
-import { _langs, _notifications, _workspaces } from '../_mockData';
+import { _langs, _notifications } from '../_mockData';
 import DashboardUI from '../components';
-import { NavDesktop } from './NavDesktop';
+import type { DashboardLayoutProps } from '../types';
+import NavDesktop from './NavDesktop';
 import { NavMobile } from './NavMobile';
 
-// ----------------------------------------------------------------------
+const icon = (name: string) => (
+  <SvgColor width="100%" height="100%" src={`/assets/icons/navbar/${name}.svg`} />
+);
 
-export type DashboardLayoutProps = {
-  sx?: SxProps<Theme>;
-  children: React.ReactNode;
-  header?: {
-    sx?: SxProps<Theme>;
-  };
-};
-
-export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) {
+const DashboardLayout = ({ sx, children, header }: DashboardLayoutProps) => {
   const theme = useTheme();
   const [navOpen, setNavOpen] = useState(false);
   const layoutQuery: Breakpoint = 'lg';
+
+  const navData = [
+    {
+      title: 'Dashboard',
+      path: '/',
+      icon: icon('ic-analytics'),
+    },
+    {
+      title: 'User',
+      path: '/user',
+      icon: icon('ic-user'),
+    },
+    {
+      title: 'Product',
+      path: '/products',
+      icon: icon('ic-cart'),
+      info: (
+        <Label color="error" variant="inverted">
+          +3
+        </Label>
+      ),
+    },
+    {
+      title: 'Blog',
+      path: '/blog',
+      icon: icon('ic-blog'),
+    },
+    {
+      title: 'Sign in',
+      path: '/sign-in',
+      icon: icon('ic-lock'),
+    },
+    {
+      title: 'Not found',
+      path: '/404',
+      icon: icon('ic-disabled'),
+    },
+  ];
 
   return (
     <LayoutSection
@@ -59,12 +93,7 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
                     [theme.breakpoints.up(layoutQuery)]: { display: 'none' },
                   }}
                 />
-                <NavMobile
-                  data={navData}
-                  open={navOpen}
-                  onClose={() => setNavOpen(false)}
-                  workspaces={_workspaces}
-                />
+                <NavMobile data={navData} open={navOpen} onClose={() => setNavOpen(false)} />
               </>
             ),
             rightArea: (
@@ -99,9 +128,7 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
       /** **************************************
        * Sidebar
        *************************************** */
-      sidebarSection={
-        <NavDesktop data={navData} layoutQuery={layoutQuery} workspaces={_workspaces} />
-      }
+      sidebarSection={<NavDesktop data={navData} layoutQuery={layoutQuery} />}
       /** **************************************
        * Footer
        *************************************** */
@@ -127,4 +154,6 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
       <Main>{children}</Main>
     </LayoutSection>
   );
-}
+};
+
+export default DashboardLayout;

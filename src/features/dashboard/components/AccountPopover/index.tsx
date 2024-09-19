@@ -1,3 +1,5 @@
+import usePathname from '@app/routes/hooks/usePathname';
+import useRouter from '@app/routes/hooks/useRouter';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -9,7 +11,6 @@ import MenuList from '@mui/material/MenuList';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { useCallback, useState } from 'react';
-import { usePathname, useRouter } from 'src/routes/hooks';
 
 // ----------------------------------------------------------------------
 

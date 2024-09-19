@@ -1,17 +1,14 @@
-import type { ButtonBaseProps } from '@mui/material/ButtonBase';
-
-import { useCallback, useState } from 'react';
-
+import Iconify from '@app/components/iconify/Iconify';
+import { Label } from '@app/components/label';
 import Box from '@mui/material/Box';
+import type { ButtonBaseProps } from '@mui/material/ButtonBase';
 import ButtonBase from '@mui/material/ButtonBase';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Popover from '@mui/material/Popover';
-
+import { useCallback, useState } from 'react';
 import { varAlpha } from 'src/theme/styles';
-
-import Iconify from '@app/components/iconify/Iconify';
-import { Label } from 'src/components/label';
+import { _workspaces } from '../../_mockData';
 
 // ----------------------------------------------------------------------
 
@@ -24,11 +21,13 @@ export type WorkspacesPopoverProps = ButtonBaseProps & {
   }[];
 };
 
-export default function WorkspacesPopover({ data = [], sx, ...other }: WorkspacesPopoverProps) {
+export default function WorkspacesPopover({
+  data = _workspaces,
+  sx,
+  ...other
+}: WorkspacesPopoverProps) {
   const [workspace, setWorkspace] = useState(data[0]);
-
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
-
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setOpenPopover(event.currentTarget);
   }, []);
@@ -46,7 +45,7 @@ export default function WorkspacesPopover({ data = [], sx, ...other }: Workspace
   );
 
   const renderAvatar = (alt: string, src: string) => (
-    <Box component="img" alt={alt} src={src} sx={{ width: 24, height: 24, borderRadius: '50%' }} />
+    <Box component="img" alt={alt} src={src} sx={{ width: 28, height: 28, borderRadius: '50%' }} />
   );
 
   const renderLabel = (plan: string) => (
@@ -60,7 +59,7 @@ export default function WorkspacesPopover({ data = [], sx, ...other }: Workspace
         onClick={handleOpenPopover}
         sx={{
           pl: 2,
-          py: 3,
+          py: 2,
           gap: 1.5,
           pr: 1.5,
           width: 1,
