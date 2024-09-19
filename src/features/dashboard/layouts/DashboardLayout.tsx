@@ -1,10 +1,7 @@
 import Iconify from '@app/components/iconify/Iconify';
-import { Label } from '@app/components/label';
-import { SvgColor } from '@app/components/svg-color';
 import { layoutClasses } from '@app/features/dashboard/layouts/classes';
-import { HeaderSection } from '@app/features/dashboard/layouts/core/HeaderSection';
-import { LayoutSection } from '@app/features/dashboard/layouts/core/LayoutSection';
 import { Main } from '@app/features/dashboard/layouts/simple';
+import navData from '@app/routes/navbar/navbar-config';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import type { Breakpoint } from '@mui/material/styles';
@@ -14,60 +11,17 @@ import { _langs, _notifications } from '../_mockData';
 import DashboardUI from '../components';
 import type { DashboardLayoutProps } from '../types';
 import NavDesktop from './NavDesktop';
-import { NavMobile } from './NavMobile';
-
-const icon = (name: string) => (
-  <SvgColor width="100%" height="100%" src={`/assets/icons/navbar/${name}.svg`} />
-);
+import NavMobile from './NavMobile';
+import HeaderSection from './core/HeaderSection';
+import LayoutSection from './core/LayoutSection';
 
 const DashboardLayout = ({ sx, children, header }: DashboardLayoutProps) => {
   const theme = useTheme();
   const [navOpen, setNavOpen] = useState(false);
   const layoutQuery: Breakpoint = 'lg';
 
-  const navData = [
-    {
-      title: 'Dashboard',
-      path: '/',
-      icon: icon('ic-analytics'),
-    },
-    {
-      title: 'User',
-      path: '/user',
-      icon: icon('ic-user'),
-    },
-    {
-      title: 'Product',
-      path: '/products',
-      icon: icon('ic-cart'),
-      info: (
-        <Label color="error" variant="inverted">
-          +3
-        </Label>
-      ),
-    },
-    {
-      title: 'Blog',
-      path: '/blog',
-      icon: icon('ic-blog'),
-    },
-    {
-      title: 'Sign in',
-      path: '/sign-in',
-      icon: icon('ic-lock'),
-    },
-    {
-      title: 'Not found',
-      path: '/404',
-      icon: icon('ic-disabled'),
-    },
-  ];
-
   return (
     <LayoutSection
-      /** **************************************
-       * Header
-       *************************************** */
       headerSection={
         <HeaderSection
           layoutQuery={layoutQuery}

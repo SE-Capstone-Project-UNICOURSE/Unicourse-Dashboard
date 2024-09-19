@@ -1,6 +1,6 @@
+import LayoutSection from '@app/features/dashboard/layouts/core/LayoutSection';
 import type { Breakpoint, SxProps, Theme } from '@mui/material/styles';
 import { stylesMode } from '@theme/styles';
-import { LayoutSection } from '@app/features/dashboard/layouts/core/LayoutSection';
 import { AuthMain } from './AuthMain';
 
 // ----------------------------------------------------------------------

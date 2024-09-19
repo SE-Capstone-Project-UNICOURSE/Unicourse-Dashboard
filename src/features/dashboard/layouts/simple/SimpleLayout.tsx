@@ -1,10 +1,10 @@
-import type { Breakpoint, SxProps, Theme } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import Link from '@mui/material/Link';
+import type { Breakpoint, SxProps, Theme } from '@mui/material/styles';
 import { RouterLink } from 'src/routes/components';
-import { Logo } from '@components/logo';
-import { HeaderSection } from '../core/HeaderSection';
-import { LayoutSection } from '../core/LayoutSection';
+
+import HeaderSection from '../core/HeaderSection';
+import LayoutSection from '../core/LayoutSection';
 import { CompactContent } from './CompactContent';
 import { Main } from './Main';
 
@@ -38,7 +38,7 @@ export function SimpleLayout({ sx, children, header, content }: SimpleLayoutProp
                 This is an info Alert.
               </Alert>
             ),
-            leftArea: <Logo />,
+            // leftArea: <Logo />,
             rightArea: (
               <Link
                 href="#"
