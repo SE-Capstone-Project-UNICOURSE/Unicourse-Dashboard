@@ -38,7 +38,7 @@ export function SimpleLayout({ sx, children, header, content }: SimpleLayoutProp
                 This is an info Alert.
               </Alert>
             ),
-            leftArea: <Logo />,
+            // leftArea: <Logo />,
             rightArea: (
               <Link
                 href="#"

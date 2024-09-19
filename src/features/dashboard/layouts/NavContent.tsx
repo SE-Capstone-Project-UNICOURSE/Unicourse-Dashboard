@@ -18,15 +18,16 @@ const NavContent = ({ data, slots, sx }: NavContentProps) => {
   };
 
   const renderNavItem = (item: NavItem, isActived: boolean) => {
-    const hasPath = Boolean(item.path); // Ensure path exists
-    const isOpen = openItem === item.title; // Check if this item is currently open
+    const hasChildren = Boolean(item.children?.length); // Kiểm tra nếu có children và không rỗng
+    const hasPath = Boolean(item.path); // Kiểm tra nếu có path
+    const isOpen = openItem === item.title; // Kiểm tra nếu item đang mở
 
     return (
-      <Box display="flex" flexDirection={'column'} width={'100%'}>
+      <Box width={'100%'}>
         <ListItemButton
           disableGutters
-          component={hasPath ? RouterLink : 'div'} // Only use RouterLink if the path exists
-          {...(hasPath && { href: item.path })} // Safely pass href only if the path exists
+          component={!hasChildren && hasPath ? RouterLink : 'div'} // Nếu không có children thì component là RouterLink để điều hướng
+          {...(!hasChildren && hasPath && { href: item.path })} // Chỉ thêm href nếu item không có children
           sx={{
             pl: 2,
             py: 1.5,
@@ -34,14 +35,14 @@ const NavContent = ({ data, slots, sx }: NavContentProps) => {
             pr: 1.5,
             borderRadius: 0.75,
             typography: 'body2',
-            fontWeight: isActived ? 'fontWeightBold' : 'fontWeightMedium', // Active color
+            fontWeight: isActived ? 'fontWeightBold' : 'fontWeightMedium',
             color: isActived ? 'primary.main' : 'text.secondary',
-            backgroundColor: isActived ? 'rgba(255, 255, 255, 0.08)' : 'transparent', // Highlight active background
+            backgroundColor: isActived ? 'rgba(255, 255, 255, 0.08)' : 'transparent',
             '&:hover': {
-              backgroundColor: 'rgba(255, 255, 255, 0.04)', // Light hover effect
+              backgroundColor: 'rgba(255, 255, 255, 0.04)',
             },
           }}
-          onClick={() => item.children && handleToggle(item.title)} // Handle toggle for submenus
+          onClick={() => hasChildren && handleToggle(item.title)} // Chỉ gọi handleToggle nếu item có children
         >
           <Box component="span" sx={{ width: 24, height: 24 }}>
             {item.icon}
@@ -51,14 +52,16 @@ const NavContent = ({ data, slots, sx }: NavContentProps) => {
               {item.title}
             </Typography>
           </Box>
-          {item.children && (isOpen ? <ExpandLess /> : <ExpandMore />)}
+          {hasChildren && (isOpen ? <ExpandLess /> : <ExpandMore />)}{' '}
+          {/* Hiển thị icon Expand nếu có children */}
           {item.info && item.info}
         </ListItemButton>
 
-        {item.children && (
+        {hasChildren && (
           <Collapse in={isOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              {item.children.map((child) => {
+              {item.children?.map((child) => {
+                // Sử dụng optional chaining để tránh lỗi
                 const childIsActive = child.path === pathname;
                 return (
                   <ListItem disableGutters disablePadding key={child.title}>
@@ -79,7 +82,7 @@ const NavContent = ({ data, slots, sx }: NavContentProps) => {
                           ? 'rgba(255, 255, 255, 0.08)'
                           : 'transparent',
                         '&:hover': {
-                          backgroundColor: 'rgba(255, 255, 255, 0.04)', // Light hover effect for child items
+                          backgroundColor: 'rgba(255, 255, 255, 0.04)',
                         },
                       }}
                     >
@@ -109,16 +112,11 @@ const NavContent = ({ data, slots, sx }: NavContentProps) => {
       </Box>
 
       {slots?.topArea}
-
       <DashboardUI.WorkspacesPopover sx={{ my: 2 }} />
 
       <Scrollbar fillContent>
         <Box component="nav" display="flex" flexDirection="column" sx={sx}>
-          {' '}
-          {/* Use flexDirection column */}
           <Box component="ul" gap={0.5} display="flex" flexDirection="column">
-            {' '}
-            {/* Flex column layout */}
             {data.map((item) => {
               const isActived = item.path === pathname;
               return (

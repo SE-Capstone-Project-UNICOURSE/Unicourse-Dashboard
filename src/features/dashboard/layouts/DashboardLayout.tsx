@@ -12,7 +12,7 @@ import { useTheme } from '@mui/material/styles';
 import { useState } from 'react';
 import { _langs, _notifications } from '../_mockData';
 import DashboardUI from '../components';
-import type { DashboardLayoutProps } from '../types';
+import type { DashboardLayoutProps, NavItem } from '../types';
 import NavDesktop from './NavDesktop';
 import NavMobile from './NavMobile';
 
@@ -25,7 +25,7 @@ const DashboardLayout = ({ sx, children, header }: DashboardLayoutProps) => {
   const [navOpen, setNavOpen] = useState(false);
   const layoutQuery: Breakpoint = 'lg';
 
-  const navData = [
+  const navData: NavItem[] = [
     {
       title: 'Dashboard',
       path: '/',
@@ -35,10 +35,13 @@ const DashboardLayout = ({ sx, children, header }: DashboardLayoutProps) => {
       title: 'User',
       path: '/user',
       icon: icon('ic-user'),
-      children: [
-        { title: 'User List', path: '/user/list', icon: icon('ic-list') },
-        { title: 'User Profile', path: '/user/profile', icon: icon('ic-profile') },
-      ],
+      children: [{ title: 'User List', path: '/user', icon: icon('ic-list') }],
+    },
+    {
+      title: 'Courses',
+      path: '/courses',
+      icon: icon('ic-courses'),
+      children: [{ title: 'Course List', path: '/courses', icon: icon('ic-list') }],
     },
     {
       title: 'Product',
