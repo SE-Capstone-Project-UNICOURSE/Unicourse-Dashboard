@@ -12,27 +12,14 @@ import Popover from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { useCallback, useState } from 'react';
-import NotificationItem from './NotificationItem';
-
-export type NotificationItemProps = {
-  id: string;
-  type: string;
-  title: string;
-  isUnRead: boolean;
-  description: string;
-  avatarUrl: string | null;
-  postedAt: string | number | null;
-};
+import NotificationItem from './NotificationComponents/NotificationItem';
+import { NotificationModel } from '../types/NotificationModel';
 
 export type NotificationsPopoverProps = IconButtonProps & {
-  data?: NotificationItemProps[];
+  data?: NotificationModel[];
 };
 
-export default function NotificationsPopover({
-  data = [],
-  sx,
-  ...other
-}: NotificationsPopoverProps) {
+const NotificationsPopover = ({ data = [], sx, ...other }: NotificationsPopoverProps) => {
   const [notifications, setNotifications] = useState(data);
 
   const totalUnRead = notifications.filter((item) => item.isUnRead === true).length;
@@ -143,4 +130,6 @@ export default function NotificationsPopover({
       </Popover>
     </>
   );
-}
+};
+
+export default NotificationsPopover;

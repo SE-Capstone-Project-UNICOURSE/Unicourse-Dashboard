@@ -2,7 +2,7 @@ import { Drawer, drawerClasses } from '@mui/material';
 import { useEffect } from 'react';
 import usePathname from '@app/routes/hooks/usePathname';
 import NavContent from './NavContent';
-import type { NavContentProps } from '../types';
+import type { NavContentProps } from '../../types';
 
 const NavMobile = ({
   sx,

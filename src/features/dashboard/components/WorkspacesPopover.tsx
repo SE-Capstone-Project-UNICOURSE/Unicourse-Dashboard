@@ -8,7 +8,7 @@ import MenuList from '@mui/material/MenuList';
 import Popover from '@mui/material/Popover';
 import { useCallback, useState } from 'react';
 import { varAlpha } from 'src/theme/styles';
-import { _workspaces } from '../../_mockData';
+import { _workspaces } from '../_mockData';
 
 // ----------------------------------------------------------------------
 

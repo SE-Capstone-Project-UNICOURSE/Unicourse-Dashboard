@@ -37,11 +37,7 @@ export type AccountPopoverProps = IconButtonProps & {
   }[];
 };
 
-export default function AccountPopover({
-  data = accountOptions,
-  sx,
-  ...other
-}: AccountPopoverProps) {
+const AccountPopover = ({ data = accountOptions, sx, ...other }: AccountPopoverProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
@@ -148,4 +144,6 @@ export default function AccountPopover({
       </Popover>
     </>
   );
-}
+};
+
+export default AccountPopover;

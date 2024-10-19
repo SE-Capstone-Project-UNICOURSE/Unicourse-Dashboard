@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------
 
-import { UserProps } from '../views/components/UserTableRow';
+import type { UserProps } from '../views/components/UserTableRow';
 
 export const visuallyHidden = {
   border: 0,

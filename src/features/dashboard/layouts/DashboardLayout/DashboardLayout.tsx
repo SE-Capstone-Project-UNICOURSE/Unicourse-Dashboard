@@ -7,13 +7,13 @@ import Box from '@mui/material/Box';
 import type { Breakpoint } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { useState } from 'react';
-import { _langs, _notifications } from '../_mockData';
-import DashboardUI from '../components';
-import type { DashboardLayoutProps } from '../types';
-import NavDesktop from './NavDesktop';
-import NavMobile from './NavMobile';
-import HeaderSection from './core/HeaderSection';
-import LayoutSection from './core/LayoutSection';
+import { _langs, _notifications } from '../../_mockData';
+import DashboardUI from '../../components';
+import type { DashboardLayoutProps } from '../../types/LayoutNavContentTypes';
+import NavDesktop from '../NavLayout/NavDesktop';
+import NavMobile from '../NavLayout/NavMobile';
+import HeaderSection from '../core/HeaderSection';
+import LayoutSection from '../core/LayoutSection';
 
 const DashboardLayout = ({ sx, children, header }: DashboardLayoutProps) => {
   const theme = useTheme();

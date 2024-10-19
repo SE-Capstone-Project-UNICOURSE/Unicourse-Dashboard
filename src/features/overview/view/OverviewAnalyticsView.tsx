@@ -1,7 +1,7 @@
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
 
-import { DashboardContent } from '@features/dashboard';
+import DashboardContent from '@app/features/dashboard/layouts/DashboardLayout/DashboardContent';
 import { _posts, _tasks, _timeline } from '../_mockData';
 import AnalyticsUI from '../components';
 
@@ -11,7 +11,7 @@ export function OverviewAnalyticsView() {
   return (
     <DashboardContent maxWidth="xl">
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
-        Hi, Welcome back 👋
+        Hi, Welcome back
       </Typography>
 
       <Grid container spacing={3}>

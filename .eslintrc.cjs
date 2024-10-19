@@ -26,16 +26,18 @@ module.exports = {
    */
   rules: {
     // general
-    'arrow-body-style': 0,
-    'no-alert': 0,
-    camelcase: 0,
-    'no-console': 0,
-    'no-unused-vars': 0,
-    'no-nested-ternary': 0,
-    'no-param-reassign': 0,
+    'arrow-body-style': 1,
+    'no-alert': 1,
+    camelcase: 1,
+    'no-console': 1,
+    'no-unused-vars': 1,
+    'no-nested-ternary': 1,
+    'no-param-reassign': 1,
     'no-underscore-dangle': 0,
     'no-restricted-exports': 0,
     'no-promise-executor-return': 0,
+    'import/order': 0,
+
     'import/prefer-default-export': 0,
     'prefer-destructuring': [1, { object: true, array: false }],
 
@@ -44,7 +46,7 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 0,
     '@typescript-eslint/consistent-type-exports': 1,
     '@typescript-eslint/consistent-type-imports': 1,
-    '@typescript-eslint/no-unused-vars': [1, { args: 'none' }],
+    '@typescript-eslint/no-unused-vars': 1,
 
     // react
     'react/no-children-prop': 0,
@@ -57,6 +59,7 @@ module.exports = {
     'react/jsx-no-useless-fragment': [1, { allowExpressions: true }],
     'react/no-unstable-nested-components': [1, { allowAsProps: true }],
     'react/jsx-curly-brace-presence': 0,
+    'react/no-unused-prop-types': 0,
 
     // jsx-a11y
     'jsx-a11y/anchor-is-valid': 0,
@@ -64,20 +67,14 @@ module.exports = {
 
     // unused imports
     'unused-imports/no-unused-imports': 1,
-    'unused-imports/no-unused-vars': [
-      0,
-      { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
-    ],
+    'unused-imports/no-unused-vars': 1,
+    'perfectionist/sort-exports': 0,
+    'perfectionist/sort-named-imports': 0,
+    'perfectionist/sort-named-exports': 0,
+    'perfectionist/sort-imports': 0,
 
-    // perfectionist (Removed or adjusted based on your request)
-    'perfectionist/sort-exports': 0, // Disabled sorting exports
-    'perfectionist/sort-named-imports': 0, // Disabled sorting named imports
-    'perfectionist/sort-named-exports': 0, // Disabled sorting named exports
-    'perfectionist/sort-imports': 0, // Disabled sorting imports entirely
-
-    // import/extensions (Tắt yêu cầu về file extension)
     'import/extensions': 0,
-    'import/no-unresolved': 0,
+    'import/no-unresolved': 1,
     'import/no-extraneous-dependencies': 0,
     'import/no-cycle': 0,
     'import/no-named-as-default': 0,

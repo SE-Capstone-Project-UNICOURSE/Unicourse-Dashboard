@@ -1,4 +1,4 @@
 /* eslint-disable import/export */
-export * from './layouts/DashboardLayout';
-export * from './layouts/DashboardMain';
-export * from './layouts/NavDesktop';
+export * from './layouts/DashboardLayout/DashboardLayout';
+export * from './layouts/DashboardLayout/DashboardMain';
+export * from './layouts/NavLayout/NavDesktop';

@@ -1,4 +1,3 @@
-import { DashboardContent } from '@features/dashboard';
 import Box from '@mui/material/Box';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
@@ -19,6 +18,7 @@ import type { FiltersProps } from './components/CourseFilters';
 import CourseFilter from './components/CourseFilters';
 import CourseItem from './components/CourseItem';
 import CourseSort from './components/CourseSort';
+import DashboardContent from '@app/features/dashboard/layouts/DashboardLayout/DashboardContent';
 
 const CourseView = () => {
   const [sortBy, setSortBy] = useState('featured');

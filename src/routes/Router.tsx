@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 
 import { BASE_URL } from '@app/constants/appConstants';
-import DashboardLayout from '@app/features/dashboard/layouts/DashboardLayout';
+import DashboardLayout from '@app/features/dashboard/layouts/DashboardLayout/DashboardLayout';
 import AuthLayout from '@features/auth/layouts/AuthLayout';
 import { varAlpha } from '@theme/styles';
 import MainPages from './pages';

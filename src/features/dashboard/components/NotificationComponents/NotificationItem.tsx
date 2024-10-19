@@ -1,13 +1,13 @@
 import Iconify from '@app/components/iconify/Iconify';
 import { Avatar, ListItemAvatar, ListItemButton, ListItemText, Typography } from '@mui/material';
 import { fToNow } from '@utils/format-time';
-import { NotificationItemProps } from '.';
+import type { NotificationModel } from '../../types/NotificationModel';
 
-export default function NotificationItem({
-  notification,
-}: {
-  notification: NotificationItemProps;
-}) {
+export type NotificationItemProps = {
+  notification: NotificationModel;
+};
+
+const NotificationItem = ({ notification }: NotificationItemProps) => {
   const { avatarUrl, title } = renderContent(notification);
 
   return (
@@ -44,11 +44,11 @@ export default function NotificationItem({
       />
     </ListItemButton>
   );
-}
+};
 
 // ----------------------------------------------------------------------
 
-function renderContent(notification: NotificationItemProps) {
+function renderContent(notification: NotificationModel) {
   const title = (
     <Typography variant="subtitle2">
       {notification.title}
@@ -103,3 +103,5 @@ function renderContent(notification: NotificationItemProps) {
     title,
   };
 }
+
+export default NotificationItem;

@@ -1,4 +1,4 @@
-import type { NotificationItemProps } from './components/NotificationsPopover';
+import { NotificationModel } from './types';
 
 export const _langs = [
   {
@@ -13,7 +13,7 @@ export const _langs = [
   },
 ];
 
-export const _notifications: NotificationItemProps[] = [
+export const _notifications: NotificationModel[] = [
   {
     id: '1',
     title: 'Order placed',

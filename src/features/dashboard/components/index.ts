@@ -5,7 +5,7 @@ import NotificationsPopover from './NotificationsPopover';
 import Searchbar from './Searchbar';
 import WorkspacesPopover from './WorkspacesPopover';
 
-const DashboardUI = {
+const DashboardUIComponents = {
   AccountPopover,
   LanguagePopover,
   MenuButton,
@@ -14,4 +14,4 @@ const DashboardUI = {
   WorkspacesPopover,
 };
 
-export default DashboardUI;
+export default DashboardUIComponents;

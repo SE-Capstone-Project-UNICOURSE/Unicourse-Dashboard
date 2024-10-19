@@ -1,45 +1,19 @@
-import type { BoxProps } from '@mui/material/Box';
-import type { Breakpoint } from '@mui/material/styles';
-import type { ContainerProps } from '@mui/material/Container';
-
-import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
+import type { Breakpoint, ContainerProps } from '@mui/material';
 import Container from '@mui/material/Container';
-import { layoutClasses } from './classes';
-
-// ----------------------------------------------------------------------
-
-export function DashboardMain({ children, sx, ...other }: BoxProps) {
-  return (
-    <Box
-      component="main"
-      className={layoutClasses.main}
-      sx={{
-        display: 'flex',
-        flex: '1 1 auto',
-        flexDirection: 'column',
-        ...sx,
-      }}
-      {...other}
-    >
-      {children}
-    </Box>
-  );
-}
-
-// ----------------------------------------------------------------------
+import { useTheme } from '@mui/material/styles';
+import { layoutClasses } from '../classes';
 
 type DashboardContentProps = ContainerProps & {
   disablePadding?: boolean;
 };
 
-export function DashboardContent({
+const DashboardContent = ({
   sx,
   children,
   disablePadding,
   maxWidth = 'xl',
   ...other
-}: DashboardContentProps) {
+}: DashboardContentProps) => {
   const theme = useTheme();
 
   const layoutQuery: Breakpoint = 'lg';
@@ -73,4 +47,6 @@ export function DashboardContent({
       {children}
     </Container>
   );
-}
+};
+
+export default DashboardContent;

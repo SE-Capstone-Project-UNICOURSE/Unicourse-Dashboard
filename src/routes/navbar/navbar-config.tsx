@@ -1,11 +1,11 @@
 import { SvgColor } from '@app/components/svg-color';
-import type { NavItem } from '@app/features/dashboard/types';
+import type { NavItemProps } from '@app/features/dashboard/types';
 
 const icon = (name: string) => (
   <SvgColor width="100%" height="100%" src={`/assets/icons/navbar/${name}.svg`} />
 );
 
-const navData: NavItem[] = [
+const navData: NavItemProps[] = [
   {
     title: 'Dashboard',
     path: '/',

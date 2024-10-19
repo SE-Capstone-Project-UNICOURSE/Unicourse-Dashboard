@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import type { Breakpoint } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { varAlpha } from '@theme/styles';
-import type { NavContentProps } from '../types';
+import type { NavContentProps } from '../../types';
 import NavContent from './NavContent';
 
 const NavDesktop = ({

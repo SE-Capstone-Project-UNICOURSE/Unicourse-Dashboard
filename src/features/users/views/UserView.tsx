@@ -1,6 +1,5 @@
 import Iconify from '@app/components/iconify/Iconify';
 import { Scrollbar } from '@components/scrollbar';
-import { DashboardContent } from '@features/dashboard';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -11,11 +10,13 @@ import TablePagination from '@mui/material/TablePagination';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
+import DashboardContent from '@app/features/dashboard/layouts/DashboardLayout/DashboardContent';
 import { applyFilter, emptyRows, getComparator } from '../utils';
 import { TableEmptyRows } from './components/TableEmptyRows';
 import { TableNoData } from './components/TableNoData';
 import { UserTableHead } from './components/UserTableHead';
-import { UserProps, UserTableRow } from './components/UserTableRow';
+import type { UserProps } from './components/UserTableRow';
+import { UserTableRow } from './components/UserTableRow';
 import { UserTableToolbar } from './components/UserTableToolbar';
 import { useUserTable } from './useUserTable';
 

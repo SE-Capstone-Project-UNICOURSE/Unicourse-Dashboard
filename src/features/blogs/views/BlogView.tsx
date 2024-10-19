@@ -1,5 +1,5 @@
 import Iconify from '@app/components/iconify/Iconify';
-import { DashboardContent } from '@features/dashboard';
+import DashboardContent from '@app/features/dashboard/layouts/DashboardLayout/DashboardContent';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Pagination from '@mui/material/Pagination';
