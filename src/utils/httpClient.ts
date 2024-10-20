@@ -1,6 +1,6 @@
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from 'axios';
-import { BASE_URL, TIMEOUT } from 'src/constants/appConstants';
+import { BASE_URL, TIMEOUT } from '@app/common/constants/appConstants';
 
 class HttpClient {
   private static instance: HttpClient;

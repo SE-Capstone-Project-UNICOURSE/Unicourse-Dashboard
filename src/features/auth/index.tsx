@@ -1,4 +1,4 @@
-import { Logo } from '@app/components/logo';
+import { Logo } from '@app/common/components/logo';
 import { Box } from '@mui/material';
 import { CONFIG } from '@utils/config-global';
 import { Helmet } from 'react-helmet-async';
@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <>
       <Helmet>
-        <title> {`Sign in - ${CONFIG.appName}`}</title>
+        <title> {`Đăng nhập bảng điều khiển - ${CONFIG.appName}`}</title>
       </Helmet>
       <Box display={'flex'} alignItems={'center'} justifyContent={'center'}>
         <Logo />

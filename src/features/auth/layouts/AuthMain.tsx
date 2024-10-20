@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------
 
-import { layoutClasses } from '@app/features/dashboard/layouts/classes';
+import { layoutClasses } from '@app/features/admin/dashboard/layouts/classes';
 import type { BoxProps, Breakpoint } from '@mui/material';
 import { Box, useTheme } from '@mui/material';
 
@@ -8,7 +8,7 @@ type MainProps = BoxProps & {
   layoutQuery: Breakpoint;
 };
 
-export function AuthMain({ sx, children, layoutQuery, ...other }: MainProps) {
+const AuthMain = ({ sx, children, layoutQuery, ...other }: MainProps) => {
   const theme = useTheme();
 
   const renderContent = (
@@ -49,4 +49,6 @@ export function AuthMain({ sx, children, layoutQuery, ...other }: MainProps) {
       {renderContent}
     </Box>
   );
-}
+};
+
+export default AuthMain;

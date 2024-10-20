@@ -1,11 +1,11 @@
-import { Router } from '@routes/Router';
+import { useScrollToTop } from '@app/hooks/useScrollToTop';
+import Router from '@app/routes/Router';
 import { Provider } from 'react-redux';
 import 'src/global.css';
-import { useScrollToTop } from 'src/hooks/useScrollToTop';
 import { ThemeProvider } from 'src/theme/ThemeProvider';
 import store from './stores';
 
-export default function App() {
+const App = () => {
   useScrollToTop();
 
   const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -17,4 +17,6 @@ export default function App() {
       </ThemeProvider>
     </Provider>
   );
-}
+};
+
+export default App;

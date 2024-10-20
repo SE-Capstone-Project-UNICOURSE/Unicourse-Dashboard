@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// Hook dùng để quản lý navigate
 const useRouter = () => {
   const navigate = useNavigate();
 
