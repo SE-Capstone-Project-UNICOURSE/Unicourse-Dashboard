@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <>
       <Helmet>
-        <title> {`Sign in - ${CONFIG.appName}`}</title>
+        <title> {`Đăng nhập bảng điều khiển - ${CONFIG.appName}`}</title>
       </Helmet>
       <Box display={'flex'} alignItems={'center'} justifyContent={'center'}>
         <Logo />

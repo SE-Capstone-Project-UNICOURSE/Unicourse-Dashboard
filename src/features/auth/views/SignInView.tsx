@@ -8,7 +8,7 @@ import SignInForm from './SignInForm';
 const SignInView = () => (
   <>
     <Box gap={1.5} display="flex" flexDirection="column" alignItems="center" sx={{ mb: 5 }}>
-      <Typography variant="h5">Admin Sign In</Typography>
+      <Typography variant="h5">Truy cập bảng điều khiển</Typography>
     </Box>
 
     <SignInForm />

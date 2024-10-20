@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------
 
-import { layoutClasses } from '@app/features/dashboard/layouts/classes';
+import { layoutClasses } from '@app/features/admin/dashboard/layouts/classes';
 import type { BoxProps, Breakpoint } from '@mui/material';
 import { Box, useTheme } from '@mui/material';
 

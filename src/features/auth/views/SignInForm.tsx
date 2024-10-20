@@ -10,8 +10,15 @@ const SignInForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSignIn = useCallback(() => {
-    localStorage.setItem('authToken', 'true'); // mốt sửa logic ở đây
-    router.push('/');
+    localStorage.setItem(
+      'user',
+      JSON.stringify({
+        token: 'dummyToken123456', // Token giả lập
+        role: 'lecturer', // Vai trò người dùng giả lập là admin
+      })
+    );
+
+    router.push('/lecturer');
   }, [router]);
 
   return (
