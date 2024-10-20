@@ -1,44 +1,65 @@
 import Iconify from '@app/common/components/iconify/Iconify';
 import useRouter from '@app/routes/hooks/useRouter';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
 import { Box, IconButton, InputAdornment, TextField } from '@mui/material';
 import { useCallback, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import signInSchema from '../schema/signIn.schema';
 
 const SignInForm = () => {
   const router = useRouter();
-
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSignIn = useCallback(() => {
-    localStorage.setItem(
-      'user',
-      JSON.stringify({
-        token: 'dummyToken123456', // Token giả lập
-        role: 'lecturer', // Vai trò người dùng giả lập là admin
-      })
-    );
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(signInSchema),
+  });
 
-    router.push('/lecturer');
-  }, [router]);
+  const handleSignIn = useCallback(
+    (data) => {
+      console.log('Form data:', data);
+
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          token: 'dummyToken123456', // Token giả lập
+          role: 'lecturer', // Vai trò người dùng giả lập là lecturer
+        })
+      );
+
+      router.push('/lecturer');
+    },
+    [router]
+  );
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="flex-end">
+    <Box
+      component="form"
+      display="flex"
+      flexDirection="column"
+      alignItems="flex-end"
+      onSubmit={handleSubmit(handleSignIn)} // Use handleSubmit from react-hook-form
+    >
       <TextField
         fullWidth
-        name="email"
         label="Địa chỉ Email"
-        defaultValue="hello@gmail.com"
-        InputLabelProps={{ shrink: true }}
+        {...register('email')} // Use register from react-hook-form
+        error={!!errors.email} // MUI error prop to show red border if validation fails
+        helperText={errors.email?.message} // Display validation error message
         sx={{ mb: 3 }}
       />
 
       <TextField
         fullWidth
-        name="password"
         label="Mật khẩu"
-        defaultValue="@demo1234"
-        InputLabelProps={{ shrink: true }}
         type={showPassword ? 'text' : 'password'}
+        {...register('password')} // Use register from react-hook-form
+        error={!!errors.password} // MUI error prop to show red border if validation fails
+        helperText={errors.password?.message} // Display validation error message
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -54,10 +75,9 @@ const SignInForm = () => {
       <LoadingButton
         fullWidth
         size="large"
-        type="submit"
+        type="submit" // Submit button
         color="inherit"
         variant="contained"
-        onClick={handleSignIn}
       >
         Đăng nhập
       </LoadingButton>
