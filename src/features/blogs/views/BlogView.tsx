@@ -1,4 +1,4 @@
-import Iconify from '@app/components/iconify/Iconify';
+import Iconify from '@app/common/components/iconify/Iconify';
 import DashboardContent from '@app/features/dashboard/layouts/DashboardLayout/DashboardContent';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';

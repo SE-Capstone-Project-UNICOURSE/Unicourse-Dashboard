@@ -1,7 +1,7 @@
-import { Router } from '@routes/Router';
+import { Router } from '@app/routes/Router';
 import { Provider } from 'react-redux';
 import 'src/global.css';
-import { useScrollToTop } from 'src/hooks/useScrollToTop';
+import { useScrollToTop } from '@app/hooks/useScrollToTop';
 import { ThemeProvider } from 'src/theme/ThemeProvider';
 import store from './stores';
 

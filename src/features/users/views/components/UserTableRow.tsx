@@ -10,8 +10,8 @@ import Popover from '@mui/material/Popover';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 
-import Iconify from '@app/components/iconify/Iconify';
-import { Label } from 'src/components/label';
+import Iconify from '@app/common/components/iconify/Iconify';
+import { Label } from '@app/common/components/label';
 
 // ----------------------------------------------------------------------
 

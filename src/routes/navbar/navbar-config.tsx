@@ -1,4 +1,4 @@
-import { SvgColor } from '@app/components/svg-color';
+import { SvgColor } from '@app/common/components/svg-color';
 import type { NavItemProps } from '@app/features/dashboard/types';
 
 const icon = (name: string) => (

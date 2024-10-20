@@ -1,4 +1,4 @@
-import Iconify from '@app/components/iconify/Iconify';
+import Iconify from '@app/common/components/iconify/Iconify';
 import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
 import InputAdornment from '@mui/material/InputAdornment';
 import type { SxProps, Theme } from '@mui/material/styles';

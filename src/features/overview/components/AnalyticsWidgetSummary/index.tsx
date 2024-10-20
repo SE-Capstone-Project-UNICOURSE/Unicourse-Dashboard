@@ -1,11 +1,11 @@
-import Iconify from '@app/components/iconify/Iconify';
+import Iconify from '@app/common/components/iconify/Iconify';
 import Box from '@mui/material/Box';
 import type { CardProps } from '@mui/material/Card';
 import Card from '@mui/material/Card';
 import { useTheme } from '@mui/material/styles';
-import type { ChartOptions } from 'src/components/chart';
-import { Chart, useChart } from 'src/components/chart';
-import { SvgColor } from 'src/components/svg-color';
+import type { ChartOptions } from '@app/common/components/chart';
+import { Chart, useChart } from '@app/common/components/chart';
+import { SvgColor } from '@app/common/components/svg-color';
 import type { ColorType } from 'src/theme/core/palette';
 import { bgGradient, varAlpha } from 'src/theme/styles';
 import { fNumber, fPercent, fShortenNumber } from 'src/utils/format-number';

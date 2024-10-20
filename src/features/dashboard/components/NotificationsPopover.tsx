@@ -1,5 +1,5 @@
-import Iconify from '@app/components/iconify/Iconify';
-import { Scrollbar } from '@components/scrollbar';
+import Iconify from '@app/common/components/iconify/Iconify';
+import { Scrollbar } from '@app/common/components/scrollbar';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';

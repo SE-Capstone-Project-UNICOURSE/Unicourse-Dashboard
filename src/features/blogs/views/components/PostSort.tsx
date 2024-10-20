@@ -7,7 +7,7 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Popover from '@mui/material/Popover';
 
-import Iconify from '@app/components/iconify/Iconify';
+import Iconify from '@app/common/components/iconify/Iconify';
 import { varAlpha } from 'src/theme/styles';
 
 // ----------------------------------------------------------------------

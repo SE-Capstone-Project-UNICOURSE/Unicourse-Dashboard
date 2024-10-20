@@ -4,14 +4,14 @@ import { BlogView } from './views/BlogView';
 
 // ----------------------------------------------------------------------
 
-export default function BlogPage() {
-  return (
-    <>
-      <Helmet>
-        <title> {`Blog - ${CONFIG.appName}`}</title>
-      </Helmet>
+const BlogPage = () => (
+  <>
+    <Helmet>
+      <title> {`Blog - ${CONFIG.appName}`}</title>
+    </Helmet>
 
-      <BlogView />
-    </>
-  );
-}
+    <BlogView />
+  </>
+);
+
+export default BlogPage;

@@ -1,11 +1,9 @@
 import LayoutSection from '@app/features/dashboard/layouts/core/LayoutSection';
 import type { Breakpoint, SxProps, Theme } from '@mui/material/styles';
 import { stylesMode } from '@theme/styles';
-import { AuthMain } from './AuthMain';
+import AuthMain from './AuthMain';
 
-// ----------------------------------------------------------------------
-
-export type AuthLayoutProps = {
+type AuthLayoutProps = {
   sx?: SxProps<Theme>;
   children: React.ReactNode;
   header?: {
@@ -13,7 +11,7 @@ export type AuthLayoutProps = {
   };
 };
 
-const AuthLayout = ({ sx, children, header }: AuthLayoutProps) => {
+const AuthLayout = ({ sx, children }: AuthLayoutProps) => {
   const layoutQuery: Breakpoint = 'md';
 
   return (

@@ -1,4 +1,4 @@
-import Iconify from '@app/components/iconify/Iconify';
+import Iconify from '@app/common/components/iconify/Iconify';
 import { layoutClasses } from '@app/features/dashboard/layouts/classes';
 import { Main } from '@app/features/dashboard/layouts/simple';
 import navData from '@app/routes/navbar/navbar-config';

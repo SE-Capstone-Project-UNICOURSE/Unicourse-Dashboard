@@ -1,6 +1,6 @@
 import usePathname from '@app/routes/hooks/usePathname';
-import { Logo } from '@components/logo';
-import { Scrollbar } from '@components/scrollbar';
+import { Logo } from '@app/common/components/logo';
+import { Scrollbar } from '@app/common/components/scrollbar';
 import { Box, ListItem } from '@mui/material';
 import { useState } from 'react';
 import DashboardUI from '../../components';

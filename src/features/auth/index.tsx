@@ -1,4 +1,4 @@
-import { Logo } from '@app/components/logo';
+import { Logo } from '@app/common/components/logo';
 import { Box } from '@mui/material';
 import { CONFIG } from '@utils/config-global';
 import { Helmet } from 'react-helmet-async';

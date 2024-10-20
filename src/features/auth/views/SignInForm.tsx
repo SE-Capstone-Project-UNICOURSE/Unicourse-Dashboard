@@ -1,4 +1,4 @@
-import Iconify from '@app/components/iconify/Iconify';
+import Iconify from '@app/common/components/iconify/Iconify';
 import useRouter from '@app/routes/hooks/useRouter';
 import { LoadingButton } from '@mui/lab';
 import { Box, IconButton, InputAdornment, Link, TextField } from '@mui/material';

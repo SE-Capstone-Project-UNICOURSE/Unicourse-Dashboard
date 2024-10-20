@@ -8,7 +8,7 @@ type MainProps = BoxProps & {
   layoutQuery: Breakpoint;
 };
 
-export function AuthMain({ sx, children, layoutQuery, ...other }: MainProps) {
+const AuthMain = ({ sx, children, layoutQuery, ...other }: MainProps) => {
   const theme = useTheme();
 
   const renderContent = (
@@ -49,4 +49,6 @@ export function AuthMain({ sx, children, layoutQuery, ...other }: MainProps) {
       {renderContent}
     </Box>
   );
-}
+};
+
+export default AuthMain;

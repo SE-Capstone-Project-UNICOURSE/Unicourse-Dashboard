@@ -2,7 +2,7 @@ import type { ButtonProps } from '@mui/material/Button';
 
 import { useCallback, useState } from 'react';
 
-import Iconify from '@app/components/iconify/Iconify';
+import Iconify from '@app/common/components/iconify/Iconify';
 import Button from '@mui/material/Button';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';

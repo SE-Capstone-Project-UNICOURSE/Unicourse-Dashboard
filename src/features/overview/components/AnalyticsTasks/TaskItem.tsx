@@ -1,4 +1,4 @@
-import Iconify from '@app/components/iconify/Iconify';
+import Iconify from '@app/common/components/iconify/Iconify';
 import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';

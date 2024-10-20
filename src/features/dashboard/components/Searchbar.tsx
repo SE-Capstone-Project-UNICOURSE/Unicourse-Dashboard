@@ -1,4 +1,4 @@
-import Iconify from '@app/components/iconify/Iconify';
+import Iconify from '@app/common/components/iconify/Iconify';
 import { bgBlur } from '@app/theme/styles';
 import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';

@@ -1,11 +1,11 @@
-import Iconify from '@app/components/iconify/Iconify';
+import Iconify from '@app/common/components/iconify/Iconify';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import type { CardProps } from '@mui/material/Card';
 import Card from '@mui/material/Card';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { SvgColor } from 'src/components/svg-color';
+import { SvgColor } from '@app/common/components/svg-color';
 import { varAlpha } from 'src/theme/styles';
 import { fShortenNumber } from 'src/utils/format-number';
 import { fDate } from 'src/utils/format-time';

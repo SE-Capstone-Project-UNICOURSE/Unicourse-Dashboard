@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Label } from 'src/components/label';
+import { Label } from '@app/common/components/label';
 import { fCurrency } from 'src/utils/format-number';
 import type { ProductItemProps } from '../../_mockData';
 

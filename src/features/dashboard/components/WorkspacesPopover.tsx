@@ -1,5 +1,5 @@
-import Iconify from '@app/components/iconify/Iconify';
-import { Label } from '@app/components/label';
+import Iconify from '@app/common/components/iconify/Iconify';
+import { Label } from '@app/common/components/label';
 import Box from '@mui/material/Box';
 import type { ButtonBaseProps } from '@mui/material/ButtonBase';
 import ButtonBase from '@mui/material/ButtonBase';

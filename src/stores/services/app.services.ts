@@ -1,5 +1,5 @@
 import httpClient from '@utils/httpClient';
-import { APP_COMMON_API_PATH } from 'src/constants/appConstants';
+import { APP_COMMON_API_PATH } from '@app/common/constants/appConstants';
 import type { AuthResponseData, DataResponse } from '../models';
 
 class AppServices {

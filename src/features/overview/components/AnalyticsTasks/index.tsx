@@ -4,7 +4,7 @@ import CardHeader from '@mui/material/CardHeader';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import { useState } from 'react';
-import { Scrollbar } from 'src/components/scrollbar';
+import { Scrollbar } from '@app/common/components/scrollbar';
 import TaskItem from './TaskItem';
 
 type Props = CardProps & {

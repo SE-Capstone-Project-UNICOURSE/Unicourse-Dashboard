@@ -1,7 +1,7 @@
 import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';
 import { forwardRef } from 'react';
-import { RouterLink } from 'src/routes/components';
+import { RouterLink } from '@app/routes/components';
 import { logoClasses } from './classes';
 
 export type LogoProps = BoxProps & {

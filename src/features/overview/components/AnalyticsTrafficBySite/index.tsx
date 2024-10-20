@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 import { fShortenNumber } from 'src/utils/format-number';
 
-import Iconify from '@app/components/iconify/Iconify';
+import Iconify from '@app/common/components/iconify/Iconify';
 import { varAlpha } from 'src/theme/styles';
 
 // ----------------------------------------------------------------------

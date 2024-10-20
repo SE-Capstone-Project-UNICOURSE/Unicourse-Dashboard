@@ -1,6 +1,6 @@
-import { ColorPicker } from '@app/components/color-utils';
-import Iconify from '@app/components/iconify/Iconify';
-import { Scrollbar } from '@app/components/scrollbar';
+import { ColorPicker } from '@app/common/components/color-utils';
+import Iconify from '@app/common/components/iconify/Iconify';
+import { Scrollbar } from '@app/common/components/scrollbar';
 import { FormControlLabel } from '@mui/material';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
