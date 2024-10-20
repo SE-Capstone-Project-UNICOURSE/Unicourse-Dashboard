@@ -39,6 +39,7 @@ const SimpleLayout = ({ sx, children, header, content }: SimpleLayoutProps) => {
               </Alert>
             ),
             // leftArea: <Logo />,
+            // leftArea: <Logo />,
             rightArea: (
               <Link
                 href="#"

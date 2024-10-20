@@ -10,7 +10,7 @@ import TablePagination from '@mui/material/TablePagination';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
-import DashboardContent from '@app/features/admin/dashboard/layouts/DashboardLayout/DashboardContent';
+import DashboardContent from '../../dashboard/layouts/DashboardLayout/DashboardContent';
 import { applyFilter, emptyRows, getComparator } from '../utils';
 import { TableEmptyRows } from './components/TableEmptyRows';
 import { TableNoData } from './components/TableNoData';
