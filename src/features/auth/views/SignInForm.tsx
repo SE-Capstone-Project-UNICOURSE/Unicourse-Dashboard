@@ -1,7 +1,7 @@
 import Iconify from '@app/common/components/iconify/Iconify';
 import useRouter from '@app/routes/hooks/useRouter';
 import { LoadingButton } from '@mui/lab';
-import { Box, IconButton, InputAdornment, Link, TextField } from '@mui/material';
+import { Box, IconButton, InputAdornment, TextField } from '@mui/material';
 import { useCallback, useState } from 'react';
 
 const SignInForm = () => {
@@ -10,6 +10,7 @@ const SignInForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSignIn = useCallback(() => {
+    localStorage.setItem('authToken', 'true'); // mốt sửa logic ở đây
     router.push('/');
   }, [router]);
 
@@ -18,20 +19,16 @@ const SignInForm = () => {
       <TextField
         fullWidth
         name="email"
-        label="Email address"
+        label="Địa chỉ Email"
         defaultValue="hello@gmail.com"
         InputLabelProps={{ shrink: true }}
         sx={{ mb: 3 }}
       />
 
-      <Link variant="body2" color="inherit" sx={{ mb: 1.5 }}>
-        Forgot password?
-      </Link>
-
       <TextField
         fullWidth
         name="password"
-        label="Password"
+        label="Mật khẩu"
         defaultValue="@demo1234"
         InputLabelProps={{ shrink: true }}
         type={showPassword ? 'text' : 'password'}
@@ -55,7 +52,7 @@ const SignInForm = () => {
         variant="contained"
         onClick={handleSignIn}
       >
-        Sign in
+        Đăng nhập
       </LoadingButton>
     </Box>
   );

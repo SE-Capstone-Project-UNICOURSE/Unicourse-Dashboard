@@ -1,5 +1,7 @@
-// const useAuthentication = () => {
-//   return;
-// };
+const useAuththentication = () => {
+  const isAuthenticated = !!localStorage.getItem('authToken');
 
-// export default useAuthentication;
+  return { isAuthenticated };
+};
+
+export default useAuththentication;

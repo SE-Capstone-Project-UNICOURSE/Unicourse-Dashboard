@@ -12,21 +12,28 @@ const navData: NavItemProps[] = [
     icon: icon('ic-analytics'),
   },
   {
-    title: 'User',
+    title: 'Người dùng',
     path: '/user',
     icon: icon('ic-user'),
-    children: [{ title: 'User List', path: '/user', icon: icon('ic-list') }],
+    children: [{ title: 'Danh sách người dùng', path: '/user', icon: icon('ic-list') }],
   },
   {
-    title: 'Courses',
+    title: 'Khoá học',
     path: '/courses',
     icon: icon('ic-courses'),
-    children: [{ title: 'Course List', path: '/courses', icon: icon('ic-list') }],
+    children: [{ title: 'Danh sách khoá học', path: '/courses', icon: icon('ic-list') }],
   },
   {
-    title: 'Blog',
+    title: 'Bài viết',
     path: '/blog',
     icon: icon('ic-blog'),
+    children: [
+      {
+        title: 'Danh sách bài viết',
+        path: '/blog',
+        icon: icon('ic-list'),
+      },
+    ],
   },
   {
     title: 'Sign in',

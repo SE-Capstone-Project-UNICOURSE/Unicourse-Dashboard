@@ -20,11 +20,9 @@ declare module '@mui/material/styles' {
 
 // ----------------------------------------------------------------------
 
-export const defaultFont = 'DM Sans Variable';
-
-export const primaryFont = setFont(defaultFont);
-
-export const secondaryFont = setFont('Barlow');
+export const primaryFont =
+  '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif';
+export const secondaryFont = 'inherit';
 
 // ----------------------------------------------------------------------
 

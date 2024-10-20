@@ -1,4 +1,4 @@
-import { RouterLink } from '@app/routes/components';
+import RouterLink from '@app/routes/components/RouterLink';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { Box, Collapse, List, ListItem, ListItemButton, Typography } from '@mui/material';
 import type { NavItemProps } from '../../types';

@@ -58,6 +58,11 @@ const AccountPopover = ({ data = accountOptions, sx, ...other }: AccountPopoverP
     [handleClosePopover, router]
   );
 
+  const handleClickLogout = () => {
+    localStorage.removeItem('authToken');
+    router.push('/sign-in');
+  };
+
   return (
     <>
       <IconButton
@@ -137,7 +142,7 @@ const AccountPopover = ({ data = accountOptions, sx, ...other }: AccountPopoverP
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <Box sx={{ p: 1 }}>
-          <Button fullWidth color="error" size="medium" variant="text">
+          <Button fullWidth color="error" size="medium" variant="text" onClick={handleClickLogout}>
             Logout
           </Button>
         </Box>

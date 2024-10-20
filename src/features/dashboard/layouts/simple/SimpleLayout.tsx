@@ -1,8 +1,8 @@
 import Alert from '@mui/material/Alert';
 import Link from '@mui/material/Link';
 import type { Breakpoint, SxProps, Theme } from '@mui/material/styles';
-import { RouterLink } from '@app/routes/components';
 
+import RouterLink from '@app/routes/components/RouterLink';
 import HeaderSection from '../core/HeaderSection';
 import LayoutSection from '../core/LayoutSection';
 import { CompactContent } from './CompactContent';
