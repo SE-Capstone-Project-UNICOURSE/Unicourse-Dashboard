@@ -32,7 +32,7 @@ module.exports = {
     'no-console': 1,
     'no-unused-vars': 1,
     'no-nested-ternary': 1,
-    'no-param-reassign': 1,
+    'no-param-reassign': 0,
     'no-underscore-dangle': 0,
     'no-restricted-exports': 0,
     'no-promise-executor-return': 0,

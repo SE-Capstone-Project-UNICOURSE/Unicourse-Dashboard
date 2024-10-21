@@ -5,12 +5,12 @@ import NotFoundView from './NotFoundView';
 
 // ----------------------------------------------------------------------
 
-const PageNotFound = ({ role }: { role: string }) => (
+const PageNotFound = () => (
   <>
     <Helmet>
       <title> {`404 page not found! | Error - ${CONFIG.appName}`}</title>
     </Helmet>
-    <NotFoundView role={role} />
+    <NotFoundView />
   </>
 );
 

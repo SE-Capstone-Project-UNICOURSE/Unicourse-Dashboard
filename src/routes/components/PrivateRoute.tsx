@@ -1,4 +1,4 @@
-import useAuthentication from '@app/hooks/useAuthentication';
+import { useAppSelector } from '@app/stores';
 import { Navigate } from 'react-router-dom';
 
 interface PrivateRouteProps {
@@ -7,13 +7,14 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute = ({ children, allowedRoles }: PrivateRouteProps) => {
-  const { isAuthenticated, role } = useAuthentication();
+  const { userInfo } = useAppSelector((state) => state.authState.auth);
+  const accessToken = localStorage.getItem('accessToken');
 
-  if (!isAuthenticated) {
+  if (!accessToken) {
     return <Navigate to="/sign-in" replace />;
   }
 
-  if (!allowedRoles.includes(role)) {
+  if (userInfo?.role && !allowedRoles.includes(userInfo?.role.toLowerCase())) {
     return <Navigate to="/access-denied" replace />;
   }
 

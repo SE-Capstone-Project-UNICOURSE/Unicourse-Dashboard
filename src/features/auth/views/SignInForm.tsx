@@ -27,7 +27,7 @@ const SignInForm = () => {
         'user',
         JSON.stringify({
           token: 'dummyToken123456', // Token giả lập
-          role: 'lecturer', // Vai trò người dùng giả lập là lecturer
+          role: 'lecturer',
         })
       );
 
