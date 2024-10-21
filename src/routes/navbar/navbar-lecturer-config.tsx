@@ -29,6 +29,11 @@ const lecturerNavData: NavItemLecturerProps[] = [
       },
     ],
   },
+  {
+    title: 'Empty',
+    path: '/lecturer/empty',
+    icon: icon('ic-courses'),
+  },
 ];
 
 export default lecturerNavData;

@@ -1,9 +1,11 @@
 import { useScrollToTop } from '@app/hooks/useScrollToTop';
 import Router from '@app/routes/Router';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import 'src/global.css';
 import { ThemeProvider } from 'src/theme/ThemeProvider';
-import store from './stores';
+import DialogManager from './common/components/DialogManager';
+import store, { persistor } from './stores';
 
 const App = () => {
   useScrollToTop();
@@ -12,9 +14,12 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <ThemeProvider>
-        <Router />
-      </ThemeProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider>
+          <DialogManager />
+          <Router />
+        </ThemeProvider>
+      </PersistGate>
     </Provider>
   );
 };

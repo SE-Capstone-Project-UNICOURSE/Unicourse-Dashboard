@@ -60,6 +60,7 @@ const AccountPopover = ({ data = accountOptions, sx, ...other }: AccountPopoverP
 
   const handleClickLogout = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('accessToken');
     router.push('/sign-in');
   };
 

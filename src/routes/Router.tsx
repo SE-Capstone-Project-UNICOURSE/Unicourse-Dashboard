@@ -1,93 +1,45 @@
-import { Suspense } from 'react';
-import { Outlet, useRoutes } from 'react-router-dom';
-import AdminDashboardLayout from '@app/features/admin/dashboard/layouts/DashboardLayout/DashboardLayout';
 import AccessDeniedView from '@app/features/error/AccessDeniedView';
-import PageNotFound from '@app/features/error/PageNotFound'; // Import Page 404 chung
-import DashboardLectureLayout from '@app/features/lecturer/dashboard/layouts/DashboardLayout/DashboardLectureLayout';
-import useAuthentication from '@app/hooks/useAuthentication'; // Import hook để lấy thông tin user
-import AuthLayout from '@features/auth/layouts/AuthLayout';
-import PrivateRoute from './components/PrivateRoute';
-import RenderFallback from './components/RenderFallback';
-import { AdminPages, LecturerPages } from './pages';
+import PageNotFound from '@app/features/error/PageNotFound'; // Import common Page 404
+import { Navigate, useRoutes } from 'react-router-dom';
+import adminRoutes from './config/AdminRoutes';
+import lecturerRoutes from './config/LecturerRoutes';
+import { useAppSelector } from '@app/stores'; // Import to get user state
 
-// Access Denied route
 const accessDeniedRoute = {
   path: '/access-denied',
   element: <AccessDeniedView />,
 };
 
-// Admin routes
-const adminRoutes = [
-  {
-    path: '/admin',
-    element: (
-      <PrivateRoute allowedRoles={['admin']}>
-        <AdminDashboardLayout>
-          <Suspense fallback={<RenderFallback />}>
-            <Outlet />
-          </Suspense>
-        </AdminDashboardLayout>
-      </PrivateRoute>
-    ),
-    children: [
-      { element: <AdminPages.HomePage />, index: true },
-      { path: 'user', element: <AdminPages.UserPage /> },
-      { path: 'courses', element: <AdminPages.CoursePage /> },
-      { path: 'blog', element: <AdminPages.BlogPage /> },
-    ],
-  },
-  {
-    path: 'sign-in',
-    element: (
-      <AuthLayout>
-        <AdminPages.SignInPage />
-      </AuthLayout>
-    ),
-  },
-];
+const RootRedirect = () => {
+  const { userInfo } = useAppSelector((state) => state.authState.auth);
 
-// Lecturer routes
-const lecturerRoutes = [
-  {
-    path: '/lecturer',
-    element: (
-      <PrivateRoute allowedRoles={['lecturer']}>
-        <DashboardLectureLayout>
-          <Suspense fallback={<RenderFallback />}>
-            <Outlet />
-          </Suspense>
-        </DashboardLectureLayout>
-      </PrivateRoute>
-    ),
-    children: [
-      { element: <LecturerPages.HomeLecturerPage />, index: true }, // Đảm bảo đây là index
-      { path: 'courses', element: <LecturerPages.CourseLecturerPage /> },
-      { path: 'blog', element: <LecturerPages.BlogLecturerPage /> },
-    ],
-  },
-  {
-    path: 'sign-in',
-    element: (
-      <AuthLayout>
-        <LecturerPages.SignInPage />
-      </AuthLayout>
-    ),
-  },
-];
+  if (!userInfo) {
+    return <Navigate to="/sign-in" replace />;
+  }
 
-// Combine the routes with a dynamic role for 404 page
-const Router = () => {
-  const { role } = useAuthentication();
+  switch (userInfo.role.toLowerCase()) {
+    case 'admin':
+      return <Navigate to="/admin" replace />;
+    case 'lecturer':
+      return <Navigate to="/lecturer" replace />;
+    default:
+      return <Navigate to="/access-denied" replace />;
+  }
+};
 
-  return useRoutes([
-    ...adminRoutes,
-    ...lecturerRoutes,
-    accessDeniedRoute,
+const Router = () =>
+  useRoutes([
     {
-      path: '*', // Trang 404 dùng chung
-      element: <PageNotFound role={role} />, // Truyền role để điều hướng đúng trang chủ
+      path: '/',
+      element: <RootRedirect />,
+    },
+    ...adminRoutes, // Admin routes
+    ...lecturerRoutes, // Lecturer routes
+    accessDeniedRoute, // Access denied route
+    {
+      path: '*',
+      element: <PageNotFound />, // Handle 404
     },
   ]);
-};
 
 export default Router;

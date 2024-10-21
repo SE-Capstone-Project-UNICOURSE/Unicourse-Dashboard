@@ -32,7 +32,7 @@ module.exports = {
     'no-console': 1,
     'no-unused-vars': 1,
     'no-nested-ternary': 1,
-    'no-param-reassign': 1,
+    'no-param-reassign': 0,
     'no-underscore-dangle': 0,
     'no-restricted-exports': 0,
     'no-promise-executor-return': 0,
@@ -60,6 +60,7 @@ module.exports = {
     'react/no-unstable-nested-components': [1, { allowAsProps: true }],
     'react/jsx-curly-brace-presence': 0,
     'react/no-unused-prop-types': 0,
+    'react-hooks/exhaustive-deps': 1,
 
     // jsx-a11y
     'jsx-a11y/anchor-is-valid': 0,

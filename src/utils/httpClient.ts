@@ -1,6 +1,6 @@
+import { BASE_URL, TIMEOUT } from '@app/common/constants/appConstants';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from 'axios';
-import { BASE_URL, TIMEOUT } from '@app/common/constants/appConstants';
 
 class HttpClient {
   private static instance: HttpClient;
@@ -25,9 +25,7 @@ class HttpClient {
         }
         return config;
       },
-      (error) => {
-        return Promise.reject(error);
-      }
+      (error) => Promise.reject(error)
     );
 
     // Interceptor to handle global errors
@@ -35,9 +33,7 @@ class HttpClient {
       (response) => response,
       (error) => {
         if (error.response && error.response.status === 401) {
-          // Handle actions on 401 errors, like redirecting to login
           console.error('Unauthorized, redirecting to login...');
-          // Add your logic to handle 401 here, e.g., logout or redirect
         }
         return Promise.reject(error);
       }

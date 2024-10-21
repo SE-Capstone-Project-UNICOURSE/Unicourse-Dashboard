@@ -7,6 +7,8 @@ import HeaderSection from '../core/HeaderSection';
 import LayoutSection from '../core/LayoutSection';
 import { CompactContent } from './CompactContent';
 import { Main } from './Main';
+import { Logo } from '@app/common/components/logo';
+import { Box } from '@mui/material';
 
 export type SimpleLayoutProps = {
   sx?: SxProps<Theme>;
@@ -38,17 +40,17 @@ const SimpleLayout = ({ sx, children, header, content }: SimpleLayoutProps) => {
                 This is an info Alert.
               </Alert>
             ),
-            // leftArea: <Logo />,
-            // leftArea: <Logo />,
             rightArea: (
-              <Link
-                href="#"
-                component={RouterLink}
-                color="inherit"
-                sx={{ typography: 'subtitle2' }}
-              >
-                Need help?
-              </Link>
+              <Box justifyContent={'center'}>
+                <Link
+                  href="#"
+                  component={RouterLink}
+                  color="inherit"
+                  sx={{ typography: 'subtitle2' }}
+                >
+                  Need help?
+                </Link>
+              </Box>
             ),
           }}
         />

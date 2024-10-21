@@ -1,29 +1,4 @@
-type AppStateType = {
-  auth: {
-    accountType: 'google' | 'apple' | null; // Account types
-    isLoading: boolean;
-    userInfo: User | null;
-    accessToken: string;
-    refreshToken: string;
-    error: string | null;
-  };
-};
-
-const initialAppState: AppStateType = {
-  auth: {
-    accountType: null,
-    isLoading: false,
-    userInfo: null,
-    accessToken: '',
-    refreshToken: '',
-    error: '',
-  },
-};
-
-export { initialAppState };
-export type { AppStateType };
-
-export interface User {
+interface User {
   id: number;
   email: string;
   full_name: string;
@@ -60,3 +35,5 @@ interface Student {
   device_token: string | null;
   wishlist: any[]; // Adjust type if the structure of wishlist items is known
 }
+
+export default User;
