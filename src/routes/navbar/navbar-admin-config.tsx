@@ -35,6 +35,11 @@ const adminNavData: NavItemProps[] = [
       },
     ],
   },
+  {
+    title: 'Empty',
+    path: '/admin/empty',
+    icon: icon('ic-courses'),
+  },
 ];
 
 export default adminNavData;

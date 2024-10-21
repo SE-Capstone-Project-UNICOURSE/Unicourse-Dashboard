@@ -19,6 +19,7 @@ const authSlice = createSlice({
     setAccountType(state, action: PayloadAction<'google' | 'apple' | null>) {
       state.auth.accountType = action.payload;
     },
+
     setToken(state, action: PayloadAction<{ accessToken: string; refreshToken: string }>) {
       state.auth.accessToken = action.payload.accessToken;
       state.auth.refreshToken = action.payload.refreshToken;

@@ -82,7 +82,22 @@ const DialogManager: React.FC = () => {
   const { color, image } = getDialogStyles();
 
   return (
-    <Dialog open={isVisible} onClose={handleCancel} maxWidth={getDialogMaxWidth()} fullWidth>
+    <Dialog
+      open={isVisible}
+      onClose={handleCancel}
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        '& .MuiPaper-root': {
+          margin: 0,
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          position: 'absolute',
+        },
+      }}
+    >
       <DialogTitle>
         <Typography variant="h5" color={color} textAlign="center" sx={{ fontWeight: 'bold' }}>
           {title}

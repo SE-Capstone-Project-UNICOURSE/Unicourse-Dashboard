@@ -23,6 +23,7 @@ const adminRoutes = [
       { path: 'user', element: <AdminPages.UserPage /> },
       { path: 'courses', element: <AdminPages.CoursePage /> },
       { path: 'blog', element: <AdminPages.BlogPage /> },
+      { path: 'empty', element: <AdminPages.EmptyPage /> },
     ],
   },
   {

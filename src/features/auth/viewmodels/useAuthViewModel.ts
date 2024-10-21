@@ -1,6 +1,6 @@
 import useRouter from '@app/routes/hooks/useRouter';
 import { useAppDispatch } from '@app/stores';
-import { showDialog } from '@app/stores/slices/dialogSlice';
+import { hideDialog, showDialog } from '@app/stores/slices/dialogSlice';
 import { DialogType } from '@app/stores/types/dialogSlice.type';
 import { auth, googleProvider } from '@app/utils/firebase';
 import { signInWithPopup } from 'firebase/auth';
@@ -11,6 +11,12 @@ import { loginIdToken } from '../slices/actions';
 const useAuthViewModel = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+
+  const handleConfirm = () => {
+    console.log('a');
+
+    dispatch(hideDialog());
+  };
 
   const signInWithGoogle = async () => {
     try {
@@ -67,7 +73,8 @@ const useAuthViewModel = () => {
       showDialog({
         title: 'Error',
         content: 'Erorr',
-        type: DialogType.ALERT,
+        type: DialogType.SUCCESS,
+        onConfirm: handleConfirm,
       })
     );
   };

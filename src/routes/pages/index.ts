@@ -10,6 +10,7 @@ const HomePage = lazy(() => import('@app/features/admin/dashboard/pages/Dashboar
 const BlogPage = lazy(() => import('@app/features/admin/blogs'));
 const UserPage = lazy(() => import('@app/features/admin/users'));
 const CoursePage = lazy(() => import('@app/features/admin/courses'));
+const EmptyPage = lazy(() => import('@app/features/admin/empty'));
 
 const AdminPages = {
   HomePage,
@@ -19,6 +20,7 @@ const AdminPages = {
   CoursePage,
   Page404,
   AccessDeniedPage,
+  EmptyPage,
 };
 
 // Lecturers
@@ -27,6 +29,7 @@ const BlogLecturerPage = lazy(() => import('@app/features/lecturer/blogs'));
 const HomeLecturerPage = lazy(
   () => import('@app/features/lecturer/dashboard/pages/DashboardLecturerPage')
 );
+const EmptyLecturesPage = lazy(() => import('@app/features/lecturer/empty'));
 
 const LecturerPages = {
   HomeLecturerPage,
@@ -35,5 +38,6 @@ const LecturerPages = {
   Page404,
   BlogLecturerPage,
   AccessDeniedPage,
+  EmptyLecturesPage,
 };
 export { AdminPages, LecturerPages };

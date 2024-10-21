@@ -1,5 +1,3 @@
-// các services, gọi api sẽ handle chung ở đây
-
 import type { AuthResponseData, DataResponse } from '@app/stores/models';
 import httpClient from '@app/utils/httpClient';
 import type { AxiosRequestConfig } from 'axios';

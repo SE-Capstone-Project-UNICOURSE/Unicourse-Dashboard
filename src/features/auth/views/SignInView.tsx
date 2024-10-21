@@ -11,6 +11,7 @@ import SignInForm from './SignInForm';
 
 const SignInView = () => {
   const { signInWithGoogle, handlePressShowDialog } = useAuthViewModel();
+
   const { isLoading } = useAppSelector((state) => state.authState.auth);
 
   return (
