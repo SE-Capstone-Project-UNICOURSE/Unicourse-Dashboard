@@ -60,6 +60,7 @@ module.exports = {
     'react/no-unstable-nested-components': [1, { allowAsProps: true }],
     'react/jsx-curly-brace-presence': 0,
     'react/no-unused-prop-types': 0,
+    'react-hooks/exhaustive-deps': 1,
 
     // jsx-a11y
     'jsx-a11y/anchor-is-valid': 0,

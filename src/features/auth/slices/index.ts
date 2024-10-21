@@ -12,7 +12,7 @@ const authSlice = createSlice({
     setIsAuthLoading(state, action: PayloadAction<boolean>) {
       state.auth.isLoading = action.payload;
     },
-    setUserInfo(state, action: PayloadAction<User>) {
+    setUserInfo(state, action: PayloadAction<User | null>) {
       state.auth.userInfo = action.payload;
     },
 

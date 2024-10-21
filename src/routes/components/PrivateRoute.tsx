@@ -1,4 +1,5 @@
-import { useAppSelector } from '@app/stores';
+import { setUserInfo } from '@app/features/auth/slices';
+import { useAppDispatch, useAppSelector } from '@app/stores';
 import { Navigate } from 'react-router-dom';
 
 interface PrivateRouteProps {
@@ -8,9 +9,11 @@ interface PrivateRouteProps {
 
 const PrivateRoute = ({ children, allowedRoles }: PrivateRouteProps) => {
   const { userInfo } = useAppSelector((state) => state.authState.auth);
+  const dispatch = useAppDispatch();
   const accessToken = localStorage.getItem('accessToken');
 
-  if (!accessToken) {
+  if (!accessToken || !userInfo) {
+    dispatch(setUserInfo(null));
     return <Navigate to="/sign-in" replace />;
   }
 
