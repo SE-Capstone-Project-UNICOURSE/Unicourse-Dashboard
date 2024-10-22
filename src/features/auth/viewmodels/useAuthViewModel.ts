@@ -31,7 +31,6 @@ const useAuthViewModel = () => {
 
           // Kiểm tra role của user
           if (user.role === 'LECTURER' || user.role === 'ADMIN') {
-            // Điều hướng đến trang dựa trên vai trò
             router.push(`/${user.role.toLowerCase()}`);
           } else {
             // Hiển thị thông báo lỗi cho các role khác
