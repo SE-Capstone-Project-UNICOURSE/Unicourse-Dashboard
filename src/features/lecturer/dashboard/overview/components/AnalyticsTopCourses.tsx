@@ -7,35 +7,14 @@ import Stack from '@mui/material/Stack';
 import LecturerCourseItem from './LecturerCourseItem';
 
 // Updated course list with revenue calculation
-const title = 'Danh sách khoá học nổi bật';
-const list = [
-  {
-    id: '1',
-    title: 'UI/UX Design with Adobe XD',
-    price: 89,
-    sold: 20,
-    revenue: 1780,
-    category: 'UI/X',
-  },
-  {
-    id: '2',
-    title: 'Introduction to Machine Learning',
-    price: 120,
-    sold: 75,
-    revenue: 9000,
-    category: 'ML',
-  },
-  {
-    id: '3',
-    title: 'Advanced React Development',
-    price: 150,
-    sold: 90,
-    revenue: 13500,
-    category: 'React',
-  },
-];
 
-const AnalyticsTopCourses = () => {
+type AnalyticsTopCoursesProps = {
+  title?: string;
+};
+
+const AnalyticsTopCourses = ({
+  title = 'Danh sách khoá học nổi bật',
+}: AnalyticsTopCoursesProps) => {
   const router = useRouter();
   return (
     <Card>
@@ -43,16 +22,7 @@ const AnalyticsTopCourses = () => {
 
       <Scrollbar sx={{ maxHeight: 400 }}>
         <Stack divider={<Divider sx={{ borderStyle: 'dashed' }} />} px={2}>
-          {list.map((item) => (
-            <LecturerCourseItem
-              key={item.id}
-              title={item.title}
-              price={item.price}
-              sold={item.sold}
-              revenue={item.revenue}
-              category={item.category}
-            />
-          ))}
+          <LecturerCourseItem />
         </Stack>
       </Scrollbar>
     </Card>

@@ -62,17 +62,17 @@ const DashboardLectureLayout = ({ sx, children, header }: DashboardLecturerLayou
                 <DashboardUI.AccountPopover
                   data={[
                     {
-                      label: 'Home',
+                      label: 'Trang chủ',
                       href: '/',
                       icon: <Iconify width={22} icon="solar:home-angle-bold-duotone" />,
                     },
                     {
-                      label: 'Profile',
+                      label: 'Hồ sơ',
                       href: '#',
                       icon: <Iconify width={22} icon="solar:shield-keyhole-bold-duotone" />,
                     },
                     {
-                      label: 'Settings',
+                      label: 'Cài đặt',
                       href: '#',
                       icon: <Iconify width={22} icon="solar:settings-bold-duotone" />,
                     },

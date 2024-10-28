@@ -2,45 +2,26 @@ import useRouter from '@app/routes/hooks/useRouter';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-type LecturerCourseItemProps = {
-  title: string;
-  price: number;
-  sold: number;
-  revenue: number;
-  category: string;
-};
+type LecturerCourseItemProps = {};
 
 // Adjusted item props to receive the necessary course data
-const LecturerCourseItem = ({ title, price, sold, revenue, category }: LecturerCourseItemProps) => {
+const LecturerCourseItem = () => {
   const router = useRouter();
   return (
     <Box display="flex" alignItems="center" justifyContent="space-between" sx={{ py: 1 }}>
-      <Box display="flex" alignItems="center">
-        {/* Category Badge */}
-        <Box
-          sx={{
-            width: 40,
-            height: 40,
-            backgroundColor: 'lightgreen',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: 2,
-            mr: 2,
-          }}
-        >
-          <Typography variant="body1" fontWeight="bold">
-            {category}
-          </Typography>
-        </Box>
-
+      <Box display="flex" alignItems="center" gap={2}>
         {/* Course Information */}
+        <img
+          src="https://via.placeholder.com/40"
+          alt="Course"
+          style={{ width: 40, height: 40, borderRadius: '50%' }}
+        />
         <Box>
           <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-            {title}
+            title
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            ${price.toFixed(2)}
+            price
           </Typography>
         </Box>
       </Box>
@@ -48,10 +29,10 @@ const LecturerCourseItem = ({ title, price, sold, revenue, category }: LecturerC
       {/* Revenue and Sold Info */}
       <Box textAlign="right">
         <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-          ${revenue.toFixed(2)}
+          Revenue
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {sold} Sold
+          Bán đượcØ
         </Typography>
       </Box>
     </Box>

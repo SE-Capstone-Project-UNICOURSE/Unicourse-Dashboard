@@ -2,12 +2,13 @@ import Iconify from '@app/common/components/iconify/Iconify';
 import LoadingIndicator from '@app/common/components/LoadingIndicator';
 import { Logo } from '@app/common/components/logo';
 import { useAppSelector } from '@app/stores';
+import { Button } from '@mui/material';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import useAuthViewModel from '../viewmodels/useAuthViewModel';
 import SignInForm from './SignInForm';
+import { LoadingButton } from '@mui/lab';
 
 const SignInView = () => {
   const { signInWithGoogle, handlePressShowDialog } = useAuthViewModel();
@@ -27,7 +28,7 @@ const SignInView = () => {
 
       <SignInForm />
 
-      <Divider sx={{ my: 3, '&::before, &::after': { borderTopStyle: 'dashed' } }}>
+      <Divider sx={{ my: 1, '&::before, &::after': { borderTopStyle: 'dashed' } }}>
         <Typography
           variant="overline"
           sx={{ color: 'text.secondary', fontWeight: 'fontWeightMedium' }}
@@ -36,11 +37,15 @@ const SignInView = () => {
         </Typography>
       </Divider>
 
-      <Box gap={1} display="flex" justifyContent="center">
-        <IconButton size="large" color="inherit" onClick={signInWithGoogle}>
-          <Iconify icon="logos:google-icon" />
-        </IconButton>
-      </Box>
+      <LoadingButton
+        fullWidth
+        size="large"
+        variant="outlined"
+        onClick={signInWithGoogle}
+        startIcon={<Iconify icon="logos:google-icon" />}
+      >
+        Đăng nhập bằng google
+      </LoadingButton>
     </>
   );
 };

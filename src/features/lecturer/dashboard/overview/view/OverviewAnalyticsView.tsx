@@ -76,7 +76,6 @@ const OverviewAnalyticsView = () => {
             }}
           />
         </Grid>
-
         <Grid xs={12} sm={6} md={4}>
           <AnalyticsUI.AnalyticsWidgetSummary
             title="Đánh giá"
@@ -92,14 +91,15 @@ const OverviewAnalyticsView = () => {
         </Grid>
 
         <Grid xs={12} md={6} lg={6}>
-          <AnalyticsUI.AnalyticsLecturerTransaction title="Dánh sách giao dịch" />
+          <Grid xs={12} md={6} lg={6}>
+            <AnalyticsUI.AnalyticsLecturerTransaction title="Dánh sách giao dịch gần nhất" />
+          </Grid>
+          <Grid xs={12} md={12} lg={6} mt={1}>
+            <AnalyticsUI.AnalyticsTasks />
+          </Grid>
         </Grid>
-
-        <Grid xs={12} md={12} lg={6}>
-          <AnalyticsUI.AnalyticsTasks />
-        </Grid>
-        <Grid xs={12} md={12} lg={6}>
-          <AnalyticsUI.AnalyticsFeedbacks />
+        <Grid xs={12} md={6} lg={6}>
+          <AnalyticsUI.LectureInfoOverall />
         </Grid>
       </Grid>
     </DashboardContent>
