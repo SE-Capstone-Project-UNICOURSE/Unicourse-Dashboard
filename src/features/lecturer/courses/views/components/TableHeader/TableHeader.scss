@@ -1,0 +1,13 @@
+.container {
+    padding: 1rem;
+    width: 100%;
+
+    &__stack {
+        width: 100%;
+        justify-content: space-between;
+
+        &--input {
+            flex-basis: 30%;
+        }
+    }
+}
