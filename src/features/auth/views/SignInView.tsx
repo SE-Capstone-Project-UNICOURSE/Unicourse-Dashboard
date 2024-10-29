@@ -2,13 +2,12 @@ import Iconify from '@app/common/components/iconify/Iconify';
 import LoadingIndicator from '@app/common/components/LoadingIndicator';
 import { Logo } from '@app/common/components/logo';
 import { useAppSelector } from '@app/stores';
-import { Button } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import useAuthViewModel from '../viewmodels/useAuthViewModel';
 import SignInForm from './SignInForm';
-import { LoadingButton } from '@mui/lab';
 
 const SignInView = () => {
   const { signInWithGoogle, handlePressShowDialog } = useAuthViewModel();

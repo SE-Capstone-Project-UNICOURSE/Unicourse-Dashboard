@@ -32,11 +32,12 @@ module.exports = {
     'no-console': 1,
     'no-else-return': 0,
     'no-unused-vars': 1,
-    'no-nested-ternary': 1,
+    'no-nested-ternary': 0,
     'no-param-reassign': 0,
     'no-underscore-dangle': 0,
     'no-restricted-exports': 0,
     'no-promise-executor-return': 0,
+
     'import/order': 0,
 
     'import/prefer-default-export': 0,

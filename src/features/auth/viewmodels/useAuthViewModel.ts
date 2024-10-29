@@ -13,8 +13,6 @@ const useAuthViewModel = () => {
   const router = useRouter();
 
   const handleConfirm = () => {
-    console.log('a');
-
     dispatch(hideDialog());
   };
 
@@ -46,17 +44,20 @@ const useAuthViewModel = () => {
     } catch (error) {
       let errorMessage = '';
 
-      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
-        errorMessage = 'Incorrect email or password. Please try again.';
+      // Log only specific Firebase Auth errors
+      if (error.code === 'auth/user-not-found') {
+        errorMessage = 'User not found. Please try again.';
+      } else if (error.code === 'auth/wrong-password') {
+        errorMessage = 'Incorrect password. Please try again.';
       } else if (error.code === 'auth/network-request-failed') {
         errorMessage = 'Please check your connection';
       } else if (error.code === 'auth/invalid-email') {
         errorMessage = 'Please provide a valid email';
       } else {
-        errorMessage = 'An error occurred during sign in. Please try again later.';
+        return; // Do not log any other cases
       }
 
-      // Dispatch the dialog with the error message
+      // Dispatch the dialog with the specific error message
       dispatch(
         showDialog({
           title: 'Lỗi',

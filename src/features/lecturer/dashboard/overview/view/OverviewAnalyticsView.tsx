@@ -1,23 +1,17 @@
 import DashboardContent from '@app/features/admin/dashboard/layouts/DashboardLayout/DashboardContent';
 import useRouter from '@app/routes/hooks/useRouter';
-import { useAppDispatch } from '@app/stores';
-import type { SelectChangeEvent } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '@app/stores';
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
-import { useState } from 'react';
+import useDashboardLectureViewModel from '../../viewmodels/useDashboardLecturerViewModel';
 import AnalyticsUI from '../components';
 
-// ----------------------------------------------------------------------
-type OptionSelectedFilter = 'Week' | 'Month' | 'Year';
 const OverviewAnalyticsView = () => {
-  const [optionSelected, setOptionSelected] = useState<OptionSelectedFilter>('Month');
   const router = useRouter();
   const dispatch = useAppDispatch();
-
-  const handleChange = (event: SelectChangeEvent<OptionSelectedFilter>) => {
-    setOptionSelected(event.target.value as OptionSelectedFilter);
-  };
+  const { handleChange, optionSelected } = useDashboardLectureViewModel();
+  const { reportData, isLoadingGetReport } = useAppSelector((state) => state.dashboardLecture);
 
   return (
     <DashboardContent>
@@ -29,7 +23,7 @@ const OverviewAnalyticsView = () => {
         py={2}
       >
         <Typography variant="h3" sx={{ mb: { xs: 2, sm: 0 } }}>
-          Bảng điều khiển giáo viên đào tạo
+          Thông số giảng viên
         </Typography>
 
         <FormControl sx={{ minWidth: 200, width: { xs: '100%', sm: '300px' } }}>
@@ -39,9 +33,8 @@ const OverviewAnalyticsView = () => {
             id="demo-simple-select-standard"
             value={optionSelected}
             onChange={handleChange}
-            label="Chọn lọc theo" // Ensure this matches the InputLabel
+            label="Chọn lọc theo"
           >
-            <MenuItem value={'Week'}>Tuần</MenuItem>
             <MenuItem value={'Month'}>Tháng</MenuItem>
             <MenuItem value={'Year'}>Năm</MenuItem>
           </Select>
@@ -49,12 +42,13 @@ const OverviewAnalyticsView = () => {
       </Box>
 
       <Grid container spacing={3}>
-        {/* Adjusting xs, sm, and md to be the same for consistent layout */}
         <Grid xs={12} sm={6} md={4}>
           <AnalyticsUI.AnalyticsWidgetSummary
+            isLoading={isLoadingGetReport}
             title="Tổng doanh thu"
-            percent={2.6}
-            total={714000}
+            percent={reportData?.commission || 0}
+            type="transaction"
+            total={reportData?.totalTransaction || 0}
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-bag.svg" />}
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
@@ -65,9 +59,11 @@ const OverviewAnalyticsView = () => {
 
         <Grid xs={12} sm={6} md={4}>
           <AnalyticsUI.AnalyticsWidgetSummary
+            isLoading={isLoadingGetReport}
             title="Tổng giao dịch"
             percent={2.8}
-            total={1723315}
+            type="enrolled"
+            total={reportData?.totalCourseEnrolled || 0}
             color="warning"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-buy.svg" />}
             chart={{
@@ -78,10 +74,12 @@ const OverviewAnalyticsView = () => {
         </Grid>
         <Grid xs={12} sm={6} md={4}>
           <AnalyticsUI.AnalyticsWidgetSummary
+            isLoading={isLoadingGetReport}
             title="Đánh giá"
             percent={3.6}
-            total={234}
+            total={reportData?.totalFeedbacks || 0}
             color="error"
+            type="feedback"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-message.svg" />}
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
@@ -90,15 +88,15 @@ const OverviewAnalyticsView = () => {
           />
         </Grid>
 
-        <Grid xs={12} md={6} lg={6}>
+        <Grid xs={12} md={8} lg={8}>
           <Grid xs={12} md={6} lg={6}>
-            <AnalyticsUI.AnalyticsLecturerTransaction title="Dánh sách giao dịch gần nhất" />
+            <AnalyticsUI.AnalyticsLecturerTransaction />
           </Grid>
           <Grid xs={12} md={12} lg={6} mt={1}>
-            <AnalyticsUI.AnalyticsTasks />
+            <AnalyticsUI.AnalyticsTopCourses />
           </Grid>
         </Grid>
-        <Grid xs={12} md={6} lg={6}>
+        <Grid xs={12} md={4} lg={4}>
           <AnalyticsUI.LectureInfoOverall />
         </Grid>
       </Grid>
