@@ -1,0 +1,16 @@
+@import "../../../../../../theme/styles/global/variables";
+@import "../../../../../../theme/styles/global/font_variables";
+
+.courses-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    border: 1px solid $border-color;
+    border-radius: 1rem;
+
+    &__title {
+        flex-grow: 1;
+        text-align: left;
+    }
+}
