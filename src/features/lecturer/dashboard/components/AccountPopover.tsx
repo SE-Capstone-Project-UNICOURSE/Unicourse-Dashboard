@@ -1,5 +1,6 @@
 import usePathname from '@app/routes/hooks/usePathname';
 import useRouter from '@app/routes/hooks/useRouter';
+import { useAppSelector } from '@app/stores';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -11,36 +12,19 @@ import MenuList from '@mui/material/MenuList';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { useCallback, useState } from 'react';
+import AccountPopoverModel from '../models/AccountPopoverModel';
 
 // ----------------------------------------------------------------------
 
-// Mock data for account
-const _myAccount = {
-  displayName: 'John Doe',
-  email: 'john.doe@example.com',
-  photoURL: 'https://via.placeholder.com/150',
-};
-
-// Mock data for navigation options
-const accountOptions = [
-  { label: 'Profile', href: '/profile', icon: <i className="fas fa-user" /> },
-  { label: 'Settings', href: '/settings', icon: <i className="fas fa-cog" /> },
-  { label: 'Dashboard', href: '/dashboard', icon: <i className="fas fa-tachometer-alt" /> },
-];
-
 export type AccountPopoverProps = IconButtonProps & {
-  data?: {
-    label: string;
-    href: string;
-    icon?: React.ReactNode;
-    info?: React.ReactNode;
-  }[];
+  data: AccountPopoverModel[];
 };
 
-const AccountPopover = ({ data = accountOptions, sx, ...other }: AccountPopoverProps) => {
+const AccountPopover = ({ data, sx, ...other }: AccountPopoverProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
+  const { userInfo } = useAppSelector((state) => state.authState.auth);
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setOpenPopover(event.currentTarget);
@@ -77,8 +61,12 @@ const AccountPopover = ({ data = accountOptions, sx, ...other }: AccountPopoverP
         }}
         {...other}
       >
-        <Avatar src={_myAccount.photoURL} alt={_myAccount.displayName} sx={{ width: 1, height: 1 }}>
-          {_myAccount.displayName.charAt(0).toUpperCase()}
+        <Avatar
+          src={userInfo?.profile_image}
+          alt={userInfo?.full_name}
+          sx={{ width: 1, height: 1 }}
+        >
+          {userInfo?.full_name}
         </Avatar>
       </IconButton>
 
@@ -96,11 +84,11 @@ const AccountPopover = ({ data = accountOptions, sx, ...other }: AccountPopoverP
       >
         <Box sx={{ p: 2, pb: 1.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {_myAccount?.displayName}
+            {userInfo?.full_name ?? ''}
           </Typography>
 
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {_myAccount?.email}
+            {userInfo?.email ?? ''}
           </Typography>
         </Box>
 
@@ -143,7 +131,7 @@ const AccountPopover = ({ data = accountOptions, sx, ...other }: AccountPopoverP
 
         <Box sx={{ p: 1 }}>
           <Button fullWidth color="error" size="medium" variant="text" onClick={handleClickLogout}>
-            Logout
+            Đăng xuất
           </Button>
         </Box>
       </Popover>

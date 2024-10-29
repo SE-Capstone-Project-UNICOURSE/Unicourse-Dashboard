@@ -1,41 +1,35 @@
-import type { CardProps } from '@mui/material/Card';
-import type { ChartOptions } from '@app/common/components/chart';
-
 import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
 import Divider from '@mui/material/Divider';
 import { useTheme } from '@mui/material/styles';
-import CardHeader from '@mui/material/CardHeader';
 
 import { fNumber } from 'src/utils/format-number';
 
-import { Chart, useChart, ChartLegends } from '@app/common/components/chart';
+import { Chart, ChartLegends, useChart } from '@app/common/components/chart';
 
-// ----------------------------------------------------------------------
-
-type AnalyticsCurrentVisitsProps = CardProps & {
-  title?: string;
-  subheader?: string;
+const chartData = {
+  title: 'Đánh giá trung bình',
+  subheader: 'Thống kê trong tháng vừa qua',
   chart: {
-    colors?: string[];
-    series: {
-      label: string;
-      value: number;
-    }[];
-    options?: ChartOptions;
-  };
+    colors: undefined, // Default colors will be used if undefined
+    series: [
+      { label: '5 ⭐️', value: 34 },
+      { label: '4 ⭐️', value: 12 },
+      { label: '3 ⭐️', value: 10 },
+      { label: '2 ⭐️', value: 5 },
+      { label: '1 ⭐️', value: 0 },
+    ],
+    options: {},
+  },
 };
 
-const AnalyticsCurrentVisits = ({
-  title,
-  subheader,
-  chart,
-  ...other
-}: AnalyticsCurrentVisitsProps) => {
+const AnalyticsFeedbacks = () => {
   const theme = useTheme();
 
-  const chartSeries = chart.series.map((item) => item.value);
+  // Extract values for the chart
+  const chartSeries = chartData.chart.series.map((item) => item.value);
 
-  const chartColors = chart.colors ?? [
+  const chartColors = chartData.chart.colors ?? [
     theme.palette.primary.main,
     theme.palette.warning.main,
     theme.palette.secondary.dark,
@@ -45,7 +39,7 @@ const AnalyticsCurrentVisits = ({
   const chartOptions = useChart({
     chart: { sparkline: { enabled: true } },
     colors: chartColors,
-    labels: chart.series.map((item) => item.label),
+    labels: chartData.chart.series.map((item) => item.label),
     stroke: { width: 0 },
     dataLabels: { enabled: true, dropShadow: { enabled: false } },
     tooltip: {
@@ -55,12 +49,12 @@ const AnalyticsCurrentVisits = ({
       },
     },
     plotOptions: { pie: { donut: { labels: { show: false } } } },
-    ...chart.options,
+    ...chartData.chart.options,
   });
 
   return (
-    <Card {...other}>
-      <CardHeader title={title} subheader={subheader} />
+    <Card>
+      <CardHeader title={chartData.title} subheader={chartData.subheader} />
 
       <Chart
         type="pie"
@@ -82,4 +76,4 @@ const AnalyticsCurrentVisits = ({
   );
 };
 
-export default AnalyticsCurrentVisits;
+export default AnalyticsFeedbacks;

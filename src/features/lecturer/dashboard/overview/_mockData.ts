@@ -37,21 +37,4 @@ const _posts = [
   },
 ];
 
-// Mock data for order timeline
-const _timeline = [
-  { id: '1', type: 'order1', title: 'Order #12345 confirmed', time: '2023-09-15 10:30:00' },
-  { id: '2', type: 'order2', title: 'Order #12345 packed', time: '2023-09-15 12:45:00' },
-  { id: '3', type: 'order3', title: 'Order #12345 shipped', time: '2023-09-15 14:30:00' },
-  { id: '4', type: 'order4', title: 'Order #12345 delivered', time: '2023-09-16 10:00:00' },
-];
-
-// Mock data for tasks
-const _tasks = [
-  { id: '1', name: 'Complete project report' },
-  { id: '2', name: 'Design website UI' },
-  { id: '3', name: 'Implement API integration' },
-  { id: '4', name: 'Test new features' },
-  { id: '5', name: 'Prepare presentation slides' },
-];
-
-export { _posts, _tasks, _timeline };
+export { _posts };

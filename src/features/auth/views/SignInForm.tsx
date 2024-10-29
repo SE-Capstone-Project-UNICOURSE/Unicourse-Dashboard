@@ -72,13 +72,7 @@ const SignInForm = () => {
         sx={{ mb: 3 }}
       />
 
-      <LoadingButton
-        fullWidth
-        size="large"
-        type="submit" // Submit button
-        color="inherit"
-        variant="contained"
-      >
+      <LoadingButton fullWidth size="large" type="submit" color="inherit" variant="contained">
         Đăng nhập
       </LoadingButton>
     </Box>

@@ -7,7 +7,7 @@ const icon = (name: string) => (
 
 const lecturerNavData: NavItemLecturerProps[] = [
   {
-    title: 'Bảng điều khiển',
+    title: 'Thông số',
     path: '/lecturer',
     icon: icon('ic-analytics'),
   },

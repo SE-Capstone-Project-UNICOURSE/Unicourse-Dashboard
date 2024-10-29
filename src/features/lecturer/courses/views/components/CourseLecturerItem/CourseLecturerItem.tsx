@@ -1,21 +1,19 @@
+import { Label } from '@app/common/components/label';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Label } from '@app/common/components/label';
 import { fCurrency } from 'src/utils/format-number';
-import type { ProductItemProps } from '../../_mockData';
 
-type CourseItemProps = {
-  product: ProductItemProps;
-};
+type CourseItemProps = {};
 
-const CourseLecturerItem = ({ product }: CourseItemProps) => {
+const CourseLecturerItem = () => {
   const renderStatus = (
     <Label
       variant="inverted"
-      color={(product.status === 'sale' && 'error') || 'info'}
+      // color={('sale' && 'error') || 'info'}
+      color={'info'}
       sx={{
         zIndex: 9,
         top: 16,
@@ -24,15 +22,15 @@ const CourseLecturerItem = ({ product }: CourseItemProps) => {
         textTransform: 'uppercase',
       }}
     >
-      {product.status}
+      Status
     </Label>
   );
 
   const renderImg = (
     <Box
       component="img"
-      alt={product.title}
-      src={product.coverUrl}
+      alt={'Product Title'}
+      src={'Product URL'}
       sx={{
         top: 0,
         width: 1,
@@ -45,7 +43,7 @@ const CourseLecturerItem = ({ product }: CourseItemProps) => {
   const renderInstructor = (
     <Typography variant="subtitle1">
       <Typography component="span" variant="body1">
-        {product.instructor}
+        Instructor
       </Typography>
     </Typography>
   );
@@ -60,24 +58,25 @@ const CourseLecturerItem = ({ product }: CourseItemProps) => {
           textDecoration: 'line-through',
         }}
       >
-        {product.priceSale && fCurrency(product.priceSale)}
+        {/* {product.priceSale && fCurrency(product.priceSale)} */}
+        {fCurrency(20000)}
       </Typography>
       &nbsp;
-      {fCurrency(product.price)}
+      {fCurrency(30000)}
     </Typography>
   );
 
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        {product.status && renderStatus}
+        {renderStatus}
 
         {renderImg}
       </Box>
 
       <Stack spacing={1} sx={{ p: 2 }}>
         <Link color="inherit" underline="hover" variant="subtitle2" noWrap>
-          {product.title}
+          Product Title
         </Link>
         {renderInstructor}
 
