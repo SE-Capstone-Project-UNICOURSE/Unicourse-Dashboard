@@ -30,6 +30,7 @@ module.exports = {
     'no-alert': 1,
     camelcase: 1,
     'no-console': 1,
+    'no-else-return': 0,
     'no-unused-vars': 1,
     'no-nested-ternary': 1,
     'no-param-reassign': 0,
