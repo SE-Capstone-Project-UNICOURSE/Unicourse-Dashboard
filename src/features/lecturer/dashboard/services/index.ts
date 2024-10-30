@@ -2,6 +2,9 @@ import type { DataResponse, PaginateResponse } from '@app/stores/models';
 import httpClient from '@app/utils/httpClient';
 import type { AxiosRequestConfig } from 'axios';
 import { DASHBOARD_LECTURE_API_PATH } from '../constants';
+import LectureFeedbackCourseModel, {
+  LectureFeedbackCourseRequestModel,
+} from '../models/LectureFeedbackCourseModel';
 import type LecturerProfileData from '../models/LectureInfoModel';
 import ReportData from '../models/ReportDataModel';
 import TopRatesCourseModel, { TopRatesCourseRequestModel } from '../models/TopRatesCourseModel';
@@ -58,6 +61,23 @@ class LectureDashboardViewServices {
       request,
       config
     );
+
+    return response.data;
+  }
+
+  public async getLatestFeedback(
+    accessToken: string,
+    request: LectureFeedbackCourseRequestModel
+  ): Promise<DataResponse<PaginateResponse<LectureFeedbackCourseModel[]>>> {
+    const config: AxiosRequestConfig = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    const response = await httpClient.post<
+      DataResponse<PaginateResponse<LectureFeedbackCourseModel[]>>
+    >(`${DASHBOARD_LECTURE_API_PATH.GET_LATEST_FEEDBACK_LECTURER}`, request, config);
 
     return response.data;
   }

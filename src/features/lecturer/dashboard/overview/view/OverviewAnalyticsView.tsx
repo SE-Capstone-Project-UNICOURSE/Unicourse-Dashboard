@@ -90,10 +90,10 @@ const OverviewAnalyticsView = () => {
 
         <Grid xs={12} md={8} lg={8}>
           <Grid xs={12} md={6} lg={6}>
-            <AnalyticsUI.AnalyticsLecturerTransaction />
+            <AnalyticsUI.AnalyticsLecturerCourses />
           </Grid>
           <Grid xs={12} md={12} lg={6} mt={1}>
-            <AnalyticsUI.AnalyticsTopCourses />
+            <AnalyticsUI.AnalyticsLatestFeedbacks />
           </Grid>
         </Grid>
         <Grid xs={12} md={4} lg={4}>

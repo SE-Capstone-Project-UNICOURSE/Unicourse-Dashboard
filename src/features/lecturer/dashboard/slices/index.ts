@@ -1,6 +1,11 @@
 // src/features/courseDetail/courseDetailSlice.ts
 import { createSlice } from '@reduxjs/toolkit';
-import { getLectureInfo, getReportData, getTopRateCourses } from './actions';
+import {
+  getLatestFeedbackLecturer,
+  getLectureInfo,
+  getReportData,
+  getTopRateCourses,
+} from './actions';
 import { initialDashboardLectureScreenState } from './types';
 
 const dashboardLecturesSlice = createSlice({
@@ -15,6 +20,15 @@ const dashboardLecturesSlice = createSlice({
     },
     setIsLoadingEnrollCourse(state, action) {
       state.lectureInfo.isLoadingGetLecture = action.payload;
+    },
+    setPageFeedbacksLecturer(state, action) {
+      state.latestFeedback.page = action.payload;
+    },
+    setPageSizeFeedbackLecturer(state, action) {
+      state.latestFeedback.pageSize = action.payload;
+    },
+    setDataFeedback(state, action) {
+      state.latestFeedback.data = action.payload;
     },
     reset: () => initialDashboardLectureScreenState,
   },
@@ -53,9 +67,28 @@ const dashboardLecturesSlice = createSlice({
       .addCase(getTopRateCourses.rejected, (state) => {
         state.topRateCourses.isLoadingGetTopRateCourses = false;
       });
+
+    builder
+      .addCase(getLatestFeedbackLecturer.pending, (state) => {
+        state.latestFeedback.isLoadingGetLatestFeedback = true;
+      })
+      .addCase(getLatestFeedbackLecturer.fulfilled, (state, action) => {
+        state.latestFeedback.isLoadingGetLatestFeedback = false;
+        state.latestFeedback.data = action.payload?.data ?? [];
+      })
+      .addCase(getLatestFeedbackLecturer.rejected, (state) => {
+        state.latestFeedback.isLoadingGetLatestFeedback = false;
+      });
   },
 });
 
-export const { setIsLoadingEnrollCourse, setPageTopRateCourse, setPageSizeTopRateCourse } =
-  dashboardLecturesSlice.actions;
+export const {
+  setIsLoadingEnrollCourse,
+  setPageTopRateCourse,
+  setPageSizeTopRateCourse,
+  setPageFeedbacksLecturer,
+  setPageSizeFeedbackLecturer,
+  setDataFeedback,
+  reset,
+} = dashboardLecturesSlice.actions;
 export default dashboardLecturesSlice.reducer;

@@ -1,17 +1,47 @@
+import type User from '@app/features/auth/models/User.model';
 import RouterLink from '@app/routes/components/RouterLink';
 import useRouter from '@app/routes/hooks/useRouter';
-import { useAppSelector } from '@app/stores';
+import { useAppDispatch } from '@app/stores';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import { jwtDecode } from 'jwt-decode';
+import { useEffect } from 'react';
 import SimpleLayout from '../admin/dashboard/layouts/simple/SimpleLayout';
+import { setUserInfo } from '../auth/slices';
 
 // ----------------------------------------------------------------------
 
 const AccessDeniedView = () => {
-  const { userInfo } = useAppSelector((state) => state.authState.auth);
+  const dispatch = useAppDispatch();
   const router = useRouter();
+  let route = '/sign-in';
+
+  useEffect(() => {
+    const handleCheckPermissionUser = () => {
+      const accessToken = localStorage.getItem('accessToken');
+      if (accessToken) {
+        try {
+          // Decode the token to check user role
+          const decodedToken = jwtDecode<User>(accessToken);
+          const userRole = decodedToken.role?.toLowerCase();
+          if (userRole) {
+            route = `/${userRole}`;
+            dispatch(setUserInfo(decodedToken));
+          } else {
+            route = '/sign-in';
+          }
+        } catch (error) {
+          route = '/sign-in';
+        }
+      } else {
+        route = '/sign-in';
+      }
+    };
+
+    handleCheckPermissionUser();
+  }, [router]);
 
   return (
     <SimpleLayout content={{ compact: true }}>
@@ -37,7 +67,7 @@ const AccessDeniedView = () => {
 
         <Button
           component={RouterLink}
-          href={`/${userInfo?.role.toLowerCase() || 'sign-in'}`}
+          href={route}
           size="large"
           variant="contained"
           color="inherit"

@@ -19,7 +19,7 @@ import { setPageSizeTopRateCourse, setPageTopRateCourse } from '../../slices';
 import { getTopRateCourses } from '../../slices/actions';
 import { Star } from '@mui/icons-material';
 
-const AnalyticsLecturerTransaction = () => {
+const AnalyticsLecturerCourses = () => {
   const dispatch = useAppDispatch();
   const {
     data,
@@ -52,14 +52,14 @@ const AnalyticsLecturerTransaction = () => {
   const handleChangePage = (event: unknown, newPage: number) => {
     if (!accessToken) return;
     dispatch(setPageTopRateCourse(newPage));
-    handleGetTopRateCourses(accessToken); // Call API whenever page changes
+    handleGetTopRateCourses(accessToken);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!accessToken) return;
     const newSize = parseInt(event.target.value, 10);
     dispatch(setPageSizeTopRateCourse(newSize));
-    dispatch(setPageTopRateCourse(1)); // Reset to page 1 when page size changes
+    dispatch(setPageTopRateCourse(0));
     handleGetTopRateCourses(accessToken);
   };
 
@@ -86,7 +86,7 @@ const AnalyticsLecturerTransaction = () => {
                 <TableCell align="center" sx={{ width: '20%' }}>
                   Hình ảnh
                 </TableCell>
-                <TableCell align="center" sx={{ width: '20%' }}>
+                <TableCell align="left" sx={{ width: '20%' }}>
                   Tên khoá học
                 </TableCell>
                 <TableCell sx={{ width: '20%' }} align="center">
@@ -111,7 +111,7 @@ const AnalyticsLecturerTransaction = () => {
                       alt={row.course.title}
                     />
                   </TableCell>
-                  <TableCell align="center" component="th" scope="row">
+                  <TableCell align="left" component="th" scope="row">
                     {row.course.title}
                   </TableCell>
                   <TableCell align="center">{row.course.price}</TableCell>
@@ -145,4 +145,4 @@ const AnalyticsLecturerTransaction = () => {
   );
 };
 
-export default AnalyticsLecturerTransaction;
+export default AnalyticsLecturerCourses;

@@ -1,3 +1,4 @@
+import LectureFeedbackCourseModel from '../../models/LectureFeedbackCourseModel';
 import LecturerProfileData from '../../models/LectureInfoModel';
 import ReportData from '../../models/ReportDataModel';
 import TopRatesCourseModel from '../../models/TopRatesCourseModel';
@@ -16,6 +17,13 @@ interface DashboardLectureScreenState {
     pageSize: number;
     total: number;
   };
+  latestFeedback: {
+    isLoadingGetLatestFeedback: boolean;
+    data: LectureFeedbackCourseModel[];
+    page: number;
+    pageSize: number;
+    total: number;
+  };
 }
 
 export const initialDashboardLectureScreenState: DashboardLectureScreenState = {
@@ -28,6 +36,13 @@ export const initialDashboardLectureScreenState: DashboardLectureScreenState = {
   topRateCourses: {
     data: [],
     isLoadingGetTopRateCourses: false,
+    page: 0,
+    pageSize: 5,
+    total: 0,
+  },
+  latestFeedback: {
+    data: [],
+    isLoadingGetLatestFeedback: false,
     page: 0,
     pageSize: 5,
     total: 0,

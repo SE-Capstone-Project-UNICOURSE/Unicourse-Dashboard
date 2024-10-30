@@ -23,14 +23,6 @@ const SignInForm = () => {
     (data) => {
       console.log('Form data:', data);
 
-      localStorage.setItem(
-        'user',
-        JSON.stringify({
-          token: 'dummyToken123456', // Token giả lập
-          role: 'lecturer',
-        })
-      );
-
       router.push('/lecturer');
     },
     [router]

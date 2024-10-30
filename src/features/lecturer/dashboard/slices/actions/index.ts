@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { LectureFeedbackCourseRequestModel } from '../../models/LectureFeedbackCourseModel';
 import { TopRatesCourseRequestModel } from '../../models/TopRatesCourseModel';
 import dashboardLectureServices from '../../services';
 
@@ -60,6 +61,26 @@ export const getTopRateCourses = createAsyncThunk(
       }
       return rejectWithValue({
         message: 'Fail to get report Data! please try again!',
+      });
+    }
+  }
+);
+
+export const getLatestFeedbackLecturer = createAsyncThunk(
+  'dashboardLecture/getLatestFeedbackLecturer',
+  async (
+    { accessToken, request }: { accessToken: string; request: LectureFeedbackCourseRequestModel },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await dashboardLectureServices.getLatestFeedback(accessToken, request);
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return rejectWithValue({ message: error.response.data.message });
+      }
+      return rejectWithValue({
+        message: 'Fail to get feedback Data! please try again!',
       });
     }
   }

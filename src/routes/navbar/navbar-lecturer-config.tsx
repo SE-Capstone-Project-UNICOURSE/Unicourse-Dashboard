@@ -1,38 +1,37 @@
-import { SvgColor } from '@app/common/components/svg-color';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import SchoolIcon from '@mui/icons-material/School';
+import ListIcon from '@mui/icons-material/List';
+import ArticleIcon from '@mui/icons-material/Article';
 import type { NavItemLecturerProps } from '@app/features/lecturer/dashboard/types';
-
-const icon = (name: string) => (
-  <SvgColor width="100%" height="100%" src={`/assets/icons/navbar/${name}.svg`} />
-);
 
 const lecturerNavData: NavItemLecturerProps[] = [
   {
     title: 'Thông số',
     path: '/lecturer',
-    icon: icon('ic-analytics'),
+    icon: <AnalyticsIcon />,
   },
   {
     title: 'Khoá học',
     path: '/lecturer/courses',
-    icon: icon('ic-courses'),
-    children: [{ title: 'Danh sách khoá học', path: '/lecturer/courses', icon: icon('ic-list') }],
+    icon: <SchoolIcon />,
+    children: [{ title: 'Danh sách khoá học', path: '/lecturer/courses', icon: <ListIcon /> }],
   },
   {
     title: 'Bài viết',
     path: '/lecturer/blog',
-    icon: icon('ic-blog'),
+    icon: <ArticleIcon />,
     children: [
       {
         title: 'Danh sách bài viết',
         path: '/lecturer/blog',
-        icon: icon('ic-list'),
+        icon: <ListIcon />,
       },
     ],
   },
   {
     title: 'Empty',
     path: '/lecturer/empty',
-    icon: icon('ic-courses'),
+    icon: <SchoolIcon />,
   },
 ];
 
