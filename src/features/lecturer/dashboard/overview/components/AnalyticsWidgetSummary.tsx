@@ -1,14 +1,16 @@
+import type { ChartOptions } from '@app/common/components/chart';
+import { Chart, useChart } from '@app/common/components/chart';
 import Iconify from '@app/common/components/iconify/Iconify';
+import { SvgColor } from '@app/common/components/svg-color';
+import GradientCircularProgress from '@app/routes/components/GradientCircularProgress';
+import helpers from '@app/utils/helpers';
 import Box from '@mui/material/Box';
 import type { CardProps } from '@mui/material/Card';
 import Card from '@mui/material/Card';
 import { useTheme } from '@mui/material/styles';
-import type { ChartOptions } from '@app/common/components/chart';
-import { Chart, useChart } from '@app/common/components/chart';
-import { SvgColor } from '@app/common/components/svg-color';
 import type { ColorType } from 'src/theme/core/palette';
 import { bgGradient, varAlpha } from 'src/theme/styles';
-import { fNumber, fPercent, fShortenNumber } from 'src/utils/format-number';
+import { fNumber, fPercent } from 'src/utils/format-number';
 
 // ----------------------------------------------------------------------
 
@@ -17,6 +19,8 @@ type Props = CardProps & {
   total: number;
   percent: number;
   color?: ColorType;
+  type: 'transaction' | 'enrolled' | 'feedback';
+  isLoading: boolean;
   icon: React.ReactNode;
   chart: {
     series: number[];
@@ -31,6 +35,8 @@ const AnalyticsWidgetSummary = ({
   total,
   chart,
   percent,
+  isLoading,
+  type,
   color = 'primary',
   sx,
   ...other
@@ -105,7 +111,15 @@ const AnalyticsWidgetSummary = ({
       >
         <Box sx={{ flexGrow: 1, minWidth: 112 }}>
           <Box sx={{ mb: 1, typography: 'subtitle2' }}>{title}</Box>
-          <Box sx={{ typography: 'h4' }}>{fShortenNumber(total)}</Box>
+          <Box sx={{ typography: 'h4' }}>
+            {isLoading ? (
+              <GradientCircularProgress />
+            ) : (
+              <div>
+                {helpers.formatCurrencyVND(total)} {type === 'transaction' ? 'VNĐ' : ''}
+              </div>
+            )}
+          </Box>
         </Box>
 
         <Chart

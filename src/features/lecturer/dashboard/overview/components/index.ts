@@ -1,13 +1,13 @@
 import AnalyticsFeedbacks from './AnalyticsFeedbacks';
-import AnalyticsLecturerTransaction from './AnalyticsLecturerTransaction';
-import AnalyticsTasks from './AnalyticsTopCourses';
+import AnalyticsLatestFeedbacks from './AnalyticsLatestFeedbacks';
+import AnalyticsLecturerCourses from './AnalyticsLecturerCourses';
 import AnalyticsWidgetSummary from './AnalyticsWidgetSummary';
 import LectureInfoOverall from './LectureInfoOverall';
 
 const AnalyticsUI = {
   AnalyticsFeedbacks,
-  AnalyticsLecturerTransaction,
-  AnalyticsTasks,
+  AnalyticsLecturerCourses,
+  AnalyticsLatestFeedbacks,
   AnalyticsWidgetSummary,
   LectureInfoOverall,
 };

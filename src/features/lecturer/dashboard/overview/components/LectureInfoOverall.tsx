@@ -18,8 +18,7 @@ import {
 } from '@mui/material';
 import { useEffect } from 'react';
 import { getLectureInfo } from '../../slices/actions';
-
-type LectureInfoOverallProps = {};
+import helpers from '@app/utils/helpers';
 
 const LectureInfoOverall = () => {
   const router = useRouter();
@@ -141,23 +140,22 @@ const LectureInfoOverall = () => {
                 <Box
                   display="flex"
                   flexDirection="column"
-                  alignItems="center"
-                  justifyContent="space-between"
+                  alignItems="flex-start"
                   sx={{
                     padding: 1,
                     borderRadius: 2,
                     boxShadow: 1,
-                    height: 250,
+                    height: 200,
                   }}
                 >
                   <Avatar
                     alt={course.title}
                     src={course.thumbnail}
                     variant="rounded"
-                    sx={{ width: '100%', height: 100 }}
+                    sx={{ width: '100%', height: 80 }}
                   />
                   <Typography
-                    variant="subtitle1"
+                    variant="subtitle2"
                     sx={{
                       display: '-webkit-box',
                       WebkitBoxOrient: 'vertical',
@@ -167,11 +165,14 @@ const LectureInfoOverall = () => {
                   >
                     {course.title}
                   </Typography>
-                  <Typography variant="body2" color="textSecondary" sx={{ textAlign: 'center' }}>
-                    Giá: {course.price > 0 ? `${course.price} VND` : 'Miễn phí'}
+                  <Typography variant="caption" color="ActiveBorder" sx={{ textAlign: 'center' }}>
+                    Giá:{' '}
+                    {course.price > 0
+                      ? `${helpers.formatCurrencyVND(course.price)} VND`
+                      : 'Miễn phí'}
                   </Typography>
                   <Typography
-                    variant="body2"
+                    variant="caption"
                     color="textSecondary"
                     sx={{ textAlign: 'center', mt: 1 }}
                   >
