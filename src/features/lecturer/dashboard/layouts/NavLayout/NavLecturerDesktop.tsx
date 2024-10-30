@@ -1,17 +1,33 @@
+import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
 import type { Breakpoint } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { varAlpha } from '@theme/styles';
 import type { NavLecturerContentProps } from '../../types';
 import NavContent from './NavLecturerContent';
 
+import React from 'react';
+
+type NavLectureDesktop = {
+  layoutQuery: Breakpoint;
+  isCollapsed: boolean;
+  setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 const NavLecturerDesktop = ({
   sx,
   data,
   slots,
   layoutQuery,
-}: NavLecturerContentProps & { layoutQuery: Breakpoint }) => {
+  setIsCollapsed,
+  isCollapsed,
+}: NavLecturerContentProps & NavLectureDesktop) => {
   const theme = useTheme();
+
+  const toggleNav = () => {
+    setIsCollapsed((prev) => !prev);
+  };
 
   return (
     <Box
@@ -26,7 +42,7 @@ const NavLecturerDesktop = ({
         flexDirection: 'column',
         bgcolor: 'var(--layout-nav-bg)',
         zIndex: 'var(--layout-nav-zIndex)',
-        width: 'var(--layout-nav-vertical-width)',
+        width: isCollapsed ? '64px' : 'var(--layout-nav-vertical-width)', // Adjusted width for collapsed state
         borderRight: `1px solid var(--layout-nav-border-color, ${varAlpha(
           theme.vars.palette.grey['500Channel'],
           0.12
@@ -34,10 +50,23 @@ const NavLecturerDesktop = ({
         [theme.breakpoints.up(layoutQuery)]: {
           display: 'flex',
         },
+        transition: 'width 0.3s', // Smooth transition for collapse/expand
         ...sx,
       }}
     >
-      <NavContent data={data} slots={slots} />
+      {/* Toggle button for collapsing/expanding navigation */}
+      <IconButton
+        onClick={toggleNav}
+        sx={{
+          alignSelf: 'flex-end',
+          mb: 1,
+          color: 'text.primary',
+        }}
+      >
+        {isCollapsed ? <ChevronRight /> : <ChevronLeft />}
+      </IconButton>
+
+      <NavContent data={data} slots={slots} isCollapsed={isCollapsed} />
     </Box>
   );
 };

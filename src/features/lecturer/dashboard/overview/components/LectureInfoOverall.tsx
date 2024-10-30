@@ -135,8 +135,8 @@ const LectureInfoOverall = () => {
         </Typography>
         <Box display="flex" flexWrap="wrap">
           <Grid container spacing={2}>
-            {info?.course.slice(-3).map((course, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
+            {info?.course.slice(-4).map((course, index) => (
+              <Grid item xs={12} sm={6} md={6} key={index}>
                 <Box
                   display="flex"
                   flexDirection="column"
@@ -145,14 +145,14 @@ const LectureInfoOverall = () => {
                     padding: 1,
                     borderRadius: 2,
                     boxShadow: 1,
-                    height: 200,
+                    height: 250,
                   }}
                 >
                   <Avatar
                     alt={course.title}
                     src={course.thumbnail}
                     variant="rounded"
-                    sx={{ width: '100%', height: 80 }}
+                    sx={{ width: '100%', height: 140 }}
                   />
                   <Typography
                     variant="subtitle2"

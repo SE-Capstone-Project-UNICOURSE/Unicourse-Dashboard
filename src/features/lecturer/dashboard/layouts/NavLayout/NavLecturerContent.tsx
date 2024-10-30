@@ -6,7 +6,12 @@ import { useState } from 'react';
 import type { NavLecturerContentProps } from '../../types';
 import RenderNavItem from './NavLecturerItem';
 
-const NavLecturerContent = ({ data, slots, sx }: NavLecturerContentProps) => {
+const NavLecturerContent = ({
+  data,
+  slots,
+  sx,
+  isCollapsed,
+}: NavLecturerContentProps & { isCollapsed?: boolean }) => {
   const pathname = usePathname();
   const [openItem, setOpenItem] = useState<string | null>(null);
 
@@ -17,7 +22,8 @@ const NavLecturerContent = ({ data, slots, sx }: NavLecturerContentProps) => {
   return (
     <Box width={'100%'}>
       <Box display="flex" justifyContent="center" alignItems="center" py={2}>
-        <Logo />
+        {/* Only show logo if nav is expanded */}
+        {!isCollapsed && <Logo />}
       </Box>
 
       <Scrollbar fillContent>
@@ -27,7 +33,7 @@ const NavLecturerContent = ({ data, slots, sx }: NavLecturerContentProps) => {
               const isActive = item.path === pathname;
               return (
                 <ListItem disableGutters disablePadding key={item.title}>
-                  {RenderNavItem({ item, isActive, openItem, handleToggle, pathname })}
+                  {RenderNavItem({ item, isActive, openItem, handleToggle, pathname, isCollapsed })}
                 </ListItem>
               );
             })}

@@ -17,7 +17,7 @@ const NavLecturerMobile = ({
     if (open) {
       onClose();
     }
-  }, [pathname, open, onClose]);
+  }, [pathname]);
 
   return (
     <Drawer
