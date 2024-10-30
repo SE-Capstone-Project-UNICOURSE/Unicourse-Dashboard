@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight } from '@mui/icons-material';
+import { ChevronLeft } from '@mui/icons-material';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import type { Breakpoint } from '@mui/material/styles';
@@ -7,6 +7,7 @@ import { varAlpha } from '@theme/styles';
 import type { NavLecturerContentProps } from '../../types';
 import NavContent from './NavLecturerContent';
 
+import { GridMenuIcon } from '@mui/x-data-grid';
 import React from 'react';
 
 type NavLectureDesktop = {
@@ -58,12 +59,12 @@ const NavLecturerDesktop = ({
       <IconButton
         onClick={toggleNav}
         sx={{
-          alignSelf: 'flex-end',
-          mb: 1,
+          alignSelf: isCollapsed ? 'center' : 'flex-end',
+          justifyContent: isCollapsed ? 'center' : 'flex-end',
           color: 'text.primary',
         }}
       >
-        {isCollapsed ? <ChevronRight /> : <ChevronLeft />}
+        {isCollapsed ? <GridMenuIcon /> : <ChevronLeft />}
       </IconButton>
 
       <NavContent data={data} slots={slots} isCollapsed={isCollapsed} />

@@ -4,7 +4,6 @@ import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import type { Breakpoint } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
-import { GridMenuIcon } from '@mui/x-data-grid';
 import { useState } from 'react';
 import DashboardUI from '../../components';
 import { Main } from '../../simple';
@@ -15,7 +14,6 @@ import HeaderSection from '../core/HeaderLecturerSection';
 import LayoutSection from '../core/LayoutLecturerSection';
 import NavDesktop from '../NavLayout/NavLecturerDesktop';
 import NavLecturerMobile from '../NavLayout/NavMobile';
-import { Button, IconButton } from '@mui/material';
 
 const DashboardLectureLayout = ({ sx, children, header }: DashboardLecturerLayoutProps) => {
   const theme = useTheme();

@@ -9,7 +9,7 @@ type OptionSelectedFilter = 'Month' | 'Year';
 
 const useDashboardLectureViewModel = () => {
   const dispatch = useAppDispatch();
-  const [optionSelected, setOptionSelected] = useState<OptionSelectedFilter>('Year');
+  const [optionSelected, setOptionSelected] = useState<OptionSelectedFilter>('Month');
   const router = useRouter();
 
   const { reportData } = useAppSelector((state) => state.dashboardLecture);
