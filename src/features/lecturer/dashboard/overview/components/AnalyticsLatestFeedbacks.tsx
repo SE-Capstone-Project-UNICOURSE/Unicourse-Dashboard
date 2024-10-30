@@ -106,7 +106,6 @@ const AnalyticsLatestFeedbacks = () => {
                 <TableCell align="center" sx={{ width: '5%' }}>
                   #
                 </TableCell>
-
                 <TableCell align="left" sx={{ width: '20%' }}>
                   Tên khoá học
                 </TableCell>
@@ -129,7 +128,7 @@ const AnalyticsLatestFeedbacks = () => {
                   <TableCell align="left" component="th" scope="row">
                     {row.course_title}
                   </TableCell>
-                  <TableCell align="center">{row.content}</TableCell>
+                  <TableCell align="left">{row.content}</TableCell>
                   <TableCell align="center">{helpers.formatDateToVN(row.created_at)}</TableCell>
                   <TableCell align="center">
                     {row.rating} <Star color="warning" fontSize="inherit" />

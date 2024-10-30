@@ -2,6 +2,7 @@ import useRouter from '@app/routes/hooks/useRouter';
 import { useAppDispatch, useAppSelector } from '@app/stores';
 import { showDialog } from '@app/stores/slices/dialogSlice';
 import { DialogType } from '@app/stores/types/dialogSlice.type';
+import helpers from '@app/utils/helpers';
 import { BadgeOutlined, LibraryBooks, People, School } from '@mui/icons-material';
 import {
   Avatar,
@@ -18,7 +19,6 @@ import {
 } from '@mui/material';
 import { useEffect } from 'react';
 import { getLectureInfo } from '../../slices/actions';
-import helpers from '@app/utils/helpers';
 
 const LectureInfoOverall = () => {
   const router = useRouter();
@@ -135,8 +135,8 @@ const LectureInfoOverall = () => {
         </Typography>
         <Box display="flex" flexWrap="wrap">
           <Grid container spacing={2}>
-            {info?.course.slice(-3).map((course, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
+            {info?.course.slice(-6).map((course, index) => (
+              <Grid item xs={6} sm={6} md={6} key={index}>
                 <Box
                   display="flex"
                   flexDirection="column"
@@ -145,14 +145,14 @@ const LectureInfoOverall = () => {
                     padding: 1,
                     borderRadius: 2,
                     boxShadow: 1,
-                    height: 200,
+                    height: 210,
                   }}
                 >
                   <Avatar
                     alt={course.title}
                     src={course.thumbnail}
                     variant="rounded"
-                    sx={{ width: '100%', height: 80 }}
+                    sx={{ width: '100%', height: 130 }}
                   />
                   <Typography
                     variant="subtitle2"

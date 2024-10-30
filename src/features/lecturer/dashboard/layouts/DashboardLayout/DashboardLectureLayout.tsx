@@ -17,7 +17,8 @@ import NavLecturerMobile from '../NavLayout/NavMobile';
 
 const DashboardLectureLayout = ({ sx, children, header }: DashboardLecturerLayoutProps) => {
   const theme = useTheme();
-  const [navOpen, setNavOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const layoutQuery: Breakpoint = 'lg';
 
   return (
@@ -47,6 +48,7 @@ const DashboardLectureLayout = ({ sx, children, header }: DashboardLecturerLayou
                     [theme.breakpoints.up(layoutQuery)]: { display: 'none' },
                   }}
                 />
+
                 <NavLecturerMobile
                   data={navData}
                   open={navOpen}
@@ -86,7 +88,14 @@ const DashboardLectureLayout = ({ sx, children, header }: DashboardLecturerLayou
       /** **************************************
        * Sidebar
        *************************************** */
-      sidebarSection={<NavDesktop data={navData} layoutQuery={layoutQuery} />}
+      sidebarSection={
+        <NavDesktop
+          data={navData}
+          layoutQuery={layoutQuery}
+          isCollapsed={isCollapsed}
+          setIsCollapsed={setIsCollapsed}
+        />
+      }
       /** **************************************
        * Footer
        *************************************** */
@@ -95,7 +104,7 @@ const DashboardLectureLayout = ({ sx, children, header }: DashboardLecturerLayou
        * Style
        *************************************** */
       cssVars={{
-        '--layout-nav-vertical-width': '300px',
+        '--layout-nav-vertical-width': `${isCollapsed ? '0px' : '300px'}`,
         '--layout-dashboard-content-pt': theme.spacing(1),
         '--layout-dashboard-content-pb': theme.spacing(8),
         '--layout-dashboard-content-px': theme.spacing(5),
@@ -109,7 +118,7 @@ const DashboardLectureLayout = ({ sx, children, header }: DashboardLecturerLayou
         ...sx,
       }}
     >
-      <Main>{children}</Main>
+      <Main sx={{ transition: 'margin-left 0.3s ease' }}>{children}</Main>
     </LayoutSection>
   );
 };

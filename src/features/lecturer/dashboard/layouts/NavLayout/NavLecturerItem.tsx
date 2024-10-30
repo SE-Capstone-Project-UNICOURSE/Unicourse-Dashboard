@@ -9,6 +9,7 @@ type RenderNavItemLecturerProps = {
   openItem: string | null;
   handleToggle: (title: string) => void;
   pathname: string;
+  isCollapsed?: boolean;
 };
 
 const RenderNavItemLecturer = ({
@@ -17,21 +18,21 @@ const RenderNavItemLecturer = ({
   isActive,
   handleToggle,
   pathname,
+  isCollapsed,
 }: RenderNavItemLecturerProps) => {
-  const hasChildren = Boolean(item.children?.length); // Kiểm tra nếu có children và không rỗng
-  const hasPath = Boolean(item.path); // Kiểm tra nếu có path
-  const isOpen = openItem === item.title; // Kiểm tra nếu item đang mở
+  const hasChildren = Boolean(item.children?.length);
+  const isOpen = openItem === item.title;
 
   return (
-    <Box width={'100%'}>
+    <Box width="100%">
       <ListItemButton
         disableGutters
-        component={!hasChildren && hasPath ? RouterLink : 'div'} // Nếu không có children thì component là RouterLink để điều hướng
-        {...(!hasChildren && hasPath && { href: item.path })} // Chỉ thêm href nếu item không có children
+        component={!hasChildren && item.path ? RouterLink : 'div'}
+        {...(!hasChildren && item.path && { href: item.path })}
         sx={{
-          pl: 2,
+          pl: isCollapsed ? 1 : 2,
           py: 1.5,
-          gap: 2,
+          gap: isCollapsed ? 0 : 2,
           pr: 1.5,
           borderRadius: 0.75,
           typography: 'body2',
@@ -41,27 +42,36 @@ const RenderNavItemLecturer = ({
           '&:hover': {
             backgroundColor: 'rgba(255, 255, 255, 0.04)',
           },
+          justifyContent: isCollapsed ? 'center' : 'flex-start', // Center items in collapsed state
         }}
-        onClick={() => hasChildren && handleToggle(item.title)} // Chỉ gọi handleToggle nếu item có children
+        onClick={() => hasChildren && handleToggle(item.title)}
       >
+        {/* Icon */}
         <Box component="span" sx={{ width: 24, height: 24 }}>
           {item.icon}
         </Box>
-        <Box component="span" flexGrow={1}>
-          <Typography variant="subtitle2" fontWeight={isActive ? 'bold' : 'medium'}>
-            {item.title}
-          </Typography>
-        </Box>
-        {hasChildren && (isOpen ? <ExpandLess /> : <ExpandMore />)}{' '}
-        {/* Hiển thị icon Expand nếu có children */}
-        {item.info && item.info}
+
+        {/* Title - Only show if not collapsed */}
+        {!isCollapsed && (
+          <Box component="span" flexGrow={1}>
+            <Typography variant="subtitle2" fontWeight={isActive ? 'bold' : 'medium'}>
+              {item.title}
+            </Typography>
+          </Box>
+        )}
+
+        {/* Expand/Collapse Icon - Only show if not collapsed */}
+        {hasChildren && !isCollapsed && (isOpen ? <ExpandLess /> : <ExpandMore />)}
+
+        {/* Optional Info */}
+        {item.info && !isCollapsed && item.info}
       </ListItemButton>
 
-      {hasChildren && (
+      {/* Render children if the item has children and is expanded */}
+      {hasChildren && !isCollapsed && (
         <Collapse in={isOpen} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {item.children?.map((child) => {
-              // Sử dụng optional chaining để tránh lỗi
               const childIsActive = child.path === pathname;
               return (
                 <ListItem disableGutters disablePadding key={child.title}>
@@ -84,9 +94,12 @@ const RenderNavItemLecturer = ({
                       },
                     }}
                   >
+                    {/* Child Icon */}
                     <Box component="span" sx={{ width: 24, height: 24 }}>
                       {child.icon}
                     </Box>
+
+                    {/* Child Title */}
                     <Box component="span" flexGrow={1}>
                       <Typography variant="body2" fontWeight={childIsActive ? 'bold' : 'regular'}>
                         {child.title}
