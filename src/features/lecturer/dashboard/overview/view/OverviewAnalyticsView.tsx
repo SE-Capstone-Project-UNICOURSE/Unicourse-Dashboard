@@ -10,7 +10,14 @@ import AnalyticsUI from '../components';
 const OverviewAnalyticsView = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { handleChange, optionSelected } = useDashboardLectureViewModel();
+  const {
+    handleChange,
+    optionSelected,
+    labelDataReport,
+    totalAmountTransactionForLabelDataReport,
+    totalEnrolledForLabelDataReport,
+    totalFeedbackForLabelDataReport,
+  } = useDashboardLectureViewModel();
   const { reportData, isLoadingGetReport } = useAppSelector((state) => state.dashboardLecture);
 
   return (
@@ -51,8 +58,8 @@ const OverviewAnalyticsView = () => {
             total={reportData?.totalTransaction || 0}
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-bag.svg" />}
             chart={{
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-              series: [22, 8, 35, 50, 82, 84, 77, 12],
+              categories: labelDataReport,
+              series: totalAmountTransactionForLabelDataReport,
             }}
           />
         </Grid>
@@ -67,8 +74,8 @@ const OverviewAnalyticsView = () => {
             color="warning"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-buy.svg" />}
             chart={{
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-              series: [40, 70, 50, 28, 70, 75, 7, 64],
+              categories: labelDataReport,
+              series: totalEnrolledForLabelDataReport,
             }}
           />
         </Grid>
@@ -82,8 +89,8 @@ const OverviewAnalyticsView = () => {
             type="feedback"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-message.svg" />}
             chart={{
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-              series: [56, 30, 23, 54, 47, 40, 62, 73],
+              categories: labelDataReport,
+              series: totalFeedbackForLabelDataReport,
             }}
           />
         </Grid>
