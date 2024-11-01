@@ -1,6 +1,5 @@
 import React from 'react';
 import { Chip, Stack } from '@mui/material';
-import { Column } from '../../core/models';
 import { COMMON_CONSTANTS } from '@app/common/constants/appConstants';
 
 function StatusChip({ value }: { value: string }) {

@@ -10,7 +10,7 @@ import store, { persistor } from './stores';
 const App = () => {
   useScrollToTop();
 
-  const baseUrl = import.meta.env.VITE_BASE_URL;
+  // const baseUrl = import.meta.env.VITE_BASE_URL;
 
   return (
     <Provider store={store}>

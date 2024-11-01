@@ -1,5 +1,3 @@
-const SettingView = () => {
-  return <div>SettingView</div>;
-};
+const SettingView = () => <div>SettingView</div>;
 
 export default SettingView;
