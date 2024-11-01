@@ -23,8 +23,7 @@ type Props = CardProps & {
 };
 
 // AnalyticsNews component responsible for rendering a list of news posts
-const AnalyticsNews = ({ title, subheader, list, ...other }: Props) => {
-  return (
+const AnalyticsNews = ({ title, subheader, list, ...other }: Props) => (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 1 }} />
 
@@ -47,6 +46,5 @@ const AnalyticsNews = ({ title, subheader, list, ...other }: Props) => {
       </Box>
     </Card>
   );
-};
 
 export default AnalyticsNews;

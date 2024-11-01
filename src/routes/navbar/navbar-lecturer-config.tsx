@@ -15,8 +15,7 @@ const lecturerNavData: NavItemLecturerProps[] = [
   {
     title: 'Khoá học',
     path: '/lecturer/courses',
-    icon: <SchoolIcon />,
-    children: [{ title: 'Danh sách khoá học', path: '/lecturer/courses', icon: <ListIcon /> }],
+    icon: <SchoolIcon />
   },
   {
     title: 'Bài viết',
