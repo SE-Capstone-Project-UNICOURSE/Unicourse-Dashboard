@@ -1,20 +1,28 @@
+// Use @use instead of @import with optional namespace aliases
 @use '../../../../../../theme/styles/global/variables' as vars;
 @use '../../../../../../theme/styles/global/font_variables' as fonts;
 @use '../../../../../../theme/styles/global/mixins' as mixins;
 @use '../../../../../../theme/styles/global/breakpoints' as breakpoints;
 
-.courses-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem;
-    border: 1px solid vars.$border-color;
-    border-radius: 1rem;
+.course-detail-header {
+    padding: 1rem 0;
+    border-bottom: 1px solid vars.$border-color;
 
-    &__title {
-        flex-grow: 1;
-        text-align: left;
+    &__grid {
+        padding: 0;
+
+        &-right {
+            justify-content: end;
+        }
     }
+}
+
+.desktop-only {
+    display: flex;
+}
+
+.mobile-only {
+    display: none;
 }
 
 @include mixins.respond-to(xxl) {}
@@ -23,7 +31,15 @@
 
 @include mixins.respond-to(lg) {}
 
-@include mixins.respond-to(md) {}
+@include mixins.respond-to(md) {
+    .desktop-only {
+        display: none;
+    }
+    
+    .mobile-only {
+        display: flex;
+    }
+}
 
 @include mixins.respond-to(sm) {}
 

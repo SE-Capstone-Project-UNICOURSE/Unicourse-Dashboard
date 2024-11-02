@@ -1,19 +1,20 @@
+// Use @use instead of @import with optional namespace aliases
 @use '../../../../../../theme/styles/global/variables' as vars;
 @use '../../../../../../theme/styles/global/font_variables' as fonts;
 @use '../../../../../../theme/styles/global/mixins' as mixins;
 @use '../../../../../../theme/styles/global/breakpoints' as breakpoints;
 
-.courses-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem;
-    border: 1px solid vars.$border-color;
-    border-radius: 1rem;
+.course-modules {
+    padding: 1rem;
 
-    &__title {
-        flex-grow: 1;
+    &__list {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    button {
         text-align: left;
+        width: 100%;
     }
 }
 
@@ -23,9 +24,19 @@
 
 @include mixins.respond-to(lg) {}
 
-@include mixins.respond-to(md) {}
+@include mixins.respond-to(md) {
+    .course-info {
+        flex-direction: column;
+    }
+}
 
-@include mixins.respond-to(sm) {}
+@include mixins.respond-to(sm) {
+    .course-modules {
+        .course-modules__list {
+            max-height: none;
+        }
+    }
+}
 
 @include mixins.respond-to(xs) {}
 

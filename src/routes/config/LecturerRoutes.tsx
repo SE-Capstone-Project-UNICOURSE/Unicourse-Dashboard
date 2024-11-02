@@ -22,6 +22,7 @@ const lecturerRoutes = [
     children: [
       { element: <LecturerPages.HomeLecturerPage />, index: true }, // Đảm bảo đây là index
       { path: 'courses', element: <LecturerPages.CourseLecturerPage /> },
+      { path: 'courses/:id', element: <LecturerPages.CourseDetailLecturerPages /> },
       { path: 'blog', element: <LecturerPages.BlogLecturerPage /> },
       { path: 'empty', element: <LecturerPages.EmptyLecturesPage /> },
     ],

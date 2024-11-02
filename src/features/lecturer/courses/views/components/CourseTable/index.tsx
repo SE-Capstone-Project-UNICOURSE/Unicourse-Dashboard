@@ -61,9 +61,9 @@ const CourseTable = ({ isLoadingGetListCourse, data }: { isLoadingGetListCourse:
                   return (
                     <TableCell key={column.id} align={column.align}>
                       {column.id === 'thumbnail' ? (
-                        <img className='course-image' src={row.thumbnail} alt={row.title} />
+                        <img loading="lazy" className='course-image' src={row.thumbnail} alt={row.title} />
                       ) : column.id === 'action' ? ( // Display action buttons
-                        <ActionButton sx={{ justifyContent: 'center' }} />
+                        <ActionButton course={row} sx={{ justifyContent: 'center' }} />
                       ) : column.format ? ( // Format value if column has format function
                         column.id === 'status' ? (
                           <StatusChip value={value} />
