@@ -39,6 +39,7 @@
     "@mui/material": "^5.16.7",
     "@mui/x-data-grid": "^7.22.0",
     "@reduxjs/toolkit": "^2.2.7",
+    "@tinymce/tinymce-react": "^5.1.1",
     "apexcharts": "^3.52.0",
     "axios": "^1.7.7",
     "dayjs": "^1.11.13",

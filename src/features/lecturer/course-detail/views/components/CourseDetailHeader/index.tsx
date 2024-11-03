@@ -17,8 +17,11 @@ const CourseDetailHeader: React.FC<CourseDetailHeaderProps> = ({
   loading,
   courseDetail,
   editMode,
-  setEditMode
+  setEditMode,
 }) => {
+  const handleResetValue = () => {
+    setEditMode(false);
+  };
 
   if (loading || !courseDetail) {
     return <div>Loading...</div>;
@@ -36,29 +39,29 @@ const CourseDetailHeader: React.FC<CourseDetailHeaderProps> = ({
           direction="row"
           spacing={2}
         >
-          <Button
+          {/* <Button
             onClick={() => setEditMode(!editMode)}
             variant="outlined"
             startIcon={editMode ? <EditOffIcon /> : <EditIcon />}
           >
             {editMode ? 'Hủy chỉnh sửa' : 'Chỉnh sửa'}
-          </Button>
-          <Button variant="contained" endIcon={<ClearAllIcon />}>
+          </Button> */}
+          <Button disabled={!editMode} onClick={() => handleResetValue()} variant="contained" endIcon={<ClearAllIcon />}>
             Reset
           </Button>
         </Stack>
 
         {/* MOBILE VIEW */}
         <Stack className="course-detail-header__grid-right mobile-only" direction="row" spacing={2}>
-          <IconButton
+          {/* <IconButton
             onClick={() => setEditMode(!editMode)}
             color="primary"
             aria-label="delete"
             size="small"
           >
             {editMode ? <EditOffIcon fontSize="inherit" /> : <EditIcon fontSize="inherit" />}
-          </IconButton>
-          <IconButton color="error" aria-label="delete" size="small">
+          </IconButton> */}
+          <IconButton disabled={!editMode} onClick={() => handleResetValue()} color="error" aria-label="delete" size="small">
             <ClearAllIcon fontSize="small" />
           </IconButton>
         </Stack>

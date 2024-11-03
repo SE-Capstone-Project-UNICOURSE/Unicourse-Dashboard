@@ -13,9 +13,10 @@ import { useAppSelector } from '@app/stores';
 import useRouter from '@app/routes/hooks/useRouter';
 
 const CourseDetailView = () => {
-  const { id } = useParams();  // Retrieve courseId from URL parameters
+  const { id } = useParams();
   const router = useRouter();
   const { courseDetail, categories } = useAppSelector((state) => state.courseDetailLecture);
+  const { editMode, setEditMode } = useCourseDetailViewModel({ courseId: Number(id) });
 
   const breadcrumbItems = [
     { label: 'Khóa học', href: '/lecturer/courses' },
@@ -29,15 +30,12 @@ const CourseDetailView = () => {
     }
   }, [id]);
 
-  // Use courseId as a number for view model
-  const { editMode, setEditMode } = useCourseDetailViewModel({ courseId: Number(id) });
-
   return (
     <DashboardContent>
       <GlobalBreadcrumb items={breadcrumbItems} />
       <div className="course-detail-view">
         <CourseDetailHeader editMode={editMode} setEditMode={setEditMode} loading={courseDetail.isLoadingGetCourseDetail} courseDetail={courseDetail.data} />
-        <CourseDetailInfo loading={courseDetail.isLoadingGetCourseDetail} courseDetail={courseDetail.data} categories={categories} editMode={editMode} />
+        <CourseDetailInfo loading={courseDetail.isLoadingGetCourseDetail} courseDetail={courseDetail.data} categories={categories} editMode={editMode} setEditMode={setEditMode} />
         <CourseActions />
         <CourseModules />
       </div>

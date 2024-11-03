@@ -33,7 +33,7 @@ const useCourseDetailViewModel = ({ courseId }: { courseId: number }) => {
 
   return {
     editMode,
-    setEditMode,
+    setEditMode
   };
 };
 
