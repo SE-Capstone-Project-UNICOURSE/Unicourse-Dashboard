@@ -36,8 +36,8 @@ const CourseDetailView = () => {
       <div className="course-detail-view">
         <CourseDetailHeader editMode={editMode} setEditMode={setEditMode} loading={courseDetail.isLoadingGetCourseDetail} courseDetail={courseDetail.data} />
         <CourseDetailInfo loading={courseDetail.isLoadingGetCourseDetail} courseDetail={courseDetail.data} categories={categories} editMode={editMode} setEditMode={setEditMode} />
-        <CourseActions />
-        <CourseModules />
+        {/* <CourseActions /> */}
+        {/* <CourseModules /> */}
       </div>
     </DashboardContent>
   );

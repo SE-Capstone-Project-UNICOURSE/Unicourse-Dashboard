@@ -36,9 +36,20 @@
         }
     }
 
-    &__learning {
+    &__section {
         &-title {
             margin-bottom: 1rem;
+        }
+
+        &__item {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            justify-content: space-between;
+        }
+
+        &__btn {
+            margin-top: 1rem;
         }
     }
 

@@ -234,7 +234,7 @@ const CourseDetailInfo: React.FC<CourseDetailProps> = ({ loading, courseDetail, 
               tabIndex={-1}
               startIcon={<CloudUploadIcon />}
             >
-              { imageFile ? 'Tải ảnh lên' : 'Cập nhật ảnh mới'}
+              {imageFile ? 'Tải ảnh lên' : 'Cập nhật ảnh mới'}
               <VisuallyHiddenInput
                 type="file"
                 onChange={(event) => selectFile(event.target.files)}
@@ -245,59 +245,79 @@ const CourseDetailInfo: React.FC<CourseDetailProps> = ({ loading, courseDetail, 
         </Grid>
 
         {/* Learning Outcome Section */}
-        <Box className="course-info__learning">
-          <Typography className="course-info__learning-title" variant="h6">Học viên sẽ học được gì?</Typography>
-          {outcomeFields.map((field, index) => (
-            <Box key={field.id} display="flex" alignItems="center">
-              <TextField
-                fullWidth
-                placeholder="Learning Outcome"
-                {...register(`learning_outcome.${index}`)}
-                error={!!errors.learning_outcome?.[index]}
-                helperText={errors.learning_outcome?.[index]?.message}
-              />
-              {editMode && (
-                <IconButton onClick={() => removeOutcome(index)}>
-                  <DeleteIcon />
-                </IconButton>
-              )}
-            </Box>
-          ))}
-          {editMode && (
-            <Button onClick={() => appendOutcome('')} startIcon={<AddIcon />}>
-              Add Outcome
-            </Button>
-          )}
+        <Box className="course-info__section">
+          <Typography className="course-info__section-title" variant="h6">
+            Học viên sẽ học được gì?
+          </Typography>
+          <Grid container spacing={2}>
+            {outcomeFields.map((field, index) => (
+              <Grid item xs={6}>
+                <Box key={field.id} className="course-info__section__item">
+                  <TextField
+                    fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    sx={{ backgroundColor: 'white' }}
+                    placeholder="Mục tiêu học tập"
+                    {...register(`learning_outcome.${index}`)}
+                    error={!!errors.learning_outcome?.[index]}
+                    helperText={errors.learning_outcome?.[index]?.message}
+                  />
+                  <Box alignContent="center">
+                    <IconButton color="error" onClick={() => removeOutcome(index)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </Box>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+          <Button
+            className="course-info__section__btn"
+            onClick={() => appendOutcome('')}
+            startIcon={<AddIcon />}
+          >
+            Thêm mục tiêu
+          </Button>
         </Box>
 
         {/* Requirements Section */}
-        <Box>
-          <Typography variant="h6">Yêu cầu khóa học</Typography>
-          {requirementFields.map((field, index) => (
-            <Box key={field.id} display="flex" alignItems="center">
-              <TextField
-                fullWidth
-                placeholder="Requirement"
-                {...register(`requirements.${index}`)}
-                error={!!errors.requirements?.[index]}
-                helperText={errors.requirements?.[index]?.message}
-              />
-              {editMode && (
-                <IconButton onClick={() => removeRequirement(index)}>
-                  <DeleteIcon />
-                </IconButton>
-              )}
-            </Box>
-          ))}
-          {editMode && (
-            <Button onClick={() => appendRequirement('')} startIcon={<AddIcon />}>
-              Add Requirement
-            </Button>
-          )}
+        <Box className="course-info__section">
+          <Typography className="course-info__section-title" variant="h6">
+            Yêu cầu khóa học
+          </Typography>
+          <Grid container spacing={2}>
+            {requirementFields.map((field, index) => (
+              <Grid item xs={6}>
+                <Box key={field.id} className="course-info__section__item">
+                  <TextField
+                    fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    sx={{ backgroundColor: 'white' }}
+                    placeholder="Yêu cầu khóa học"
+                    {...register(`requirements.${index}`)}
+                    error={!!errors.requirements?.[index]}
+                    helperText={errors.requirements?.[index]?.message}
+                  />
+                  <Box alignContent="center">
+                    <IconButton color="error" onClick={() => removeRequirement(index)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </Box>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+          <Button
+            className="course-info__section__btn"
+            onClick={() => appendRequirement('')}
+            startIcon={<AddIcon />}
+          >
+            Thêm yêu cầu
+          </Button>
         </Box>
 
         {/* Status and Category Select */}
-        <Box>
+        {/* <Box>
           <Chip
             label={
               courseDetail.status === 'PUBLISHED'
@@ -313,21 +333,22 @@ const CourseDetailInfo: React.FC<CourseDetailProps> = ({ loading, courseDetail, 
             control={control}
             render={({ field }) => (
               <Select {...field} disabled={!editMode} fullWidth>
-                {categories && categories.data && categories.data.map((category) => (
-                  <MenuItem key={category.id} value={category.id}>
-                    {category.name}
-                  </MenuItem>
-                ))}
+                {categories &&
+                  categories.data &&
+                  categories.data.map((category) => (
+                    <MenuItem key={category.id} value={category.id}>
+                      {category.name}
+                    </MenuItem>
+                  ))}
               </Select>
             )}
           />
-        </Box>
+        </Box> */}
       </Box>
 
       {/* Modal for Editing Description */}
       <Modal open={descriptionModalOpen} onClose={() => setDescriptionModalOpen(false)}>
         <Box className="modal-box">
-          {/* Placeholder for a rich text editor component */}
           <Button onClick={() => setDescriptionModalOpen(false)}>Close</Button>
         </Box>
       </Modal>
