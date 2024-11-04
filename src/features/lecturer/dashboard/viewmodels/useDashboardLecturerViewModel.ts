@@ -3,6 +3,12 @@ import { useAppDispatch, useAppSelector } from '@app/stores';
 import { SelectChangeEvent } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { DailyData } from '../models/ReportDataModel';
+import {
+  setReportLabelData,
+  setReportTotalAmountTransaction,
+  setReportTotalEnrolled,
+  setReportTotalFeedback,
+} from '../slices';
 import { getReportData } from '../slices/actions';
 
 type OptionSelectedFilter = 'Month' | 'Year';
@@ -15,16 +21,16 @@ const useDashboardLectureViewModel = () => {
   const { reportData } = useAppSelector((state) => state.dashboardLecture);
   const accessToken = localStorage.getItem('accessToken');
 
-  // State for labels and totals
-  const [labelDataReport, setLabelDataReport] = useState<string[]>([]);
-  const [totalAmountTransactionForLabelDataReport, setTotalAmountTransactionForLabelDataReport] =
-    useState<number[]>([]);
-  const [totalEnrolledForLabelDataReport, setTotalEnrolledForLabelDataReport] = useState<number[]>(
-    []
-  );
-  const [totalFeedbackForLabelDataReport, setTotalFeedbackForLabelDataReport] = useState<number[]>(
-    []
-  );
+  // // State for labels and totals
+  // const [labelDataReport, setLabelDataReport] = useState<string[]>([]);
+  // const [totalAmountTransactionForLabelDataReport, setTotalAmountTransactionForLabelDataReport] =
+  //   useState<number[]>([]);
+  // const [totalEnrolledForLabelDataReport, setTotalEnrolledForLabelDataReport] = useState<number[]>(
+  //   []
+  // );
+  // const [totalFeedbackForLabelDataReport, setTotalFeedbackForLabelDataReport] = useState<number[]>(
+  //   []
+  // );
 
   const processReportData = () => {
     if (!reportData) return;
@@ -60,10 +66,10 @@ const useDashboardLectureViewModel = () => {
     });
 
     // Update state with calculated values
-    setLabelDataReport(labels);
-    setTotalAmountTransactionForLabelDataReport(amountTransactions);
-    setTotalEnrolledForLabelDataReport(enrollments);
-    setTotalFeedbackForLabelDataReport(feedbacks);
+    dispatch(setReportLabelData(labels));
+    dispatch(setReportTotalAmountTransaction(amountTransactions));
+    dispatch(setReportTotalEnrolled(enrollments));
+    dispatch(setReportTotalFeedback(feedbacks));
 
     // Logging for debugging
     console.log('Label Data Report (Months):', labels);
@@ -95,10 +101,6 @@ const useDashboardLectureViewModel = () => {
   return {
     optionSelected,
     handleChange,
-    labelDataReport,
-    totalAmountTransactionForLabelDataReport,
-    totalEnrolledForLabelDataReport,
-    totalFeedbackForLabelDataReport,
   };
 };
 

@@ -30,6 +30,18 @@ const dashboardLecturesSlice = createSlice({
     setDataFeedback(state, action) {
       state.latestFeedback.data = action.payload;
     },
+    setReportLabelData(state, action) {
+      state.labelDataReport = action.payload;
+    },
+    setReportTotalAmountTransaction(state, action) {
+      state.totalAmountTransactionForLabelDataReport = action.payload;
+    },
+    setReportTotalEnrolled(state, action) {
+      state.totalEnrolledForLabelDataReport = action.payload;
+    },
+    setReportTotalFeedback(state, action) {
+      state.totalFeedbackForLabelDataReport = action.payload;
+    },
     reset: () => initialDashboardLectureScreenState,
   },
   extraReducers: (builder) => {
@@ -89,6 +101,10 @@ export const {
   setPageFeedbacksLecturer,
   setPageSizeFeedbackLecturer,
   setDataFeedback,
+  setReportLabelData,
+  setReportTotalAmountTransaction,
+  setReportTotalEnrolled,
+  setReportTotalFeedback,
   reset,
 } = dashboardLecturesSlice.actions;
 export default dashboardLecturesSlice.reducer;
