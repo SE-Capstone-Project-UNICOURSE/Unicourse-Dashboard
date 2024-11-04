@@ -46,6 +46,14 @@ class helpers {
     }
   }
 
+  public formatPrice(price: number): string {
+    if (price === 0) {
+      return 'Miễn phí';
+    } else {
+      return `${price.toLocaleString('vi-VN')} VND`;
+    }
+  }
+
   private formatStatusCourse(status: string): string {
     switch (status) {
       case COMMON_CONSTANTS.DRAFT:

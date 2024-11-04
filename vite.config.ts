@@ -39,6 +39,8 @@ export default defineConfig(({ mode }) => {
         { find: '@utils', replacement: path.resolve(__dirname, './src/utils') },
         { find: '@routes', replacement: path.resolve(__dirname, './src/routes') },
         { find: '@theme', replacement: path.resolve(__dirname, './src/theme') },
+        { find: '@breakpoints', replacement: path.resolve(__dirname, './src/theme/styles/global/breakpoints')},
+        { find: '@mixins', replacement: path.resolve(__dirname, './src/theme/styles/global/mixins.scss')},
       ],
     },
     server: {

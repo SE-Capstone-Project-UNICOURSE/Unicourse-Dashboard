@@ -3,8 +3,7 @@ import { Autocomplete, Box, Button, Stack, TextField } from '@mui/material';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import './TableHeader.scss';
 
-const TableHeader = () => {
-  return (
+const TableHeader = () => (
     <Box className="container">
       <Stack direction="row" spacing={2} className="container__stack">
         <Button
@@ -36,7 +35,6 @@ const TableHeader = () => {
       </Stack>
     </Box>
   );
-};
 
 export default TableHeader;
 

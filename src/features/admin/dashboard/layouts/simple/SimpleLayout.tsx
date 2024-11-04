@@ -7,7 +7,6 @@ import HeaderSection from '../core/HeaderSection';
 import LayoutSection from '../core/LayoutSection';
 import { CompactContent } from './CompactContent';
 import { Main } from './Main';
-import { Logo } from '@app/common/components/logo';
 import { Box } from '@mui/material';
 
 export type SimpleLayoutProps = {

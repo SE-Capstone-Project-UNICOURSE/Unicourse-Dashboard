@@ -10,8 +10,7 @@ type Props = BoxProps & {
   totalItems: number;
 };
 
-const CartIcon = ({ totalItems, sx, ...other }: Props) => {
-  return (
+const CartIcon = ({ totalItems, sx, ...other }: Props) => (
     <Box
       component={RouterLink}
       href="#"
@@ -39,6 +38,5 @@ const CartIcon = ({ totalItems, sx, ...other }: Props) => {
       </Badge>
     </Box>
   );
-};
 
 export default CartIcon;

@@ -18,8 +18,7 @@ type Props = CardProps & {
 };
 
 // AnalyticsOrderTimeline component that renders the entire timeline
-const AnalyticsOrderTimeline = ({ title, subheader, list, ...other }: Props) => {
-  return (
+const AnalyticsOrderTimeline = ({ title, subheader, list, ...other }: Props) => (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
 
@@ -39,6 +38,5 @@ const AnalyticsOrderTimeline = ({ title, subheader, list, ...other }: Props) => 
       </Timeline>
     </Card>
   );
-};
 
 export default AnalyticsOrderTimeline;
