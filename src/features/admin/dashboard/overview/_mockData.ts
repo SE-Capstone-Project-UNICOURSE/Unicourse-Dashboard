@@ -54,4 +54,42 @@ const _tasks = [
   { id: '5', name: 'Prepare presentation slides' },
 ];
 
-export { _posts, _tasks, _timeline };
+const _transactions = [
+  {
+    id: '1',
+    transactionId: 'TX123456',
+    amount: '500,000 VND',
+    status: 'Đã hoàn thành',
+    time: new Date('2023-09-15T10:30:00'),
+  },
+  {
+    id: '2',
+    transactionId: 'TX123457',
+    amount: '1,000,000 VND',
+    status: 'Chờ xử lý',
+    time: new Date('2023-09-14T08:45:00'),
+  },
+  {
+    id: '3',
+    transactionId: 'TX123458',
+    amount: '2,000,000 VND',
+    status: 'Đã hoàn thành',
+    time: new Date('2023-09-13T12:00:00'),
+  },
+  {
+    id: '4',
+    transactionId: 'TX123459',
+    amount: '300,000 VND',
+    status: 'Đã hủy',
+    time: new Date('2023-09-12T14:30:00'),
+  },
+  {
+    id: '5',
+    transactionId: 'TX123460',
+    amount: '1,500,000 VND',
+    status: 'Đã hoàn thành',
+    time: new Date('2023-09-11T09:20:00'),
+  },
+];
+
+export { _posts, _tasks, _timeline, _transactions };

@@ -7,7 +7,7 @@ export type InputNumberValue = string | number | null | undefined;
 
 type Options = Intl.NumberFormatOptions | undefined;
 
-const DEFAULT_LOCALE = { code: 'en-US', currency: 'USD' };
+const DEFAULT_LOCALE = { code: 'vi-VN', currency: 'VND' };
 
 function processInput(inputValue: InputNumberValue): number | null {
   if (inputValue == null || Number.isNaN(inputValue)) return null;
@@ -72,18 +72,23 @@ export function fPercent(inputValue: InputNumberValue, options?: Options) {
 
 export function fShortenNumber(inputValue: InputNumberValue, options?: Options) {
   const locale = DEFAULT_LOCALE;
-
   const number = processInput(inputValue);
   if (number === null) return '';
 
-  const fm = new Intl.NumberFormat(locale.code, {
+  let formattedNumber = new Intl.NumberFormat(locale.code, {
     notation: 'compact',
     maximumFractionDigits: 2,
     ...options,
   }).format(number);
 
-  return fm.replace(/[A-Z]/g, (match) => match.toLowerCase());
+  // Thay đổi ký hiệu quốc tế thành "k" và "tr" cho phù hợp với đơn vị tiền Việt
+  formattedNumber = formattedNumber
+    .replace('K', 'k')    // Thay K (thousand) thành k
+    .replace('M', 'tr')   // Thay M (million) thành tr
+    .replace('B', 'tỷ');  // Thay B (billion) thành tỷ (nếu cần cho các số lớn hơn)
+  return formattedNumber;
 }
+
 
 // ----------------------------------------------------------------------
 

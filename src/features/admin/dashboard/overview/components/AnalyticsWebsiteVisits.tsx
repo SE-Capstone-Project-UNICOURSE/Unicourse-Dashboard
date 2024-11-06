@@ -45,7 +45,7 @@ const AnalyticsWebsiteVisits = ({ title, subheader, chart, ...other }: Props) =>
     },
     tooltip: {
       y: {
-        formatter: (value: number) => `${value} visits`,
+        formatter: (value: number) => `${value} lượt`,
       },
     },
     ...chart.options,

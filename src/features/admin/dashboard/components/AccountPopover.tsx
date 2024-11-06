@@ -11,14 +11,22 @@ import MenuList from '@mui/material/MenuList';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { useCallback, useState } from 'react';
+import User from '@app/features/auth/models/User.model';
 
 // ----------------------------------------------------------------------
 
-// Mock data for account
+// Parse `persist:root` từ localStorage
+const persistRoot = JSON.parse(localStorage.getItem('persist:root') || '{}');
+const authState = persistRoot.authState ? JSON.parse(persistRoot.authState) : {};
+
+// Sử dụng model User và lấy thông tin từ authState
+const user = authState.auth.userInfo as User;
+
+
 const _myAccount = {
-  displayName: 'John Doe',
-  email: 'john.doe@example.com',
-  photoURL: 'https://via.placeholder.com/150',
+  displayName: user?.full_name || 'Guest',
+  email: user?.email || 'guest@example.com',
+  photoURL: user?.profile_image || 'https://via.placeholder.com/150',
 };
 
 // Mock data for navigation options
@@ -144,7 +152,7 @@ const AccountPopover = ({ data = accountOptions, sx, ...other }: AccountPopoverP
 
         <Box sx={{ p: 1 }}>
           <Button fullWidth color="error" size="medium" variant="text" onClick={handleClickLogout}>
-            Logout
+            Đăng xuất
           </Button>
         </Box>
       </Popover>

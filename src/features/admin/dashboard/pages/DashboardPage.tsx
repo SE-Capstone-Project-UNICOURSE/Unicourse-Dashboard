@@ -1,6 +1,5 @@
-import { OverviewAnalyticsView } from '@app/features/admin/overview/view/OverviewAnalyticsView';
+import { OverviewAnalyticsView } from '../overview/view/OverviewAnalyticsView';
 import { Helmet } from 'react-helmet-async';
-
 import { CONFIG } from 'src/utils/config-global';
 
 // ----------------------------------------------------------------------

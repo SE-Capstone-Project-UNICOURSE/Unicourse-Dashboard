@@ -5,6 +5,7 @@ import AnalyticsNews from './AnalyticsNews';
 import AnalyticsOrderTimeline from './AnalyticsOrderTimeline';
 import AnalyticsTasks from './AnalyticsTasks';
 import AnalyticsTrafficBySite from './AnalyticsTrafficBySite';
+import AnalyticsTransactions from './AnalyticsTransactions';
 import AnalyticsWebsiteVisits from './AnalyticsWebsiteVisits';
 import AnalyticsWidgetSummary from './AnalyticsWidgetSummary';
 
@@ -18,6 +19,7 @@ const AnalyticsUI = {
   AnalyticsTrafficBySite,
   AnalyticsWebsiteVisits,
   AnalyticsWidgetSummary,
+  AnalyticsTransactions,
 };
 
 export default AnalyticsUI;

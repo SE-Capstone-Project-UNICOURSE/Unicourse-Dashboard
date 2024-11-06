@@ -18,6 +18,7 @@ const OverviewAnalyticsView = () => {
     totalEnrolledForLabelDataReport,
     totalFeedbackForLabelDataReport,
   } = useDashboardLectureViewModel();
+  
   const { reportData, isLoadingGetReport } = useAppSelector((state) => state.dashboardLecture);
 
   return (
