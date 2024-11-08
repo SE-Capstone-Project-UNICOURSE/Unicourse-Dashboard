@@ -1,38 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  Typography,
-  TextField,
-  Button,
-  IconButton,
-  Select,
-  MenuItem,
-  Chip,
-  Modal,
-  Grid,
-  styled,
-  FormHelperText,
-} from '@mui/material';
+import { Category, Course } from '@app/common/models/Course';
+import { yupResolver } from '@hookform/resolvers/yup';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Close';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { useForm, useFieldArray, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
-import './CourseDetailInfo.scss';
-import { Category, Course } from '@app/common/models/Course';
+import {
+  Box,
+  Button,
+  FormHelperText,
+  Grid,
+  IconButton,
+  Modal,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
 import CardDescription from './components/CardDescription';
-
-interface CourseFormValues {
-  title: string;
-  price: number;
-  title_description: string;
-  learning_outcome?: string[] | any;
-  requirements?: string[] | any;
-  status: 'PUBLISHED' | 'DRAFT' | 'CLOSED';
-  category_id: number;
-  description: string;
-}
+import { VisuallyHiddenInput } from './components/VisuallyHiddenInput';
+import {
+  courseDetailInfoValue,
+  CourseFormValues,
+  validationSchema,
+} from './core/schema/courseDetailInfo.schema';
+import './CourseDetailInfo.scss';
+import { validationArrayString } from './core/services/validateService';
 
 interface CourseDetailProps {
   loading: boolean;
@@ -45,54 +37,45 @@ interface CourseDetailProps {
   setEditMode: (value: boolean) => void;
 }
 
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
-});
-
-const CourseDetailInfo: React.FC<CourseDetailProps> = ({ loading, courseDetail, categories, editMode, setEditMode }) => {
+const CourseDetailInfo: React.FC<CourseDetailProps> = ({
+  loading,
+  courseDetail,
+  categories,
+  editMode,
+  setEditMode,
+}) => {
   const [descriptionModalOpen, setDescriptionModalOpen] = useState(false);
   const [imageFile, setImageFile] = useState<string>('');
 
-  // VALIDATION SCHEMA
-  const validationSchema = Yup.object().shape({
-    title: Yup.string().required('Tiêu đề là bắt buộc').min(10, 'Tiêu đề cần ít nhất 10 ký tự'),
-    price: Yup.number().required('Giá là bắt buộc'),
-    title_description: Yup.string().required('Mô tả ngắn là bắt buộc').min(10, 'Mô tả ngắn cần ít nhất 10 ký tự'),
-    learning_outcome: Yup.array().of(Yup.string().required('Mục tiêu không được bỏ trống')),
-    requirements: Yup.array().of(Yup.string().required('Yêu cầu không được bỏ trống')),
-    status: Yup.string().oneOf(['PUBLISHED', 'DRAFT', 'CLOSED']).required(),
-    category_id: Yup.number().required('Danh mục là bắt buộc'),
-    description: Yup.string().required('Mô tả khóa học là bắt buộc').min(10, 'Mô tả cần ít nhất 10 ký tự'),
-  });
-
-  const { control, register, handleSubmit, setValue, formState: { errors }, reset, watch } = useForm<CourseFormValues>({
+  const {
+    control,
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+    reset,
+    watch,
+    setError,
+    clearErrors,
+  } = useForm<CourseFormValues>({
     resolver: yupResolver(validationSchema),
-    defaultValues: {
-      title: '',
-      price: 0,
-      title_description: '',
-      learning_outcome: [],
-      requirements: [],
-      status: 'DRAFT',
-      category_id: 0,
-      description: '',
-    },
+    defaultValues: courseDetailInfoValue,
   });
 
-  const { fields: outcomeFields, append: appendOutcome, remove: removeOutcome } = useFieldArray({
+  const {
+    fields: outcomeFields,
+    append: appendOutcome,
+    remove: removeOutcome,
+  } = useFieldArray({
     control,
     name: 'learning_outcome',
   });
 
-  const { fields: requirementFields, append: appendRequirement, remove: removeRequirement } = useFieldArray({
+  const {
+    fields: requirementFields,
+    append: appendRequirement,
+    remove: removeRequirement,
+  } = useFieldArray({
     control,
     name: 'requirements',
   });
@@ -106,7 +89,6 @@ const CourseDetailInfo: React.FC<CourseDetailProps> = ({ loading, courseDetail, 
         title_description: courseDetail.title_description || '',
         learning_outcome: courseDetail.learning_outcome || [],
         requirements: courseDetail.requirements || [],
-        status: courseDetail.status || 'DRAFT',
         category_id: courseDetail.category_id || 0,
         description: courseDetail.description || '',
       });
@@ -127,35 +109,106 @@ const CourseDetailInfo: React.FC<CourseDetailProps> = ({ loading, courseDetail, 
   };
 
   // BEHAVIOR ZONE
-  const handleValueChange = (field: string, value: any, shouldValidate) => {
+  // const handleValueChange = (field: string, value: any, shouldValidate) => {
+  //   if (!field) return;
+  //   setEditMode(true);
+  //   switch (field) {
+  //     case 'title':
+  //       setValue('title', value, { shouldValidate });
+  //       break;
+  //     case 'price':
+  //       setValue('price', value, { shouldValidate });
+  //       break;
+  //     case 'title_description':
+  //       setValue('title_description', value, { shouldValidate });
+  //       break;
+  //     case 'status':
+  //       setValue('status', value, { shouldValidate });
+  //       break;
+  //     case 'category_id':
+  //       setValue('category_id', value, { shouldValidate });
+  //       break;
+  //     case 'learning_outcome':
+  //       setValue('learning_outcome', value, { shouldValidate });
+  //       break;
+  //     case 'requirements':
+  //       setValue('requirements', value, { shouldValidate });
+  //       break;
+  //     case 'description':
+  //       setValue('description', value, { shouldValidate });
+  //       break;
+  //     default:
+  //   }
+  // };
+
+  const handleRemoveOutcome = (index: number) => {
+    // Clear errors for the specific index being removed
+    clearErrors(`learning_outcome.${index}`);
+    // Remove the item
+    const currentLearningOutCome = watch('learning_outcome' as keyof CourseFormValues);
+    const updateLearningOutcome = currentLearningOutCome.filter((_, i) => i !== index);
+    // Assign the new array to the field
+    setValue('learning_outcome', updateLearningOutcome, { shouldValidate: true });
+  };
+
+  const handleAddOutcome = () => {
+    const currentLearningOutcome = watch('learning_outcome' as keyof CourseFormValues) || [];
+    let allFieldsValid = true;
+  
+    // Validate existing items in the learning_outcome array
+    currentLearningOutcome.forEach((item, index) => {
+      // Validate each item using validationArrayString without calling setValue
+      const isValidField = validationArrayString(setError, clearErrors, 'learning_outcome', currentLearningOutcome, index);
+      if (!isValidField) {
+        allFieldsValid = false; // Mark as invalid if any field fails validation
+      }
+    });
+  
+    // Only append a new empty item if all existing items are valid
+    if (allFieldsValid) {
+      appendOutcome('');
+    }
+  };
+
+  const handleRequirement = () => {
+    const currentRequirements = watch('requirements' as keyof CourseFormValues) || [];
+    let allFieldsValid = true;
+  
+    // Validate existing items in the requirements array
+    currentRequirements.forEach((item, index) => {
+      // Validate each item using validationArrayString without calling setValue
+      const isValidField = validationArrayString(setError, clearErrors, 'requirements', currentRequirements, index);
+      if (!isValidField) {
+        allFieldsValid = false; // Mark as invalid if any field fails validation
+      }
+    });
+  
+    // Only append a new empty item if all existing items are valid
+    if (allFieldsValid) {
+      appendRequirement('');
+    }
+  }
+  
+
+  const handleValueChange = (field: string, value: any, shouldValidate = true) => {
     if (!field) return;
     setEditMode(true);
-    switch (field) {
-      case 'title':
-        setValue('title', value, { shouldValidate });
-        break;
-      case 'price':
-        setValue('price', value, { shouldValidate });
-        break;
-      case 'title_description':
-        setValue('title_description', value, { shouldValidate });
-        break;
-      case 'status':
-        setValue('status', value, { shouldValidate });
-        break;
-      case 'category_id':
-        setValue('category_id', value, { shouldValidate });
-        break;
-      case 'learning_outcome':
-        setValue('learning_outcome', value, { shouldValidate });
-        break;
-      case 'requirements':
-        setValue('requirements', value, { shouldValidate });
-        break;
-      case 'description':
-        setValue('description', value, { shouldValidate });
-        break;
-      default:
+
+    const arrayFieldMatch = field.match(/^(\w+)\.(\d+)$/);
+    if (arrayFieldMatch) {
+      const arrayFieldName = arrayFieldMatch[1]; // e.g., "learning_outcome"
+      const index = parseInt(arrayFieldMatch[2], 10); // e.g., 0
+
+      // Use watch to get the current array value
+      const currentArray = watch(arrayFieldName as keyof CourseFormValues) || [];
+      const updatedArray = [...currentArray];
+      updatedArray[index] = value;
+
+      // Validate without calling setValue
+      validationArrayString(setError, clearErrors, arrayFieldName, updatedArray, index);
+    } else {
+      // Directly set non-array fields
+      setValue(field as keyof CourseFormValues, value, { shouldValidate });
     }
   };
 
@@ -163,7 +216,7 @@ const CourseDetailInfo: React.FC<CourseDetailProps> = ({ loading, courseDetail, 
     const file = URL.createObjectURL(files[0]);
     setImageFile(file);
     setEditMode(true);
-  }
+  };
 
   if (loading || !courseDetail) {
     return <div>Loading...</div>;
@@ -212,7 +265,10 @@ const CourseDetailInfo: React.FC<CourseDetailProps> = ({ loading, courseDetail, 
                 description={watch('description')}
                 onChangeDescription={handleValueChange}
               />
-              <FormHelperText sx={{ marginLeft: 14, marginTop: 3 }} error={!!errors.description}>
+              <FormHelperText
+                sx={{ marginLeft: '14px', marginTop: '3px' }}
+                error={!!errors.description}
+              >
                 {errors.description?.message}
               </FormHelperText>
             </Box>
@@ -251,19 +307,28 @@ const CourseDetailInfo: React.FC<CourseDetailProps> = ({ loading, courseDetail, 
           </Typography>
           <Grid container spacing={2}>
             {outcomeFields.map((field, index) => (
-              <Grid item xs={6}>
-                <Box key={field.id} className="course-info__section__item">
+              <Grid item xs={6} key={field.id}>
+                {/* Make sure `key` is set to `field.id` */}
+                <Box className="course-info__section__item">
                   <TextField
                     fullWidth
                     InputLabelProps={{ shrink: true }}
                     sx={{ backgroundColor: 'white' }}
                     placeholder="Mục tiêu học tập"
-                    {...register(`learning_outcome.${index}`)}
+                    {...register(`learning_outcome.${index}` as const)}
                     error={!!errors.learning_outcome?.[index]}
                     helperText={errors.learning_outcome?.[index]?.message}
+                    onChange={(e) =>
+                      handleValueChange(`learning_outcome.${index}`, e.target.value, false)
+                    }
+                    onBlur={(e) =>
+                      setValue(`learning_outcome.${index}`, e.target.value, {
+                        shouldValidate: true,
+                      })
+                    }
                   />
                   <Box alignContent="center">
-                    <IconButton color="error" onClick={() => removeOutcome(index)}>
+                    <IconButton color="error" onClick={() => handleRemoveOutcome(index)}>
                       <DeleteIcon />
                     </IconButton>
                   </Box>
@@ -273,7 +338,7 @@ const CourseDetailInfo: React.FC<CourseDetailProps> = ({ loading, courseDetail, 
           </Grid>
           <Button
             className="course-info__section__btn"
-            onClick={() => appendOutcome('')}
+            onClick={() => handleAddOutcome()}
             startIcon={<AddIcon />}
           >
             Thêm mục tiêu
@@ -287,8 +352,10 @@ const CourseDetailInfo: React.FC<CourseDetailProps> = ({ loading, courseDetail, 
           </Typography>
           <Grid container spacing={2}>
             {requirementFields.map((field, index) => (
-              <Grid item xs={6}>
-                <Box key={field.id} className="course-info__section__item">
+              <Grid item xs={6} key={field.id}>
+                {' '}
+                {/* Make sure `key` is set to `field.id` */}
+                <Box className="course-info__section__item">
                   <TextField
                     fullWidth
                     InputLabelProps={{ shrink: true }}
@@ -297,6 +364,14 @@ const CourseDetailInfo: React.FC<CourseDetailProps> = ({ loading, courseDetail, 
                     {...register(`requirements.${index}`)}
                     error={!!errors.requirements?.[index]}
                     helperText={errors.requirements?.[index]?.message}
+                    onChange={(e) =>
+                      handleValueChange(`requirements.${index}`, e.target.value, false)
+                    }
+                    onBlur={(e) =>
+                      setValue(`requirements.${index}`, e.target.value, {
+                        shouldValidate: true,
+                      })
+                    }
                   />
                   <Box alignContent="center">
                     <IconButton color="error" onClick={() => removeRequirement(index)}>
@@ -309,7 +384,7 @@ const CourseDetailInfo: React.FC<CourseDetailProps> = ({ loading, courseDetail, 
           </Grid>
           <Button
             className="course-info__section__btn"
-            onClick={() => appendRequirement('')}
+            onClick={() => handleRequirement()}
             startIcon={<AddIcon />}
           >
             Thêm yêu cầu
