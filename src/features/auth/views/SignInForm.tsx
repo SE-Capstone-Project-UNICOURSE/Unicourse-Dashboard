@@ -6,8 +6,13 @@ import { Box, IconButton, InputAdornment, TextField } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import signInSchema from '../schema/signIn.schema';
+import useAuthViewModel from '../viewmodels/useAuthViewModel';
+import { useAppSelector } from '@app/stores';
 
 const SignInForm = () => {
+  const { signIn } = useAuthViewModel();
+  const { isLoading } = useAppSelector((state) => state.authState.auth);
+
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -21,9 +26,8 @@ const SignInForm = () => {
 
   const handleSignIn = useCallback(
     (data) => {
-      console.log('Form data:', data);
-
-      router.push('/lecturer');
+      if (isLoading) return;
+      signIn(data.email, data.password);
     },
     [router]
   );

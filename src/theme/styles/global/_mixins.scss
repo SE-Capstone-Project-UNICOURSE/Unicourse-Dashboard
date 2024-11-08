@@ -1,25 +1,7 @@
-// _mixins.scss
+@use './breakpoints' as breakpoints;
+
 @mixin respond-to($breakpoint) {
-    @if $breakpoint == xxl {
-      @media (max-width: $breakpoint-xxl) { @content; }
-    }
-    @else if $breakpoint == xl {
-      @media (max-width: $breakpoint-xl) { @content; }
-    }
-    @else if $breakpoint == lg {
-      @media (max-width: $breakpoint-lg) { @content; }
-    }
-    @else if $breakpoint == md {
-      @media (max-width: $breakpoint-md) { @content; }
-    }
-    @else if $breakpoint == sm {
-      @media (max-width: $breakpoint-sm) { @content; }
-    }
-    @else if $breakpoint == xs {
-      @media (max-width: $breakpoint-xs) { @content; }
-    }
-    @else if $breakpoint == xxs {
-      @media (max-width: $breakpoint-xxs) { @content; }
-    }
+  @media (max-width: map-get(breakpoints.$breakpoints, $breakpoint)) {
+    @content;
   }
-  
+}

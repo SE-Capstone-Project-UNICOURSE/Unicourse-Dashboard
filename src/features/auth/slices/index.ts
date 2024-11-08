@@ -68,6 +68,7 @@ const authSlice = createSlice({
           state.auth.accessToken = cleanedAccessToken;
           state.auth.refreshToken = cleanedRefreshToken;
           state.auth.error = '';
+          localStorage.setItem('USER_INFO', JSON.stringify(state.auth.userInfo));
         }
       })
       .addCase(signInWithEmail.rejected, (state) => {

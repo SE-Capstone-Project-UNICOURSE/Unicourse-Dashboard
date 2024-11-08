@@ -1,0 +1,35 @@
+// @import '@variables';
+// @import '@font_variables';
+// @import '@mixins';
+// @import '@breakpoints';
+// Use @use instead of @import with optional namespace aliases
+@use '../../../../../../theme/styles/global/variables' as vars;
+@use '../../../../../../theme/styles/global/font_variables' as fonts;
+@use '../../../../../../theme/styles/global/mixins' as mixins;
+@use '../../../../../../theme/styles/global/breakpoints' as breakpoints;
+
+.course-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+@include mixins.respond-to(xxl) {}
+
+@include mixins.respond-to(xl) {}
+
+@include mixins.respond-to(lg) {}
+
+@include mixins.respond-to(md) {}
+
+@include mixins.respond-to(sm) {
+    .course-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+@include mixins.respond-to(xs) {}
+
+@include mixins.respond-to(xxs) {}

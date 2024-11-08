@@ -6,7 +6,7 @@ import { auth, googleProvider } from '@app/utils/firebase';
 import { signInWithPopup } from 'firebase/auth';
 import { jwtDecode } from 'jwt-decode';
 import type User from '../models/User.model';
-import { loginIdToken } from '../slices/actions';
+import { loginIdToken, signInWithEmail } from '../slices/actions';
 
 const useAuthViewModel = () => {
   const dispatch = useAppDispatch();
@@ -68,6 +68,57 @@ const useAuthViewModel = () => {
     }
   };
 
+  // Sign in normally with email and password
+  const signIn = async (email: string, password: string) => {
+    try {
+
+      await dispatch(signInWithEmail({ email, password }))
+        .unwrap()
+        .then((data) => {
+          const cleanedAccessToken = data?.accessToken.split(' ')[1];
+          const user = jwtDecode<User>(cleanedAccessToken || '');
+
+          // Kiểm tra role của user
+          if (user.role === 'LECTURER' || user.role === 'ADMIN') {
+            router.push(`/${user.role.toLowerCase()}`);
+          } else {
+            // Hiển thị thông báo lỗi cho các role khác
+            dispatch(
+              showDialog({
+                title: 'Access Denied',
+                content: 'Only lecturers and admins are allowed to access this resource.',
+                type: DialogType.ERROR,
+              })
+            );
+          }
+        });
+    } catch (error) {
+      let errorMessage = '';
+
+      // Log only specific Firebase Auth errors
+      if (error.code === 'auth/user-not-found') {
+        errorMessage = 'User not found. Please try again.';
+      } else if (error.code === 'auth/wrong-password') {
+        errorMessage = 'Incorrect password. Please try again.';
+      } else if (error.code === 'auth/network-request-failed') {
+        errorMessage = 'Please check your connection';
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'Please provide a valid email';
+      } else {
+        return; // Do not log any other cases
+      }
+
+      // Dispatch the dialog with the specific error message
+      dispatch(
+        showDialog({
+          title: 'Lỗi',
+          content: `Error signing in with Google: ${errorMessage}`,
+          type: DialogType.ERROR,
+        })
+      );
+    }
+  }
+
   const handlePressShowDialog = () => {
     dispatch(
       showDialog({
@@ -79,7 +130,7 @@ const useAuthViewModel = () => {
     );
   };
 
-  return { signInWithGoogle, handlePressShowDialog };
+  return { signInWithGoogle, handlePressShowDialog, signIn };
 };
 
 export default useAuthViewModel;
