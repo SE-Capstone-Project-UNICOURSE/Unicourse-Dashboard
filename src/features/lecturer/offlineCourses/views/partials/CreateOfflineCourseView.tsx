@@ -1,3 +1,4 @@
+import { useAppSelector } from '@app/stores';
 import {
   Box,
   Button,
@@ -14,10 +15,10 @@ import React, { useState } from 'react';
 import CreateCourseOfflineForm from '../components/CreateCourseOfflineForm';
 import VerticalStepInstruction from '../components/VerticalStepInstruction';
 
-const steps = ['Thông tin chung', 'Giảng viên', 'Lịch học', 'Xác nhận'];
+const steps = ['Tạo khoá học', 'Tạo lịch học', 'Xác nhận'];
 
 const CreateOfflineCourseView: React.FC = () => {
-  const [activeStep, setActiveStep] = useState(0);
+  const { activeStep } = useAppSelector((state) => state.listCourseOfflineLecture);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -33,14 +34,6 @@ const CreateOfflineCourseView: React.FC = () => {
     setDrawerOpen(open);
   };
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
   };
@@ -50,9 +43,9 @@ const CreateOfflineCourseView: React.FC = () => {
       case 0:
         return <CreateCourseOfflineForm />;
       case 1:
-        return <CreateCourseOfflineForm />;
+        return <Box>Step 2</Box>;
       case 2:
-        return <CreateCourseOfflineForm />;
+        return <Box>Step 3</Box>;
       case 3:
         return (
           <Box>
@@ -106,20 +99,6 @@ const CreateOfflineCourseView: React.FC = () => {
       </Stepper>
       <Box mt={3} mb={2}>
         {renderStepContent(activeStep)}
-      </Box>
-      <Box display="flex" justifyContent="space-between">
-        <Button disabled={activeStep === 0} onClick={handleBack} variant="contained">
-          Quay lại
-        </Button>
-        {activeStep === steps.length - 1 ? (
-          <Button variant="contained" color="primary">
-            Xác nhận
-          </Button>
-        ) : (
-          <Button variant="contained" color="primary" onClick={handleNext}>
-            Tiếp tục
-          </Button>
-        )}
       </Box>
     </Paper>
   );

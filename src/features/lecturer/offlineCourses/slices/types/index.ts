@@ -11,6 +11,7 @@ interface ListCourseOfflineState {
     hasMore: boolean;
   };
   screenState: ScreenState;
+  activeStep: number;
 }
 
 const initialListCourseOfflineState: ListCourseOfflineState = {
@@ -22,6 +23,7 @@ const initialListCourseOfflineState: ListCourseOfflineState = {
     hasMore: true,
   },
   screenState: 'list',
+  activeStep: 0,
 };
 
 export { initialListCourseOfflineState };

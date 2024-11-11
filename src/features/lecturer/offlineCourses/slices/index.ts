@@ -16,11 +16,14 @@ const listCourseOfflineLectureSlice = createSlice({
     setListCourse(state, action) {
       state.listCourse = action.payload;
     },
+    setActiveStep(state, action) {
+      state.activeStep = action.payload;
+    },
     reset: () => initialListCourseOfflineState,
   },
   extraReducers: (builder) => {},
 });
 
-export const { setIsLoadingListCourse, setListCourse, reset, setScreenState } =
+export const { setIsLoadingListCourse, setListCourse, reset, setScreenState, setActiveStep } =
   listCourseOfflineLectureSlice.actions;
 export default listCourseOfflineLectureSlice.reducer;
