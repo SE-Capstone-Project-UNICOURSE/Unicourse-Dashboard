@@ -21,10 +21,13 @@ const CreateCourseOfflineForm = () => {
     control,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm<courseMentorCreationFormValues>({
     resolver: yupResolver(courseMentorCreation),
     defaultValues: courseMentorCreationDefaultFormValues,
   });
+
+  console.log(getValues('date_range.start_date'));
 
   const { activeStep, selectedCourseId } = useAppSelector(
     (state) => state.listCourseOfflineLecture
@@ -53,44 +56,48 @@ const CreateCourseOfflineForm = () => {
   }, [activeStep]);
 
   return (
-    <Box display="flex" gap={4}>
-      <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate width="65%">
-        <Grid container spacing={2}>
-          {formFields.map((fieldConfig) => (
-            <Grid
-              item
-              xs={fieldConfig.grid?.xs}
-              sm={fieldConfig.grid?.sm}
-              md={fieldConfig.grid?.md}
-              key={fieldConfig.name}
+    <Grid container spacing={4}>
+      <Grid item xs={12} lg={8} md={9}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
+          <Grid container spacing={2}>
+            {formFields.map((fieldConfig) => (
+              <Grid
+                item
+                xs={fieldConfig.grid?.xs}
+                sm={fieldConfig.grid?.sm}
+                md={fieldConfig.grid?.md}
+                key={fieldConfig.name}
+              >
+                <FormInputRender
+                  fieldConfig={fieldConfig}
+                  control={control}
+                  error={!!errors[fieldConfig.name]}
+                  helperText={errors[fieldConfig.name]?.message as string}
+                />
+              </Grid>
+            ))}
+          </Grid>
+          <Box display="flex" justifyContent="space-between" mt={2}>
+            <GradientButton
+              variant="outlined"
+              onClick={() => {
+                dispatch(setActiveStep(activeStep - 1));
+              }}
             >
-              <FormInputRender
-                fieldConfig={fieldConfig}
-                control={control}
-                error={!!errors[fieldConfig.name]}
-                helperText={errors[fieldConfig.name]?.message as string}
-              />
-            </Grid>
-          ))}
-        </Grid>
-        <Box display="flex" justifyContent="space-between" mt={2}>
-          <GradientButton
-            variant="outlined"
-            onClick={() => {
-              dispatch(setActiveStep(activeStep - 1));
-            }}
-          >
-            Quay lại
-          </GradientButton>
+              Quay lại
+            </GradientButton>
 
-          <GradientButton type="submit">Tiếp tục</GradientButton>
+            <GradientButton type="submit" onClick={handleNext}>
+              Tiếp tục
+            </GradientButton>
+          </Box>
         </Box>
-      </Box>
+      </Grid>
 
-      <Box width="35%">
+      <Grid item xs={12} lg={4} md={3}>
         <CourseDetailInfoCreate />
-      </Box>
-    </Box>
+      </Grid>
+    </Grid>
   );
 };
 

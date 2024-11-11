@@ -25,26 +25,26 @@ export const useCourseMentorFormFields = (): FormFieldConfig<courseMentorCreatio
       label: 'Giảm giá',
       inputType: 'input',
       type: 'number',
-      grid: { xs: 12, sm: 6, md: 12 },
+      grid: { xs: 12, sm: 12, md: 12 },
       unit: '%',
     },
     {
       name: 'description',
       label: 'Mô tả',
       inputType: 'editor',
-      grid: { xs: 12, sm: 6, md: 12 },
+      grid: { xs: 12, sm: 12, md: 12 },
     },
     {
       name: 'image',
       label: 'URL hình ảnh',
       inputType: 'upload',
-      grid: { xs: 12, sm: 6, md: 12 },
+      grid: { xs: 12, sm: 12, md: 12 },
     },
     {
       name: 'center_id',
       label: 'Trung tâm',
       inputType: 'select',
-      grid: { xs: 12, sm: 6, md: 12 },
+      grid: { xs: 12, sm: 12, md: 12 },
       selectOptions: data.map((item) => ({
         value: item.id,
         label: item.address,
@@ -54,7 +54,7 @@ export const useCourseMentorFormFields = (): FormFieldConfig<courseMentorCreatio
       name: 'date_range',
       label: 'Khoảng thời gian',
       inputType: 'date-range',
-      grid: { xs: 12, sm: 6, md: 12 },
+      grid: { xs: 12, sm: 12, md: 12 },
       dateRangeProps: {
         start: {
           name: 'start_date',

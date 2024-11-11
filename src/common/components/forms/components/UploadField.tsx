@@ -6,9 +6,16 @@ import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 interface UploadFieldProps<T extends FieldValues> {
   label: string;
   field: ControllerRenderProps<T>;
+  error?: boolean;
+  helperText?: string;
 }
 
-function UploadField<T extends FieldValues>({ label, field }: UploadFieldProps<T>) {
+function UploadField<T extends FieldValues>({
+  label,
+  field,
+  error,
+  helperText,
+}: UploadFieldProps<T>) {
   return (
     <Box>
       <TextField
@@ -44,6 +51,8 @@ function UploadField<T extends FieldValues>({ label, field }: UploadFieldProps<T
             </InputAdornment>
           ),
         }}
+        error={error} // Show error styling if true
+        helperText={helperText} // Show error message if provided
       />
       {field.value && (
         <Box mt={1}>

@@ -21,6 +21,7 @@ import { steps } from '../../constants';
 import { setCreateCourseInstruction } from '../../slices';
 import CreateCourseOfflineForm from '../components/CreateCourseOfflineForm';
 import VerticalStepInstruction from '../components/VerticalStepInstruction';
+import CreateOfflineCourseCalendarListView from './CreateOfflineCourseCalendarListView';
 import ListOnlineCourseLecturer from './ListOnlineCourseLecturer';
 
 const CreateOfflineCourseView: React.FC = () => {
@@ -49,7 +50,7 @@ const CreateOfflineCourseView: React.FC = () => {
       case 1:
         return <CreateCourseOfflineForm />;
       case 2:
-        return <Box>Step 3</Box>;
+        return <CreateOfflineCourseCalendarListView />;
       case 3:
         return (
           <Box>
@@ -64,7 +65,7 @@ const CreateOfflineCourseView: React.FC = () => {
   return (
     <Paper elevation={3} style={{ padding: '20px' }}>
       <Typography variant="h4" align="center" gutterBottom>
-        Tạo khóa học offline
+        Tạo khóa học trực tiếp
       </Typography>
 
       <GradientButton style={{ marginBottom: 20 }} variant="outlined" onClick={toggleDrawer(true)}>

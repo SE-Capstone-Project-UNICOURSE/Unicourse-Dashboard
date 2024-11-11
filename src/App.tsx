@@ -1,5 +1,7 @@
 import { useScrollToTop } from '@app/hooks/useScrollToTop';
 import Router from '@app/routes/Router';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import 'src/global.css';
@@ -15,10 +17,12 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <ThemeProvider>
-          <DialogManager />
-          <Router />
-        </ThemeProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <ThemeProvider>
+            <DialogManager />
+            <Router />
+          </ThemeProvider>
+        </LocalizationProvider>
       </PersistGate>
     </Provider>
   );

@@ -1,7 +1,8 @@
 import { Box, CheckboxProps, TextFieldProps } from '@mui/material';
 import { Control, Controller, ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
-import { FormFieldConfig } from '../configs/FormFieldConfig';
+import { FormFieldConfig, InputType } from '../configs/FormFieldConfig';
 import CheckboxField from './CheckboxField';
+import DatePickerField from './DatePickerField';
 import DateRangeField from './DateRangeField';
 import EditorField from './EditorField';
 import InputField from './InputField';
@@ -26,13 +27,14 @@ type FieldProps<T extends FieldValues> = {
   inputProps?: TextFieldProps | CheckboxProps;
 };
 
-const inputComponents: Record<string, React.FC<any>> = {
+const inputComponents: Record<InputType, React.FC<any>> = {
   input: InputField,
   select: SelectField,
   checkbox: CheckboxField,
   'date-range': DateRangeField,
   upload: UploadField,
   editor: EditorField,
+  'date-picker': DatePickerField,
 };
 
 function FormInputRender<T extends FieldValues>({

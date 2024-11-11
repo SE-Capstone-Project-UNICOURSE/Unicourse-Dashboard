@@ -2,7 +2,14 @@ import { CheckboxProps, TextFieldProps } from '@mui/material';
 import { FieldValues } from 'react-hook-form';
 import { DateRangeProps } from '../components/DateRangeField';
 
-type InputType = 'input' | 'select' | 'checkbox' | 'date' | 'editor' | 'upload' | 'date-range';
+export type InputType =
+  | 'input'
+  | 'select'
+  | 'checkbox'
+  | 'editor'
+  | 'upload'
+  | 'date-range'
+  | 'date-picker';
 
 export type SelectOption = {
   value: string | number;
@@ -19,7 +26,7 @@ interface FormFieldConfig<T extends FieldValues> {
   selectOptions?: SelectOption[];
   type?: React.HTMLInputTypeAttribute;
   inputProps?: TextFieldProps | CheckboxProps;
-  dateRangeProps?: DateRangeProps<T>;
+  dateRangeProps?: DateRangeProps;
 }
 
 export type { FormFieldConfig };
