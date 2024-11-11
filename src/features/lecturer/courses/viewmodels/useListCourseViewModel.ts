@@ -3,6 +3,8 @@ import { useAppDispatch, useAppSelector } from '@app/stores';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { getListCourseOfLecture } from '../slices/actions';
 import SearchRequest from '@app/common/models/SearchRequest';
+import User from '@app/features/auth/models/User.model';
+
 
 const useListCourseViewModel = () => {
   const dispatch = useAppDispatch();
@@ -16,6 +18,7 @@ const useListCourseViewModel = () => {
     if (!accessToken) {
       router.push('/sign-in');
     } else {
+      const UserInfo: User = JSON.parse(localStorage.getItem('USER_INFO') || '{}');
       dispatch(
         getListCourseOfLecture({
           accessToken: accessToken || '',
@@ -23,7 +26,7 @@ const useListCourseViewModel = () => {
             page: pageOption.page,
             limit: pageOption.limit,
           },
-          lectureId: 1,
+          lectureId: UserInfo.lecturer.id,
         })
       );
     }

@@ -9,9 +9,6 @@ const listCourseLectureSlice = createSlice({
   name: 'listCourseLecture',
   initialState: initialListCourseLectureScreenState,
   reducers: {
-    setIsLoadingListCourse(state, action) {
-        state.listCourse = action.payload;
-    },
     setListCourse(state, action) {
         state.listCourse = action.payload;
     },
@@ -33,7 +30,6 @@ const listCourseLectureSlice = createSlice({
 });
 
 export const {
-  setIsLoadingListCourse,
   setListCourse,
   reset,
 } = listCourseLectureSlice.actions;

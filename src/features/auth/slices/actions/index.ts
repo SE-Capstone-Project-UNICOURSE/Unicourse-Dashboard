@@ -23,7 +23,7 @@ export const loginIdToken = createAsyncThunk(
 );
 
 // Async thunk for fetching courses by category with pagination
-export const signInWithEmail = createAsyncThunk(
+export const signInWithEmail = createAsyncThunk( 
   'auth/signInWithEmail',
   async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
     try {

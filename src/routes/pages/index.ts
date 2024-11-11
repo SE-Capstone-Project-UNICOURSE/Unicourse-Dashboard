@@ -25,6 +25,7 @@ const AdminPages = {
 
 // Lecturers
 const CourseLecturerPage = lazy(() => import('@app/features/lecturer/courses'));
+const CourseDetailLecturerPages = lazy(() => import('@app/features/lecturer/course-detail'));
 const BlogLecturerPage = lazy(() => import('@app/features/lecturer/blogs'));
 const HomeLecturerPage = lazy(
   () => import('@app/features/lecturer/dashboard/pages/DashboardLecturerPage')
@@ -36,6 +37,7 @@ const LecturerPages = {
   HomeLecturerPage,
   SignInPage,
   CourseLecturerPage,
+  CourseDetailLecturerPages,
   Page404,
   BlogLecturerPage,
   AccessDeniedPage,
