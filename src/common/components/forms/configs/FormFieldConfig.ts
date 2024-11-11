@@ -1,44 +1,25 @@
-// FormFieldConfig.ts
 import { CheckboxProps, TextFieldProps } from '@mui/material';
-import { Path } from 'react-hook-form';
+import { FieldValues } from 'react-hook-form';
+import { DateRangeProps } from '../components/DateRangeField';
+
+type InputType = 'input' | 'select' | 'checkbox' | 'date' | 'editor' | 'upload' | 'date-range';
 
 export type SelectOption = {
   value: string | number;
   label: string;
 };
 
-type InputType = 'input' | 'select' | 'checkbox' | 'date';
-
-// Base field configuration for text/number/date inputs
-export type BaseFieldConfig<T> = {
-  name: Path<T>;
+// Base field configuration with common properties
+interface FormFieldConfig<T extends FieldValues> {
+  name: keyof T;
   label: string;
-  inputType: InputType;
+  unit?: string;
   grid?: { xs?: number; sm?: number; md?: number };
+  inputType: InputType;
+  selectOptions?: SelectOption[];
+  type?: React.HTMLInputTypeAttribute;
   inputProps?: TextFieldProps | CheckboxProps;
-};
+  dateRangeProps?: DateRangeProps<T>;
+}
 
-// Extended configuration for 'select' input type
-export type SelectFieldConfig<T> = BaseFieldConfig<T> & {
-  inputType: 'select';
-  selectOptions: SelectOption[]; // Only available for 'select' input
-};
-
-// Extended configuration for 'checkbox' input type
-export type CheckboxFieldConfig<T> = BaseFieldConfig<T> & {
-  inputType: 'checkbox';
-  inputProps?: CheckboxProps;
-};
-
-// Extended configuration for 'date' input type
-export type DateFieldConfig<T> = BaseFieldConfig<T> & {
-  inputType: 'date';
-  inputProps?: TextFieldProps;
-};
-
-// Union of all field configurations
-export type FormFieldConfig<T> =
-  | BaseFieldConfig<T>
-  | SelectFieldConfig<T>
-  | CheckboxFieldConfig<T>
-  | DateFieldConfig<T>;
+export type { FormFieldConfig };

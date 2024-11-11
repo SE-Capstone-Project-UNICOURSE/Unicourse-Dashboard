@@ -1,4 +1,9 @@
-import { useAppSelector } from '@app/stores';
+/* eslint-disable react/prop-types */
+import GradientButton from '@app/common/components/atoms/GradientButton';
+import { APP_COLOR } from '@app/common/constants/appConstants';
+import { useAppDispatch, useAppSelector } from '@app/stores';
+import { CheckCircleRounded, RadioButtonChecked } from '@mui/icons-material';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import {
   Box,
   Button,
@@ -11,17 +16,20 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
+import { steps } from '../../constants';
+import { setCreateCourseInstruction } from '../../slices';
 import CreateCourseOfflineForm from '../components/CreateCourseOfflineForm';
 import VerticalStepInstruction from '../components/VerticalStepInstruction';
-
-const steps = ['Tạo khoá học', 'Tạo lịch học', 'Xác nhận'];
+import ListOnlineCourseLecturer from './ListOnlineCourseLecturer';
 
 const CreateOfflineCourseView: React.FC = () => {
-  const { activeStep } = useAppSelector((state) => state.listCourseOfflineLecture);
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const { activeStep, openCreateCourseInstructor } = useAppSelector(
+    (state) => state.listCourseOfflineLecture
+  );
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const dispatch = useAppDispatch();
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (
@@ -31,19 +39,15 @@ const CreateOfflineCourseView: React.FC = () => {
     ) {
       return;
     }
-    setDrawerOpen(open);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    dispatch(setCreateCourseInstruction(open));
   };
 
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
-        return <CreateCourseOfflineForm />;
+        return <ListOnlineCourseLecturer />;
       case 1:
-        return <Box>Step 2</Box>;
+        return <CreateCourseOfflineForm />;
       case 2:
         return <Box>Step 3</Box>;
       case 3:
@@ -62,12 +66,14 @@ const CreateOfflineCourseView: React.FC = () => {
       <Typography variant="h4" align="center" gutterBottom>
         Tạo khóa học offline
       </Typography>
-      <Button variant="outlined" onClick={toggleDrawer(true)} style={{ marginBottom: '20px' }}>
+
+      <GradientButton style={{ marginBottom: 20 }} variant="outlined" onClick={toggleDrawer(true)}>
         Hiển thị hướng dẫn
-      </Button>
+      </GradientButton>
+
       <Drawer
         anchor={isMobile ? 'bottom' : 'right'}
-        open={drawerOpen}
+        open={openCreateCourseInstructor}
         onClose={toggleDrawer(false)}
         PaperProps={{
           sx: {
@@ -91,11 +97,28 @@ const CreateOfflineCourseView: React.FC = () => {
         </Box>
       </Drawer>
       <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
+        {steps.map((label, index) => {
+          const isDone = index < activeStep;
+          const isSelected = index === activeStep;
+
+          return (
+            <Step key={label} completed={isDone}>
+              <StepLabel
+                StepIconComponent={() => {
+                  if (isDone) {
+                    return <CheckCircleRounded sx={{ color: APP_COLOR.success }} />; // Done state: green check
+                  } else if (isSelected) {
+                    return <RadioButtonChecked sx={{ color: APP_COLOR.info }} />; // Selected state: primary color
+                  } else {
+                    return <RadioButtonUncheckedIcon sx={{ color: APP_COLOR.border }} />; // Unselected state: default border color
+                  }
+                }}
+              >
+                {label}
+              </StepLabel>
+            </Step>
+          );
+        })}
       </Stepper>
       <Box mt={3} mb={2}>
         {renderStepContent(activeStep)}

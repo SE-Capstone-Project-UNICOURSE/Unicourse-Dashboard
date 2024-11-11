@@ -7,18 +7,18 @@ const courseMentorCreation = Yup.object().shape({
   description: Yup.string().nullable(),
   image: Yup.string().url().max(555).required('Image URL is required'),
   center_id: Yup.number().required('Center ID is required'),
-  start_date: Yup.string().required('Start date is required'),
-  end_date: Yup.string()
-    .min(Yup.ref('start_date'), 'End date must be after start date')
-    .required('End date is required'),
-  mentor_sessions: Yup.array()
-    .of(
-      Yup.object().shape({
-        // Define schema for each mentor session based on your requirements
-      })
-    )
-    .required('Mentor sessions are required'),
-  category: Yup.string().oneOf(['beginner', 'intermediate', 'advanced']).required(),
+  date_range: Yup.object({
+    start_date: Yup.string()
+      .required('Start date is required')
+      .matches(/^\d{4}-\d{2}-\d{2}$/, 'Start date must be in YYYY-MM-DD format'),
+    end_date: Yup.string()
+      .required('End date is required')
+      .matches(/^\d{4}-\d{2}-\d{2}$/, 'End date must be in YYYY-MM-DD format')
+      .test('is-greater', 'End date should be after start date', function (value) {
+        const { start_date } = this.parent;
+        return start_date && value && new Date(value) > new Date(start_date);
+      }),
+  }).required(),
 });
 
 export { courseMentorCreation };

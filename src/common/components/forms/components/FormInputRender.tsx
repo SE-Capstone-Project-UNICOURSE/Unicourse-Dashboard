@@ -1,8 +1,12 @@
-// FormInputRender.tsx
-import { Checkbox, CheckboxProps, MenuItem, TextField, TextFieldProps } from '@mui/material';
-import React from 'react';
-import { Control, Controller, FieldValues } from 'react-hook-form';
-import { FormFieldConfig, SelectFieldConfig } from '../configs/FormFieldConfig';
+import { Box, CheckboxProps, TextFieldProps } from '@mui/material';
+import { Control, Controller, ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
+import { FormFieldConfig } from '../configs/FormFieldConfig';
+import CheckboxField from './CheckboxField';
+import DateRangeField from './DateRangeField';
+import EditorField from './EditorField';
+import InputField from './InputField';
+import SelectField from './SelectField';
+import UploadField from './UploadField';
 
 interface FormInputRenderProps<T extends FieldValues> {
   fieldConfig: FormFieldConfig<T>;
@@ -11,83 +15,58 @@ interface FormInputRenderProps<T extends FieldValues> {
   helperText?: string;
 }
 
+type FieldProps<T extends FieldValues> = {
+  label: string;
+  field: ControllerRenderProps<T>;
+  error?: boolean;
+  helperText?: string;
+  unit?: string;
+  selectOptions?: { value: string | number; label: string }[];
+  dateInfo?: { start: any; end: any };
+  inputProps?: TextFieldProps | CheckboxProps;
+};
+
+const inputComponents: Record<string, React.FC<any>> = {
+  input: InputField,
+  select: SelectField,
+  checkbox: CheckboxField,
+  'date-range': DateRangeField,
+  upload: UploadField,
+  editor: EditorField,
+};
+
 function FormInputRender<T extends FieldValues>({
   fieldConfig,
   control,
   error,
   helperText,
 }: FormInputRenderProps<T>) {
-  const { name, label, inputType, ...rest } = fieldConfig;
+  const { name, label, inputType, unit, selectOptions, dateRangeProps, ...rest } = fieldConfig;
 
-  const renderInputField = () => {
-    switch (inputType) {
-      case 'input':
-        return (
-          <TextField
-            label={String(label)}
-            variant="outlined"
-            fullWidth
-            error={error}
-            helperText={helperText}
-            {...(rest.inputProps as TextFieldProps)}
-          />
-        );
-
-      case 'select':
-        return (
-          <TextField
-            label={String(label)}
-            select
-            variant="outlined"
-            fullWidth
-            error={error}
-            helperText={helperText}
-            {...(rest.inputProps as TextFieldProps)}
-          >
-            {(rest as SelectFieldConfig<T>).selectOptions?.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-        );
-
-      case 'checkbox':
-        return (
-          <Checkbox
-            checked={Boolean(rest.inputProps?.value)}
-            {...(rest.inputProps as CheckboxProps)}
-          />
-        );
-
-      case 'date':
-        return (
-          <TextField
-            label={String(label)}
-            type="date"
-            variant="outlined"
-            fullWidth
-            error={error}
-            helperText={helperText}
-            InputLabelProps={{ shrink: true }}
-            {...(rest.inputProps as TextFieldProps)}
-          />
-        );
-
-      default:
-        return null;
-    }
-  };
+  const Component: React.ComponentType<FieldProps<T>> =
+    inputComponents[inputType] || (() => <Box>No Field Type Found</Box>);
 
   return (
     <Controller
-      name={name}
+      name={name as Path<T>}
       control={control}
-      render={({ field }) =>
-        React.cloneElement(renderInputField() as React.ReactElement, { ...field })
-      }
+      render={({ field }) => (
+        <Component
+          label={label}
+          field={field}
+          error={error}
+          helperText={helperText}
+          unit={unit}
+          selectOptions={selectOptions}
+          dateInfo={dateRangeProps}
+          {...rest}
+        />
+      )}
     />
   );
 }
 
+const getInputComponentKeys = () => Object.keys(inputComponents);
+
 export default FormInputRender;
+export { getInputComponentKeys };
