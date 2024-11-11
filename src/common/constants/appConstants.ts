@@ -10,4 +10,13 @@ export const COMMON_CONSTANTS = {
   DRAFT: 'DRAFT',
   PUBLISHED: 'PUBLISHED',
   CLOSED: 'CLOSED',
-}
+};
+
+export const APP_COLOR = {
+  border: '#ccc', // Default border color
+  highlight: '#3f51b5', // Highlight color for selected items
+  shadow: 'rgba(63, 81, 181, 0.5)', // Shadow color for selected cards
+  error: '#d32f2f', // Error color for warnings or errors
+  success: '#388e3c', // Success color for success messages
+  info: '#1976d2', // Info color for informational messages/icons
+};
