@@ -1,7 +1,4 @@
-import useRouter from '@app/routes/hooks/useRouter';
-import { useAppDispatch, useAppSelector } from '@app/stores';
-import { showDialog } from '@app/stores/slices/dialogSlice';
-import { DialogType } from '@app/stores/types/dialogSlice.type';
+import { useAppSelector } from '@app/stores';
 import helpers from '@app/utils/helpers';
 import { BadgeOutlined, LibraryBooks, People, School } from '@mui/icons-material';
 import {
@@ -17,38 +14,12 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
-import { useEffect } from 'react';
-import { getLectureInfo } from '../../slices/actions';
 
 const LectureInfoOverall = () => {
-  const router = useRouter();
-  const dispatch = useAppDispatch();
-
   const { userInfo } = useAppSelector((state) => state.authState.auth);
   const {
     lectureInfo: { info },
   } = useAppSelector((state) => state.dashboardLecture);
-
-  const accessToken = localStorage.getItem('accessToken');
-
-  useEffect(() => {
-    const handleGetInfo = () => {
-      if (!userInfo?.lecturer.id || !accessToken) {
-        dispatch(
-          showDialog({
-            title: 'Thông báo',
-            content: 'Vui lòng đăng nhập lại',
-            type: DialogType.ERROR,
-          })
-        );
-        return;
-      }
-
-      dispatch(getLectureInfo({ accessToken, lectureId: Number(userInfo?.lecturer.id) }));
-    };
-
-    handleGetInfo();
-  }, []);
 
   return (
     <Card>

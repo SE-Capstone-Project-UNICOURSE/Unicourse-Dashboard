@@ -1,5 +1,7 @@
 import useRouter from '@app/routes/hooks/useRouter';
 import { useAppDispatch, useAppSelector } from '@app/stores';
+import { showDialog } from '@app/stores/slices/dialogSlice';
+import { DialogType } from '@app/stores/types/dialogSlice.type';
 import { SelectChangeEvent } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { DailyData } from '../models/ReportDataModel';
@@ -9,7 +11,7 @@ import {
   setReportTotalEnrolled,
   setReportTotalFeedback,
 } from '../slices';
-import { getReportData } from '../slices/actions';
+import { getLectureInfo, getReportData } from '../slices/actions';
 
 type OptionSelectedFilter = 'Month' | 'Year';
 
@@ -18,6 +20,7 @@ const useDashboardLectureViewModel = () => {
   const [optionSelected, setOptionSelected] = useState<OptionSelectedFilter>('Month');
   const router = useRouter();
 
+  const { userInfo } = useAppSelector((state) => state.authState.auth);
   const { reportData } = useAppSelector((state) => state.dashboardLecture);
   const accessToken = localStorage.getItem('accessToken');
 
@@ -67,15 +70,32 @@ const useDashboardLectureViewModel = () => {
     } else {
       dispatch(getReportData({ accessToken: accessToken || '', filterBy: optionSelected }));
     }
-  }, [accessToken, optionSelected, dispatch, router]);
+  }, []);
 
   // Process report data when it changes
   useEffect(() => {
     processReportData();
+    handleGetInfo();
   }, []);
+
+  const handleGetInfo = () => {
+    if (!userInfo?.lecturer.id || !accessToken) {
+      dispatch(
+        showDialog({
+          title: 'Thông báo',
+          content: 'Vui lòng đăng nhập lại',
+          type: DialogType.ERROR,
+        })
+      );
+      return;
+    }
+
+    dispatch(getLectureInfo({ accessToken, lectureId: Number(userInfo?.lecturer.id) }));
+  };
 
   const handleChange = (event: SelectChangeEvent<OptionSelectedFilter>) => {
     setOptionSelected(event.target.value as OptionSelectedFilter);
+    dispatch(getReportData({ accessToken: accessToken || '', filterBy: optionSelected }));
   };
 
   return {
