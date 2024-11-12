@@ -42,7 +42,7 @@ const DashboardLectureLayout = ({ sx, children, header }: DashboardLecturerLayou
             leftArea: (
               <>
                 <DashboardUI.MenuButton
-                  onClick={() => setNavOpen(true)}
+                  onClick={() => setNavOpen(!navOpen)} // Toggle navOpen state
                   sx={{
                     ml: -1,
                     [theme.breakpoints.up(layoutQuery)]: { display: 'none' },
@@ -85,9 +85,6 @@ const DashboardLectureLayout = ({ sx, children, header }: DashboardLecturerLayou
           }}
         />
       }
-      /** **************************************
-       * Sidebar
-       *************************************** */
       sidebarSection={
         <NavDesktop
           data={navData}
@@ -96,13 +93,7 @@ const DashboardLectureLayout = ({ sx, children, header }: DashboardLecturerLayou
           setIsCollapsed={setIsCollapsed}
         />
       }
-      /** **************************************
-       * Footer
-       *************************************** */
       footerSection={null}
-      /** **************************************
-       * Style
-       *************************************** */
       cssVars={{
         '--layout-nav-vertical-width': `${isCollapsed ? '0px' : '300px'}`,
         '--layout-dashboard-content-pt': theme.spacing(1),
@@ -118,7 +109,9 @@ const DashboardLectureLayout = ({ sx, children, header }: DashboardLecturerLayou
         ...sx,
       }}
     >
-      <Main sx={{ transition: 'margin-left 0.3s ease' }}>{children}</Main>
+      <Main sx={{ transition: 'margin-left 0.3s ease' }} openNav={navOpen}>
+        {children}
+      </Main>
     </LayoutSection>
   );
 };

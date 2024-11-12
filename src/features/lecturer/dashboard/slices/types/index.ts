@@ -24,6 +24,10 @@ interface DashboardLectureScreenState {
     pageSize: number;
     total: number;
   };
+  labelDataReport: string[];
+  totalAmountTransactionForLabelDataReport: number[];
+  totalEnrolledForLabelDataReport: number[];
+  totalFeedbackForLabelDataReport: number[];
 }
 
 export const initialDashboardLectureScreenState: DashboardLectureScreenState = {
@@ -47,4 +51,8 @@ export const initialDashboardLectureScreenState: DashboardLectureScreenState = {
     pageSize: 5,
     total: 0,
   },
+  labelDataReport: [],
+  totalAmountTransactionForLabelDataReport: [],
+  totalEnrolledForLabelDataReport: [],
+  totalFeedbackForLabelDataReport: [],
 };

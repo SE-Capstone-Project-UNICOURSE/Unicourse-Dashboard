@@ -1,6 +1,5 @@
 import DashboardContent from '@app/features/admin/dashboard/layouts/DashboardLayout/DashboardContent';
-import useRouter from '@app/routes/hooks/useRouter';
-import { useAppDispatch, useAppSelector } from '@app/stores';
+import { useAppSelector } from '@app/stores';
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -8,16 +7,13 @@ import useDashboardLectureViewModel from '../../viewmodels/useDashboardLecturerV
 import AnalyticsUI from '../components';
 
 const OverviewAnalyticsView = () => {
-  const router = useRouter();
-  const dispatch = useAppDispatch();
+  const { handleChange, optionSelected } = useDashboardLectureViewModel();
   const {
-    handleChange,
-    optionSelected,
     labelDataReport,
     totalAmountTransactionForLabelDataReport,
     totalEnrolledForLabelDataReport,
     totalFeedbackForLabelDataReport,
-  } = useDashboardLectureViewModel();
+  } = useAppSelector((state) => state.dashboardLecture);
   const { reportData, isLoadingGetReport } = useAppSelector((state) => state.dashboardLecture);
 
   return (

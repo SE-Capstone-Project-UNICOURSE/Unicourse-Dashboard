@@ -15,7 +15,6 @@ const DashboardLectureContent = ({
   ...other
 }: DashboardLectureContentProps) => {
   const theme = useTheme();
-
   const layoutQuery: Breakpoint = 'lg';
 
   return (
@@ -28,18 +27,13 @@ const DashboardLectureContent = ({
         flexDirection: 'column',
         pt: 'var(--layout-dashboard-content-pt)',
         pb: 'var(--layout-dashboard-content-pb)',
-        [theme.breakpoints.up(layoutQuery)]: {
-          px: 'var(--layout-dashboard-content-px)',
-        },
-        ...(disablePadding && {
-          p: {
-            xs: 0,
-            sm: 0,
-            md: 0,
-            lg: 0,
-            xl: 0,
-          },
-        }),
+        ...(disablePadding
+          ? { p: 0 } // Remove padding if disablePadding is true
+          : {
+              [theme.breakpoints.up(layoutQuery)]: {
+                px: 'var(--layout-dashboard-content-px)',
+              },
+            }),
         ...sx,
       }}
       {...other}
