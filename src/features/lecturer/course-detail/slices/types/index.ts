@@ -1,3 +1,4 @@
+import { Vimeo } from "../../constants/TopicVideoType";
 import { Category, Course } from "../../models";
 
 export interface CourseDetailScreenState {
@@ -10,6 +11,10 @@ export interface CourseDetailScreenState {
         isLoadingGetCategories: boolean;
         data: Array<Category> | undefined;
     };
+    vimeoVideo: {
+        isLoadingVimeoVideo: boolean;
+        data: Vimeo | undefined;
+    }
 }
 
 export const initialCourseDetailScreenState: CourseDetailScreenState = {
@@ -22,4 +27,8 @@ export const initialCourseDetailScreenState: CourseDetailScreenState = {
         data: undefined,
         isLoadingGetCategories: false,
     },
+    vimeoVideo: {
+        data: undefined,
+        isLoadingVimeoVideo: false,
+    }
 };

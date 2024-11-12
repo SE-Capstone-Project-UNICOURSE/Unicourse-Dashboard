@@ -2,7 +2,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   getCategories,
-  getCourseDetailById
+  getCourseDetailById,
+  getVideoVimeoWithAccessToken
 } from './actions';
 import { initialCourseDetailScreenState } from './types';
 
@@ -21,6 +22,9 @@ const courseDetailSlice = createSlice({
     },
     setFirstLoadCategories(state, action) {
         state.isFirstLoadCategory = action.payload;
+    },
+    setVideoVimeo(state, action) {
+      state.vimeoVideo.data = action.payload;
     },
     reset: () => initialCourseDetailScreenState,
   },
@@ -47,6 +51,17 @@ const courseDetailSlice = createSlice({
       .addCase(getCategories.rejected, (state) => {
         state.categories.isLoadingGetCategories = false;
       });
+    builder
+      .addCase(getVideoVimeoWithAccessToken.pending, (state) => {
+        state.vimeoVideo.isLoadingVimeoVideo = true;
+      })
+      .addCase(getVideoVimeoWithAccessToken.fulfilled, (state, action) => {
+        state.vimeoVideo.isLoadingVimeoVideo = false;
+        state.vimeoVideo.data = action.payload;
+      })
+      .addCase(getVideoVimeoWithAccessToken.rejected, (state) => {
+        state.vimeoVideo.isLoadingVimeoVideo = false;
+      });
   },
 });
 
@@ -55,6 +70,7 @@ export const {
   setIsLoadingGetCourseDetail,
   setCategories,
   setFirstLoadCategories,
+  setVideoVimeo,
   reset,
 } = courseDetailSlice.actions;
 export default courseDetailSlice.reducer;
