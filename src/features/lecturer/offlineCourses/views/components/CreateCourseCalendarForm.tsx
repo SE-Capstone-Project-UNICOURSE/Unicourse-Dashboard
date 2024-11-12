@@ -1,7 +1,8 @@
 import FormInputRender from '@app/common/components/forms/components/FormInputRender';
 import { useAppDispatch } from '@app/stores';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Grid, Typography } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { Box, Grid, IconButton, Typography } from '@mui/material';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useCourseCalendarFormFields } from '../../configs/useCourseCalendarFormFields';
 import { courseMentorSessionSchema } from '../../schema/courseMentorSession.schema';
@@ -9,8 +10,14 @@ import {
   CourseMentorSessionFormValues,
   courseMentorSessionFormValues,
 } from '../../types/courseMentorSessionFormValues';
+import { GridDeleteIcon } from '@mui/x-data-grid';
 
-const CreateCourseCalendarForm = () => {
+type CreateCourseCalendarFormProps = {
+  indexItem: number;
+  onDelete: (formId: number) => void;
+};
+
+const CreateCourseCalendarForm = ({ indexItem, onDelete }: CreateCourseCalendarFormProps) => {
   const dispatch = useAppDispatch();
   const formFields = useCourseCalendarFormFields();
 
@@ -28,9 +35,23 @@ const CreateCourseCalendarForm = () => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+    <Box component="form" onSubmit={handleSubmit(onSubmit)} position="relative">
+      {/* Delete Button */}
+      <IconButton
+        onClick={() => onDelete(indexItem)}
+        style={{
+          position: 'absolute',
+          top: 8,
+          right: 8,
+          marginBottom: 30,
+        }}
+        aria-label="delete"
+      >
+        <GridDeleteIcon />
+      </IconButton>
+
       <Typography variant="h4" gutterBottom>
-        Tạo Mô Tả Buổi
+        Tạo Mô Tả Buổi {indexItem + 1}
       </Typography>
 
       <Grid container spacing={2} mb={2}>

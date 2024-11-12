@@ -1,6 +1,7 @@
-import { CheckboxProps, TextFieldProps } from '@mui/material';
+import { CheckboxProps, SxProps, TextFieldProps } from '@mui/material';
 import { FieldValues } from 'react-hook-form';
 import { DateRangeProps } from '../components/DateRangeField';
+import { Theme } from '@mui/material/styles';
 
 export type InputType =
   | 'input'
@@ -27,6 +28,7 @@ interface FormFieldConfig<T extends FieldValues> {
   type?: React.HTMLInputTypeAttribute;
   inputProps?: TextFieldProps | CheckboxProps;
   dateRangeProps?: DateRangeProps;
+  sx?: SxProps<Theme>;
 }
 
 export type { FormFieldConfig };

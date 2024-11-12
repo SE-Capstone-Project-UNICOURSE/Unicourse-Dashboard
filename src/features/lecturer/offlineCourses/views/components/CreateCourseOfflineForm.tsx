@@ -87,9 +87,7 @@ const CreateCourseOfflineForm = () => {
               Quay lại
             </GradientButton>
 
-            <GradientButton type="submit" onClick={handleNext}>
-              Tiếp tục
-            </GradientButton>
+            <GradientButton type="submit">Tiếp tục</GradientButton>
           </Box>
         </Box>
       </Grid>

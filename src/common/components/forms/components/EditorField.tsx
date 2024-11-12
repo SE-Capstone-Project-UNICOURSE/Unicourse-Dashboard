@@ -15,7 +15,6 @@ function EditorField<T extends FieldValues>({ label, field }: EditorFieldProps<T
       <Editor
         apiKey="kvvobsrb95sskboun6nxg20hndep4tm17ygjgc73bqwi5bu2"
         initialValue={field.value || ''}
-        onEditorChange={(content) => field.onChange(content)}
       />
     </Box>
   );
