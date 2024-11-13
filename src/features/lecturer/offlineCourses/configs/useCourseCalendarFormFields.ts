@@ -16,9 +16,9 @@ export const useCourseCalendarFormFields = (): FormFieldConfig<CourseMentorSessi
       grid: { xs: 12, sm: 12, md: 12 },
     },
     {
-      name: 'date_range', // A virtual name for grouping start and end dates
+      name: 'date_range',
       label: 'Khoảng thời gian',
-      inputType: 'date-range',
+      inputType: 'dateRange',
       grid: { xs: 12, sm: 12, md: 12 },
       dateRangeProps: {
         start: {

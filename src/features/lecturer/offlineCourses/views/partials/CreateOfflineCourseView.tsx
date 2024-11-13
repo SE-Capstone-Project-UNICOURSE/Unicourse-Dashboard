@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
 import GradientButton from '@app/common/components/atoms/GradientButton';
 import { APP_COLOR } from '@app/common/constants/appConstants';
 import { useAppDispatch, useAppSelector } from '@app/stores';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { CheckCircleRounded, RadioButtonChecked } from '@mui/icons-material';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import {
@@ -17,8 +17,14 @@ import {
   useTheme,
 } from '@mui/material';
 import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { steps } from '../../constants';
+import { courseMentorCreation } from '../../schema/courseMentorCreation.schema';
 import { setCreateCourseInstruction } from '../../slices';
+import {
+  courseMentorCreationDefaultFormValues,
+  courseMentorCreationFormValues,
+} from '../../types/courseMentorCreationFormValues';
 import CreateCourseOfflineForm from '../components/CreateCourseOfflineForm';
 import VerticalStepInstruction from '../components/VerticalStepInstruction';
 import CreateOfflineCourseCalendarListView from './CreateOfflineCourseCalendarListView';
@@ -31,6 +37,11 @@ const CreateOfflineCourseView: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const dispatch = useAppDispatch();
+
+  const methods = useForm<courseMentorCreationFormValues>({
+    resolver: yupResolver(courseMentorCreation),
+    defaultValues: courseMentorCreationDefaultFormValues,
+  });
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (
@@ -48,7 +59,11 @@ const CreateOfflineCourseView: React.FC = () => {
       case 0:
         return <ListOnlineCourseLecturer />;
       case 1:
-        return <CreateCourseOfflineForm />;
+        return (
+          <FormProvider {...methods}>
+            <CreateCourseOfflineForm methods={methods} />
+          </FormProvider>
+        );
       case 2:
         return <CreateOfflineCourseCalendarListView />;
       case 3:

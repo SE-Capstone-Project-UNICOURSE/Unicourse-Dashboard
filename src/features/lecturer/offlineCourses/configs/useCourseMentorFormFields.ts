@@ -1,9 +1,14 @@
 import { FormFieldConfig } from '@app/common/components/forms/configs/FormFieldConfig';
 import { useAppSelector } from '@app/stores';
+import { useFormContext } from 'react-hook-form';
 import { courseMentorCreationFormValues } from '../types/courseMentorCreationFormValues';
 
-export const useCourseMentorFormFields = (): FormFieldConfig<courseMentorCreationFormValues>[] => {
+const useCourseMentorFormFields = (): FormFieldConfig<courseMentorCreationFormValues>[] => {
   const { data } = useAppSelector((state) => state.listCourseOfflineLecture.centers);
+
+  const {
+    formState: { errors },
+  } = useFormContext<courseMentorCreationFormValues>();
 
   const config: FormFieldConfig<courseMentorCreationFormValues>[] = [
     {
@@ -53,16 +58,20 @@ export const useCourseMentorFormFields = (): FormFieldConfig<courseMentorCreatio
     {
       name: 'date_range',
       label: 'Khoảng thời gian',
-      inputType: 'date-range',
+      inputType: 'dateRange',
       grid: { xs: 12, sm: 12, md: 12 },
       dateRangeProps: {
         start: {
           name: 'start_date',
           label: 'Ngày bắt đầu',
+          error: !!errors.date_range?.start_date?.message,
+          helperText: errors.date_range?.start_date?.message,
         },
         end: {
           name: 'end_date',
           label: 'Ngày kết thúc',
+          error: !!errors.date_range?.end_date?.message,
+          helperText: errors.date_range?.end_date?.message,
         },
       },
     },
@@ -70,3 +79,5 @@ export const useCourseMentorFormFields = (): FormFieldConfig<courseMentorCreatio
 
   return config;
 };
+
+export default useCourseMentorFormFields;

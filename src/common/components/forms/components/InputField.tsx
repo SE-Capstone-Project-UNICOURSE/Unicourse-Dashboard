@@ -1,5 +1,5 @@
+import { InputAdornment, TextField, TextFieldProps } from '@mui/material';
 import React from 'react';
-import { TextField, TextFieldProps, InputAdornment } from '@mui/material';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
 interface InputFieldProps<T extends FieldValues> {
@@ -23,6 +23,7 @@ function InputField<T extends FieldValues>({
 }: InputFieldProps<T>) {
   return (
     <TextField
+      {...field}
       label={label}
       variant="outlined"
       fullWidth
@@ -32,7 +33,6 @@ function InputField<T extends FieldValues>({
       InputProps={{
         endAdornment: unit ? <InputAdornment position="end">{unit}</InputAdornment> : null,
       }}
-      {...field}
       {...(inputProps as TextFieldProps)}
     />
   );

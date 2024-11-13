@@ -1,6 +1,6 @@
 import { Box, TextFieldProps } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import dayjs, { Dayjs } from 'dayjs'; // Import dayjs for date manipulation
+import dayjs, { Dayjs } from 'dayjs';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
 export interface DateRangeProps {
@@ -8,27 +8,24 @@ export interface DateRangeProps {
     name: string;
     label: string;
     inputProps?: TextFieldProps;
+    error?: boolean;
+    helperText?: string;
   };
   end: {
     name: string;
     label: string;
     inputProps?: TextFieldProps;
+    error?: boolean;
+    helperText?: string;
   };
 }
 
 interface DateRangeFieldProps<T extends FieldValues> {
   field: ControllerRenderProps<T>;
-  error?: boolean;
-  helperText?: string;
   dateInfo: DateRangeProps;
 }
 
-function DateRangeField<T extends FieldValues>({
-  field,
-  error,
-  helperText,
-  dateInfo,
-}: DateRangeFieldProps<T>) {
+function DateRangeField<T extends FieldValues>({ field, dateInfo }: DateRangeFieldProps<T>) {
   const { onChange } = field;
 
   return (
@@ -45,7 +42,11 @@ function DateRangeField<T extends FieldValues>({
           })
         }
         slotProps={{
-          textField: { error, helperText, fullWidth: true },
+          textField: {
+            error: dateInfo.start.error,
+            helperText: dateInfo.start.helperText,
+            fullWidth: true,
+          },
         }}
       />
 
@@ -61,7 +62,11 @@ function DateRangeField<T extends FieldValues>({
           })
         }
         slotProps={{
-          textField: { error, helperText, fullWidth: true },
+          textField: {
+            error: dateInfo.end.error,
+            helperText: dateInfo.end.helperText,
+            fullWidth: true,
+          },
         }}
       />
     </Box>
