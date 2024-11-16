@@ -222,7 +222,7 @@ export function OverviewAnalyticsView() {
           />
         </Grid>
 
-        <Grid xs={12} md={6} lg={6}>``
+        <Grid xs={12} md={6} lg={6}>
           <AnalyticsUI.AnalyticsCurrentVisits
             title="Top 5 khoá học được mua nhiều nhất"
             chart={{

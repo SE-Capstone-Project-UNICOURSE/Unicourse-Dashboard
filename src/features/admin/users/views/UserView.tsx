@@ -20,53 +20,49 @@ import { UserTableRow } from './components/UserTableRow';
 import { UserTableToolbar } from './components/UserTableToolbar';
 import { useUserTable } from './useUserTable';
 
-const _users = [
+const _users: UserProps[] = [
   {
     id: '1',
-    name: 'John Doe',
-    company: 'Tech Solutions',
-    role: 'Admin',
-    isVerified: true,
-    status: 'active',
-    avatarUrl: 'https://via.placeholder.com/150', // Thêm avatarUrl
+    email: 'thanhdat.it.work@gmail.com',
+    full_name: 'Nguyen Thanh Dat',
+    date_of_birth: '1995-12-10',
+    profile_image: 'https://via.placeholder.com/150',
+    address: '123 Đường ABC, TP.HCM',
   },
   {
     id: '2',
-    name: 'Jane Smith',
-    company: 'Innovative Inc.',
-    role: 'User',
-    isVerified: false,
-    status: 'pending',
-    avatarUrl: 'https://via.placeholder.com/150', // Thêm avatarUrl
+    email: null,
+    full_name: null,
+    date_of_birth: null,
+    profile_image: null,
+    address: null,
   },
   {
     id: '3',
-    name: 'Alice Johnson',
-    company: 'Acme Corp',
-    role: 'Manager',
-    isVerified: true,
-    status: 'inactive',
-    avatarUrl: 'https://via.placeholder.com/150', // Thêm avatarUrl
+    email: 'example.user@gmail.com',
+    full_name: 'Jane Doe',
+    date_of_birth: null,
+    profile_image: 'https://via.placeholder.com/150',
+    address: '456 Đường DEF, Hà Nội',
   },
   {
     id: '4',
-    name: 'Bob Williams',
-    company: 'Creative Agency',
-    role: 'User',
-    isVerified: false,
-    status: 'active',
-    avatarUrl: 'https://via.placeholder.com/150', // Thêm avatarUrl
+    email: 'john.doe@gmail.com',
+    full_name: 'John Doe',
+    date_of_birth: '1990-05-20',
+    profile_image: 'https://via.placeholder.com/150',
+    address: null,
   },
   {
     id: '5',
-    name: 'Charlie Brown',
-    company: 'StartUp X',
-    role: 'Admin',
-    isVerified: true,
-    status: 'pending',
-    avatarUrl: 'https://via.placeholder.com/150', // Thêm avatarUrl
+    email: null,
+    full_name: null,
+    date_of_birth: '1988-07-15',
+    profile_image: null,
+    address: '789 Đường GHI, Đà Nẵng',
   },
 ];
+
 
 export function UserView() {
   const table = useUserTable();
@@ -85,14 +81,14 @@ export function UserView() {
     <DashboardContent>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          Users
+          Danh sách người dùng
         </Typography>
         <Button
           variant="contained"
           color="inherit"
           startIcon={<Iconify icon="mingcute:add-line" />}
         >
-          New user
+          Thêm mới
         </Button>
       </Box>
 
@@ -122,12 +118,13 @@ export function UserView() {
                   )
                 }
                 headLabel={[
-                  { id: 'name', label: 'Name' },
-                  { id: 'company', label: 'Company' },
-                  { id: 'role', label: 'Role' },
-                  { id: 'isVerified', label: 'Verified', align: 'center' },
-                  { id: 'status', label: 'Status' },
-                  { id: '' },
+                  { id: 'index', label: 'STT' }, // STT
+                  { id: 'profile_image', label: 'Ảnh' }, // Avatar
+                  { id: 'full_name', label: 'Họ và Tên' }, // Full Name
+                  { id: 'email', label: 'Email' }, // Email
+                  { id: 'date_of_birth', label: 'Ngày sinh' }, // Date of Birth
+                  { id: 'address', label: 'Địa chỉ' }, // Address
+                  { id: 'action', label: 'Thao tác' }, // Action
                 ]}
               />
               <TableBody>
@@ -140,6 +137,7 @@ export function UserView() {
                     <UserTableRow
                       key={row.id}
                       row={row}
+                      index={table.page * table.rowsPerPage + dataFiltered.indexOf(row)}
                       selected={table.selected.includes(row.id)}
                       onSelectRow={() => table.onSelectRow(row.id)}
                     />
