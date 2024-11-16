@@ -14,6 +14,7 @@ type PostItemProps = {
   coverUrl: string;
   description: string;
   postedAt: Date | string;
+  price: number; // Giá tiền của giao dịch
 };
 
 type Props = CardProps & {
@@ -22,7 +23,7 @@ type Props = CardProps & {
   list: PostItemProps[];
 };
 
-// AnalyticsNews component responsible for rendering a list of news posts
+// Component AnalyticsTransactions hiển thị danh sách các giao dịch gần đây
 export default function AnalyticsTransactions({ title, subheader, list, ...other }: Props) {
   return (
     <Card {...other}>
@@ -42,7 +43,7 @@ export default function AnalyticsTransactions({ title, subheader, list, ...other
           color="inherit"
           endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
         >
-          View all
+          Xem tất cả
         </Button>
       </Box>
     </Card>

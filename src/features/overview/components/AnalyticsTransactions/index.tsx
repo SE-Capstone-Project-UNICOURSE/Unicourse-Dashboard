@@ -1,11 +1,11 @@
-import Iconify from '@app/components/iconify/Iconify';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import type { CardProps } from '@mui/material/Card';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import { Scrollbar } from 'src/components/scrollbar';
 import TransactionItem from './TransactionItem';
+import { Scrollbar } from '@app/common/components/scrollbar';
+import Iconify from '@app/common/components/iconify/Iconify';
 
 // Define the type for the post items and AnalyticsNews props
 type PostItemProps = {

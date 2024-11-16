@@ -2,40 +2,46 @@
 const _posts = [
   {
     id: '1',
-    title: 'Breaking News: Market Hits Record High',
+    title: 'Thanh toán thành công khoá học "Spring Boot Cơ Bản"',
     coverUrl: 'https://via.placeholder.com/150',
-    description: 'The stock market reached new heights today...',
-    postedAt: new Date('2023-09-15T10:30:00'),
+    description: 'Người dùng đã hoàn tất thanh toán cho khoá học này.',
+    postedAt: new Date('2024-11-14T10:30:00'),
+    price: 1500000,
   },
   {
     id: '2',
-    title: 'New Tech Trends in 2024',
+    title: 'Khóa học "ReactJS Nâng Cao" được đăng ký',
     coverUrl: 'https://via.placeholder.com/150',
-    description: 'Explore the latest trends in technology...',
-    postedAt: new Date('2023-09-14T08:45:00'),
+    description: 'Người dùng mới vừa đăng ký tham gia khoá học ReactJS.',
+    postedAt: new Date('2024-11-13T08:45:00'),
+    price: 2500000,
   },
   {
     id: '3',
-    title: 'Climate Change: What We Can Do',
+    title: 'Hoàn tất thanh toán khoá học "Node.js Mastery"',
     coverUrl: 'https://via.placeholder.com/150',
-    description: 'Find out how you can make a difference...',
-    postedAt: new Date('2023-09-13T12:00:00'),
+    description: 'Giao dịch thanh toán qua ví điện tử đã hoàn tất.',
+    postedAt: new Date('2024-11-12T12:00:00'),
+    price: 1800000,
   },
   {
     id: '4',
-    title: 'Startup Funding Reaches All-time High',
+    title: 'Hoàn tiền cho giao dịch thất bại',
     coverUrl: 'https://via.placeholder.com/150',
-    description: 'The venture capital funding in startups is...',
-    postedAt: new Date('2023-09-12T14:30:00'),
+    description: 'Một giao dịch không thành công đã được hoàn tiền.',
+    postedAt: new Date('2024-11-11T14:30:00'),
+    price: -500000, // Số tiền âm biểu thị hoàn tiền
   },
   {
     id: '5',
-    title: 'Healthcare Innovation in 2024',
+    title: 'Khóa học "Python for Data Science" đã được kích hoạt',
     coverUrl: 'https://via.placeholder.com/150',
-    description: 'Learn about the latest innovations in healthcare...',
-    postedAt: new Date('2023-09-11T09:20:00'),
+    description: 'Người dùng đã kích hoạt quyền truy cập khoá học.',
+    postedAt: new Date('2024-11-10T09:20:00'),
+    price: 2000000,
   },
 ];
+
 
 // Mock data for order timeline
 const _timeline = [

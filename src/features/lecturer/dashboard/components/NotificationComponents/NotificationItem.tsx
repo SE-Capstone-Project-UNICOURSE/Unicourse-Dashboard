@@ -38,7 +38,7 @@ const NotificationItem = ({ notification }: NotificationItemProps) => {
             }}
           >
             <Iconify width={14} icon="solar:clock-circle-outline" />
-            {fToNow(notification.postedAt)}
+            {fToNow(notification.postedAt ? new Date(notification.postedAt) : null)}
           </Typography>
         }
       />

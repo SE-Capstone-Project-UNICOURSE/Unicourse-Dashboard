@@ -3,6 +3,9 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/vi'; // Import ngôn ngữ tiếng Việt
+
+dayjs.extend(relativeTime); // Kích hoạt plugin relativeTime
 
 // ----------------------------------------------------------------------
 
@@ -92,14 +95,16 @@ export function fTimestamp(date: DatePickerFormat) {
 
 // ----------------------------------------------------------------------
 
-/** output: a few seconds, 2 years
+/**
+ * Format thời gian từ hiện tại đến một ngày cụ thể (theo ngôn ngữ tiếng Việt).
+ * @param date Ngày cần format
+ * @returns Chuỗi hiển thị như "2 ngày trước" hoặc "1 tháng trước"
  */
-export function fToNow(date: DatePickerFormat) {
+export function fToNow(date: Date | string | null) {
   if (!date) {
     return null;
   }
 
   const isValid = dayjs(date).isValid();
-
-  return isValid ? dayjs(date).toNow(true) : 'Invalid time value';
+  return isValid ? `${dayjs(date).locale('vi').toNow(true)} trước` : 'Thời gian không hợp lệ';
 }

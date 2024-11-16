@@ -8,17 +8,30 @@ import { useEffect, useState } from 'react';
 import AdminDashboardService from '../../services';
 import { DataResponse } from '@app/stores/models';
 import { CourseData, StatisticsData, UserWillingData } from '../../models';
+import { CircularProgress, Box } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
 export function OverviewAnalyticsView() {
   // Định nghĩa `statistics` với kiểu `DataResponse<StatisticsData> | null`
   const [statistics, setStatistics] = useState<DataResponse<StatisticsData> | null>(null);
-  const [topCourses, setTopCourses] = useState<CourseData[]>([]); // Khai báo topCourses là CourseData[]
-  const [paidUsers, setPaidUsers] = useState<UserWillingData>([]); // Khai báo paidUsers là UserWillingData
+  const [topCourses, setTopCourses] = useState<CourseData[]>([]);
+  const [paidUsers, setPaidUsers] = useState<UserWillingData>([]);
 
   // Lấy accessToken (giả sử bạn có accessToken ở đây)
   const accessToken = localStorage.getItem('accessToken') || '';
+
+  const normalizeData = (data, length = 12) => {
+    const normalized = [...data];
+    while (normalized.length < length) {
+      normalized.push(0); // Bổ sung giá trị 0 nếu thiếu
+    }
+    return normalized.slice(0, length); // Cắt nếu dư
+  };
+
+  // Chuẩn hóa dữ liệu
+  const usersData = normalizeData(statistics?.data?.users.series || []);
+  const paidUsersData = normalizeData(paidUsers || []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,10 +42,11 @@ export function OverviewAnalyticsView() {
 
         // Gọi API getTopCourses từ service
         const topCoursesResponse = await AdminDashboardService.getTopCourses(accessToken);
-        setTopCourses(topCoursesResponse.data || []); 
+        setTopCourses(topCoursesResponse.data || []);
+
         // Gọi API getWillingUsers từ service
         const paidUsersResponse = await AdminDashboardService.getWillingUsers(accessToken);
-        setPaidUsers(paidUsersResponse.data || []); 
+        setPaidUsers(paidUsersResponse.data || []);
       } catch (error) {
         console.error('Failed to fetch data', error);
       }
@@ -42,10 +56,25 @@ export function OverviewAnalyticsView() {
   }, [accessToken]);
 
   if (!statistics) {
-    // Sẽ thay thế lại bằng loading page với gif icon loading
-    return <div>Loading...</div>; 
-
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          background: 'linear-gradient(to bottom, #B4C5E4, #F8F9FC)', // Gradient tùy chỉnh
+          color: 'black',
+          gap: 2,
+        }}
+      >
+        <CircularProgress size={60} color="inherit" />
+        <Box sx={{ typography: 'h6' }}>Đang tải dữ liệu...</Box>
+      </Box>
+    );
   }
+  
   return (
     <DashboardContent maxWidth="xl">
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
@@ -164,7 +193,6 @@ export function OverviewAnalyticsView() {
         <Grid xs={12} md={6} lg={12}>
           <AnalyticsUI.AnalyticsWebsiteVisits
             title="Tỷ lệ sinh viên mới và số lượng khoá học đăng ký"
-            subheader="(+12%) so với 2023"
             chart={{
               categories: [
                 'Tháng 1',
@@ -176,11 +204,36 @@ export function OverviewAnalyticsView() {
                 'Tháng 7',
                 'Tháng 8',
                 'Tháng 9',
+                'Tháng 10',
+                'Tháng 11',
+                'Tháng 12',
               ],
               series: [
-                { name: 'Số sinh viên mới', data: [120, 60, 62, 30, 150, 170, 70, 62, 55] },
-                { name: 'Số lượng đã đăng ký học', data: [89, 52, 29, 133, 132, 53, 23, 58, 24] },
+                {
+                  name: 'Số sinh viên mới',
+                  data: usersData, // Chuẩn hóa từ API users
+                },
+                {
+                  name: 'Số lượng đã đăng ký học',
+                  data: paidUsersData, // Chuẩn hóa từ API paidUsers
+                },
               ],
+            }}
+          />
+        </Grid>
+
+        <Grid xs={12} md={6} lg={6}>``
+          <AnalyticsUI.AnalyticsCurrentVisits
+            title="Top 5 khoá học được mua nhiều nhất"
+            chart={{
+              series: topCourses
+                .filter((course) => course.value > 0) // Loại bỏ các khóa học có value = 0
+                .sort((a, b) => b.value - a.value) // Sắp xếp giảm dần theo value
+                .slice(0, 5) // Lấy 5 phần tử đầu tiên
+                .map((course) => ({
+                  label: course.title, // Gắn nhãn khóa học
+                  value: course.value, // Gắn giá trị khóa học
+                })),
             }}
           />
         </Grid>
@@ -190,25 +243,11 @@ export function OverviewAnalyticsView() {
           <AnalyticsUI.AnalyticsTransactions title="Giao dịch gần đây" list={_posts.slice(0, 5)} />
         </Grid>
 
-        <Grid xs={12} md={6} lg={6}>
+        {/* <Grid xs={12} md={6} lg={6}>
           <AnalyticsUI.AnalyticsNews title="News" list={_posts.slice(0, 5)} />
-        </Grid>
+        </Grid> */}
 
-        <Grid xs={12} md={6} lg={4}>
-          <AnalyticsUI.AnalyticsCurrentVisits
-            title="Top 5 khoá học được mua nhiều nhất"
-            chart={{
-              series: [
-                { label: 'MAD101', value: 124 },
-                { label: 'JPD123', value: 123 },
-                { label: 'MAS291', value: 521 },
-                { label: 'JPD113', value: 421 },
-                { label: 'PRO392', value: 103 },
-              ],
-            }}
-          />
-        </Grid>
-
+        {/*    
         <Grid xs={12} md={6} lg={8}>
           <AnalyticsUI.AnalyticsConversionRates
             title="Conversion rates"
@@ -221,9 +260,9 @@ export function OverviewAnalyticsView() {
               ],
             }}
           />
-        </Grid>
+        </Grid> */}
 
-        <Grid xs={12} md={6} lg={4}>
+        {/* <Grid xs={12} md={6} lg={4}>
           <AnalyticsUI.AnalyticsCurrentSubject
             title="Current subject"
             chart={{
@@ -235,8 +274,8 @@ export function OverviewAnalyticsView() {
               ],
             }}
           />
-        </Grid>
-
+        </Grid> */}
+        {/* 
         <Grid xs={12} md={6} lg={4}>
           <AnalyticsUI.AnalyticsOrderTimeline title="Order timeline" list={_timeline} />
         </Grid>
@@ -255,7 +294,7 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} md={6} lg={8}>
           <AnalyticsUI.AnalyticsTasks title="Tasks" list={_tasks} />
-        </Grid>
+        </Grid> */}
       </Grid>
     </DashboardContent>
   );

@@ -11,13 +11,18 @@ type PostItemProps = {
   coverUrl: string;
   description: string;
   postedAt: Date | string;
+  price: number; // Giá tiền
 };
 
 type Props = BoxProps & {
   item: PostItemProps;
 };
 
-// PostItem component responsible for rendering individual news posts
+ // Hàm format tiền tệ
+ const formatPrice = (value: number) =>
+  new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+
+// TransactionItem component responsible for rendering individual transactions
 export default function TransactionItem({ sx, item, ...other }: Props) {
   return (
     <Box
@@ -32,6 +37,7 @@ export default function TransactionItem({ sx, item, ...other }: Props) {
       }}
       {...other}
     >
+      {/* Avatar */}
       <Avatar
         variant="rounded"
         alt={item.title}
@@ -39,13 +45,20 @@ export default function TransactionItem({ sx, item, ...other }: Props) {
         sx={{ width: 48, height: 48, flexShrink: 0 }}
       />
 
+      {/* Title and description */}
       <ListItemText
         primary={item.title}
-        secondary={item.description}
+        secondary={`${item.description}`}
         primaryTypographyProps={{ noWrap: true, typography: 'subtitle2' }}
         secondaryTypographyProps={{ mt: 0.5, noWrap: true, component: 'span' }}
       />
 
+      {/* Giá tiền */}
+      <Box sx={{ flexShrink: 0, typography: 'subtitle2', color: 'primary.main', textAlign: 'right' }}>
+        {formatPrice(item.price)}
+      </Box>
+
+      {/* Thời gian */}
       <Box sx={{ flexShrink: 0, color: 'text.disabled', typography: 'caption' }}>
         {fToNow(item.postedAt)}
       </Box>
