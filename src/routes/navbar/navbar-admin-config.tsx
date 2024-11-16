@@ -1,15 +1,30 @@
+import Iconify from '@app/common/components/iconify/Iconify';
 import { SvgColor } from '@app/common/components/svg-color';
 import type { NavItemProps } from '@app/features/admin/dashboard/types';
 
 const icon = (name: string) => (
   <SvgColor width="100%" height="100%" src={`/assets/icons/navbar/${name}.svg`} />
 );
+const icon_1 = (name: string) => <Iconify icon={name} width={22} height={22} />;
+
 
 const adminNavData: NavItemProps[] = [
   {
     title: 'Bảng điều khiển',
     path: '/admin',
     icon: icon('ic-analytics'),
+  },
+  {
+    title: 'Giao dịch',
+    path: '/admin/transactions',
+    icon: icon_1('eva:credit-card-outline'), // Icon thể hiện giao dịch
+    children: [
+      {
+        title: 'Danh sách giao dịch',
+        path: '/admin/transactions',
+        icon: icon_1('eva:list-outline'), // Icon danh sách
+      },
+    ],
   },
   {
     title: 'Người dùng',

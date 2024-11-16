@@ -74,7 +74,7 @@ export function OverviewAnalyticsView() {
       </Box>
     );
   }
-  
+
   return (
     <DashboardContent maxWidth="xl">
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
@@ -82,6 +82,33 @@ export function OverviewAnalyticsView() {
       </Typography>
 
       <Grid container spacing={3}>
+        <Grid xs={12} sm={6} md={3}>
+          <AnalyticsUI.AnalyticsWidgetSummary
+            title="Tổng doanh thu trong tuần"
+            percent={statistics.data?.income.growthRate || 0}
+            total={statistics.data?.income.currentWeek || 0}
+            color="error"
+            icon={<img alt="icon" src="/assets/icons/glass/ic-glass-bag.svg" />}
+            chart={{
+              categories: [
+                'Tháng 1',
+                'Tháng 2',
+                'Tháng 3',
+                'Tháng 4',
+                'Tháng 5',
+                'Tháng 6',
+                'Tháng 7',
+                'Tháng 8',
+                'Tháng 9',
+                'Tháng 10',
+                'Tháng 11',
+                'Tháng 12',
+              ],
+              series: statistics.data?.income.series || [],
+            }}
+          />
+        </Grid>
+
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsUI.AnalyticsWidgetSummary
             title="Khóa học đã bán trong tuần"
@@ -163,36 +190,9 @@ export function OverviewAnalyticsView() {
           />
         </Grid>
 
-        <Grid xs={12} sm={6} md={3}>
-          <AnalyticsUI.AnalyticsWidgetSummary
-            title="Tổng doanh thu trong tuần"
-            percent={statistics.data?.income.growthRate || 0}
-            total={statistics.data?.income.currentWeek || 0}
-            color="error"
-            icon={<img alt="icon" src="/assets/icons/glass/ic-glass-message.svg" />}
-            chart={{
-              categories: [
-                'Tháng 1',
-                'Tháng 2',
-                'Tháng 3',
-                'Tháng 4',
-                'Tháng 5',
-                'Tháng 6',
-                'Tháng 7',
-                'Tháng 8',
-                'Tháng 9',
-                'Tháng 10',
-                'Tháng 11',
-                'Tháng 12',
-              ],
-              series: statistics.data?.income.series || [],
-            }}
-          />
-        </Grid>
-
         <Grid xs={12} md={6} lg={12}>
           <AnalyticsUI.AnalyticsWebsiteVisits
-            title="Tỷ lệ sinh viên mới và số lượng khoá học đăng ký"
+            title="Tỷ lệ học viên mới và số lượng khoá học đăng ký"
             chart={{
               categories: [
                 'Tháng 1',
@@ -210,7 +210,7 @@ export function OverviewAnalyticsView() {
               ],
               series: [
                 {
-                  name: 'Số sinh viên mới',
+                  name: 'Số học viên mới',
                   data: usersData, // Chuẩn hóa từ API users
                 },
                 {
