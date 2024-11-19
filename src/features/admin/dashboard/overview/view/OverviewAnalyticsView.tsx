@@ -2,12 +2,11 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
 
 import DashboardContent from '@app/features/admin/dashboard/layouts/DashboardLayout/DashboardContent';
-import { _posts, _tasks, _timeline } from '../_mockData';
 import AnalyticsUI from '../components';
 import { useEffect, useState } from 'react';
 import AdminDashboardService from '../../services';
 import { DataResponse } from '@app/stores/models';
-import { CourseData, StatisticsData, UserWillingData } from '../../models';
+import { CourseData, StatisticsData, TransactionData, UserWillingData } from '../../models';
 import { CircularProgress, Box } from '@mui/material';
 
 // ----------------------------------------------------------------------
@@ -17,6 +16,7 @@ export function OverviewAnalyticsView() {
   const [statistics, setStatistics] = useState<DataResponse<StatisticsData> | null>(null);
   const [topCourses, setTopCourses] = useState<CourseData[]>([]);
   const [paidUsers, setPaidUsers] = useState<UserWillingData>([]);
+  const [transactions, setTransactions] = useState<TransactionData[]>([]);
 
   // Lấy accessToken (giả sử bạn có accessToken ở đây)
   const accessToken = localStorage.getItem('accessToken') || '';
@@ -28,10 +28,6 @@ export function OverviewAnalyticsView() {
     }
     return normalized.slice(0, length); // Cắt nếu dư
   };
-
-  // Chuẩn hóa dữ liệu
-  const usersData = normalizeData(statistics?.data?.users.series || []);
-  const paidUsersData = normalizeData(paidUsers || []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,6 +43,9 @@ export function OverviewAnalyticsView() {
         // Gọi API getWillingUsers từ service
         const paidUsersResponse = await AdminDashboardService.getWillingUsers(accessToken);
         setPaidUsers(paidUsersResponse.data || []);
+
+        const response = await AdminDashboardService.getTransactions(accessToken);
+        setTransactions(Array.isArray(response) ? response : []); // Gán dữ liệu giao dịch vào state
       } catch (error) {
         console.error('Failed to fetch data', error);
       }
@@ -54,6 +53,19 @@ export function OverviewAnalyticsView() {
 
     fetchData();
   }, [accessToken]);
+  // Chuẩn hóa dữ liệu
+  const usersData = normalizeData(statistics?.data?.users.series || []);
+  const paidUsersData = normalizeData(paidUsers || []);
+
+  // Chuẩn hóa dữ liệu giao dịch
+  const mappedTransactions = transactions.map((transaction) => ({
+    id: transaction.id.toString(),
+    title: transaction.transactionLineItem[0]?.course_mentor?.title || 'Giao dịch',
+    coverUrl: transaction.transactionLineItem[0]?.course_mentor?.image || '',
+    description: transaction.description,
+    postedAt: transaction.transaction_date,
+    price: transaction.final_amount,
+  }));
 
   if (!statistics) {
     return (
@@ -240,7 +252,7 @@ export function OverviewAnalyticsView() {
 
         {/* Số lượng giao dịch gần đây */}
         <Grid xs={12} md={6} lg={6}>
-          <AnalyticsUI.AnalyticsTransactions title="Giao dịch gần đây" list={_posts.slice(0, 5)} />
+          <AnalyticsUI.AnalyticsTransactions title="Giao dịch gần đây" list={mappedTransactions} />
         </Grid>
 
         {/* <Grid xs={12} md={6} lg={6}>

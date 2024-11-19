@@ -5,6 +5,7 @@ import type { StatisticsData } from '../models/StatisticSeriesModel';
 import type { CourseData } from '../models/CourseDataModel';
 import type { UserWillingData } from '../models/UserWillingDataModel';
 import { DASHBOARD_ADMIN_API_PATH } from '../../constants';
+import { TransactionData } from '../models';
 
 class AdminDashboardService {
   // API lấy dữ liệu thống kê
@@ -53,6 +54,23 @@ class AdminDashboardService {
     );
 
     return response.data;
+  }
+
+  // API lấy danh sách giao dịch
+  public async getTransactions(accessToken: string): Promise<TransactionData[]> {
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  const response = await httpClient.post<{ data: { data: TransactionData[] } }>(
+    `${DASHBOARD_ADMIN_API_PATH.GET_TRANSACTIONS}`,
+    {},
+    config
+  );
+
+    return response.data.data.data;
   }
 }
 
