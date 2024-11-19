@@ -1,8 +1,6 @@
 import React from 'react';
 import './CourseHeader.scss';
 import { Typography, Button, Grid, Stack, IconButton } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import EditOffIcon from '@mui/icons-material/EditOff';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
 import { Course } from '@app/common/models/Course';
 
@@ -39,29 +37,25 @@ const CourseDetailHeader: React.FC<CourseDetailHeaderProps> = ({
           direction="row"
           spacing={2}
         >
-          {/* <Button
-            onClick={() => setEditMode(!editMode)}
-            variant="outlined"
-            startIcon={editMode ? <EditOffIcon /> : <EditIcon />}
+          <Button
+            disabled={!editMode}
+            onClick={() => handleResetValue()}
+            variant="contained"
+            endIcon={<ClearAllIcon />}
           >
-            {editMode ? 'Hủy chỉnh sửa' : 'Chỉnh sửa'}
-          </Button> */}
-          <Button disabled={!editMode} onClick={() => handleResetValue()} variant="contained" endIcon={<ClearAllIcon />}>
             Reset
           </Button>
         </Stack>
 
         {/* MOBILE VIEW */}
         <Stack className="course-detail-header__grid-right mobile-only" direction="row" spacing={2}>
-          {/* <IconButton
-            onClick={() => setEditMode(!editMode)}
-            color="primary"
+          <IconButton
+            disabled={!editMode}
+            onClick={() => handleResetValue()}
+            color="error"
             aria-label="delete"
             size="small"
           >
-            {editMode ? <EditOffIcon fontSize="inherit" /> : <EditIcon fontSize="inherit" />}
-          </IconButton> */}
-          <IconButton disabled={!editMode} onClick={() => handleResetValue()} color="error" aria-label="delete" size="small">
             <ClearAllIcon fontSize="small" />
           </IconButton>
         </Stack>

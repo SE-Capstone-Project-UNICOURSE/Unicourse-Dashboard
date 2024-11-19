@@ -2,7 +2,7 @@ import useRouter from '@app/routes/hooks/useRouter';
 import { useAppDispatch } from '@app/stores';
 import { useEffect, useState } from 'react';
 import { getVideoVimeoWithAccessToken } from '../slices/actions';
-import { VimeoRequest } from '../constants/TopicVideoType';
+import { VimeoRequest } from '../models/TopicVideo';
 
 const useTopicViewModel = () => {
   const dispatch = useAppDispatch();

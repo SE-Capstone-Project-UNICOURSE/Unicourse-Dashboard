@@ -1,4 +1,3 @@
-// src/features/courseDetail/courseDetailSlice.ts
 import { createSlice } from '@reduxjs/toolkit';
 import {
   getCategories,

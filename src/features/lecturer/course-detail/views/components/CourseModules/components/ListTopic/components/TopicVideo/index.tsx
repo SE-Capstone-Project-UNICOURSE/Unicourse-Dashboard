@@ -5,7 +5,7 @@ import {
   EMBED_YOUTUBE,
   GET_SOURCE_VIDEO,
   Platform,
-} from '../../../../../../../constants/TopicVideoType';
+} from '../../../../../../../models/TopicVideo';
 import useTopicViewModel from '@app/features/lecturer/course-detail/viewmodels/useTopicViewModel';
 import { useAppSelector } from '@app/stores';
 

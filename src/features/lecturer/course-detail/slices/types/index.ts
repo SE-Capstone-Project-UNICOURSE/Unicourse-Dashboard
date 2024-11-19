@@ -1,5 +1,4 @@
-import { Vimeo } from "../../constants/TopicVideoType";
-import { Category, Course } from "../../models";
+import { Category, Course, Vimeo } from "../../models";
 
 export interface CourseDetailScreenState {
     courseDetail: {

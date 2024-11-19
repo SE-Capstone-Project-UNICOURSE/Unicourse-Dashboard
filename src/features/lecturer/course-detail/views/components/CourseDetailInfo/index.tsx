@@ -10,9 +10,8 @@ import {
   Grid,
   IconButton,
   Modal,
-  Stack,
   TextField,
-  Typography,
+  Typography
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -23,8 +22,8 @@ import {
   CourseFormValues,
   validationSchema,
 } from './core/schema/courseDetailInfo.schema';
-import './CourseDetailInfo.scss';
 import { validationArrayString } from './core/services/validateService';
+import './CourseDetailInfo.scss';
 
 interface CourseDetailProps {
   loading: boolean;
