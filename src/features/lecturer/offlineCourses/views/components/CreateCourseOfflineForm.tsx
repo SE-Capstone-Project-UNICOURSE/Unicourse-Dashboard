@@ -5,6 +5,7 @@ import { FormProvider, SubmitHandler, UseFormReturn } from 'react-hook-form';
 
 import GradientButton from '@app/common/components/atoms/GradientButton';
 import FormInputRender from '@app/common/components/forms/components/FormInputRender';
+import useGetAccessRefreshToken from '@app/hooks/useGetAccessRefreshToken';
 import useCourseMentorFormFields from '../../configs/useCourseMentorFormFields';
 import { setActiveStep } from '../../slices';
 import { getCenters, getCourseDetail } from '../../slices/actions';
@@ -27,8 +28,7 @@ const CreateCourseOfflineForm = ({ methods }: CreateCourseOfflineFormProps) => {
   );
   const dispatch = useAppDispatch();
   const formFields = useCourseMentorFormFields();
-
-  const accessToken = localStorage.getItem('accessToken');
+  const { accessToken } = useGetAccessRefreshToken();
 
   const onSubmit: SubmitHandler<courseMentorCreationFormValues> = (data) => {
     console.log(data);

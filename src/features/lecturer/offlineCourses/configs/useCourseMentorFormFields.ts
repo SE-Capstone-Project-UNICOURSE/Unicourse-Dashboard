@@ -1,4 +1,5 @@
 import { FormFieldConfig } from '@app/common/components/forms/configs/FormFieldConfig';
+import useUploadFileToFirebase from '@app/hooks/useUploadFileToFirebase';
 import { useAppSelector } from '@app/stores';
 import { useFormContext } from 'react-hook-form';
 import { courseMentorCreationFormValues } from '../types/courseMentorCreationFormValues';
@@ -9,6 +10,8 @@ const useCourseMentorFormFields = (): FormFieldConfig<courseMentorCreationFormVa
   const {
     formState: { errors },
   } = useFormContext<courseMentorCreationFormValues>();
+
+  const { uploadFileToFirebase, deleteFileFromFirebase } = useUploadFileToFirebase();
 
   const config: FormFieldConfig<courseMentorCreationFormValues>[] = [
     {
@@ -31,6 +34,7 @@ const useCourseMentorFormFields = (): FormFieldConfig<courseMentorCreationFormVa
       inputType: 'input',
       type: 'number',
       grid: { xs: 12, sm: 12, md: 12 },
+      inputProps: { maxLength: 3, max: '100', min: '0' },
       unit: '%',
     },
     {
@@ -44,6 +48,10 @@ const useCourseMentorFormFields = (): FormFieldConfig<courseMentorCreationFormVa
       label: 'URL hình ảnh',
       inputType: 'upload',
       grid: { xs: 12, sm: 12, md: 12 },
+      accept: 'image/png,image/jpeg',
+      onFileUpload: (file) => uploadFileToFirebase(file, 'Course/Offline'),
+      onDeleteFile: (fileUrl) => deleteFileFromFirebase(fileUrl),
+      showPreview: true,
     },
     {
       name: 'center_id',

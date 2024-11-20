@@ -1,4 +1,4 @@
-import { CheckboxProps, SxProps, TextFieldProps } from '@mui/material';
+import { CheckboxProps, InputBaseProps, SxProps } from '@mui/material';
 import { Theme } from '@mui/material/styles';
 import { FieldValues } from 'react-hook-form';
 import { DateRangeProps } from '../components/DateRangeField';
@@ -17,6 +17,7 @@ export type SelectOption = {
   label: string;
 };
 
+// Quy định chung cho các config field
 interface FormFieldConfig<T extends FieldValues> {
   name: keyof T;
   label: string;
@@ -25,9 +26,14 @@ interface FormFieldConfig<T extends FieldValues> {
   inputType: InputType;
   selectOptions?: SelectOption[];
   type?: React.HTMLInputTypeAttribute;
-  inputProps?: TextFieldProps | CheckboxProps;
+  inputProps?: InputBaseProps['inputProps'] | CheckboxProps;
   dateRangeProps?: DateRangeProps;
   sx?: SxProps<Theme>;
+  accept?: string; // for handling upload file
+  onFileUpload?: (file: File) => void;
+  onDeleteFile?: (fileUrl: string) => void;
+  showPreview?: boolean;
+  helperText?: string;
 }
 
 export type { FormFieldConfig };

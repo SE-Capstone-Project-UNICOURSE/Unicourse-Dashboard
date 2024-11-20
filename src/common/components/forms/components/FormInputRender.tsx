@@ -1,4 +1,4 @@
-import { Box, CheckboxProps, SxProps, TextFieldProps } from '@mui/material';
+import { Box, CheckboxProps, InputBaseProps, SxProps } from '@mui/material';
 import { Theme } from '@mui/material/styles';
 import { Control, Controller, ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
 import { FormFieldConfig, InputType } from '../configs/FormFieldConfig';
@@ -25,10 +25,15 @@ type FieldProps<T extends FieldValues> = {
   unit?: string;
   selectOptions?: { value: string | number; label: string }[];
   dateInfo?: { start: any; end: any };
-  inputProps?: TextFieldProps | CheckboxProps;
+  inputProps?: InputBaseProps['inputProps'] | CheckboxProps;
   sx?: SxProps<Theme>;
+  onFileUpload?: (file: File) => void;
+  onDeleteFile?: (fileUrl: string) => void;
+  showPreview?: boolean;
+  accept?: string;
 };
 
+// Render ra component form
 const inputComponents: Record<InputType, React.FC<any>> = {
   input: InputField,
   select: SelectField,
@@ -45,7 +50,18 @@ function FormInputRender<T extends FieldValues>({
   error,
   helperText,
 }: FormInputRenderProps<T>) {
-  const { name, label, inputType, unit, selectOptions, dateRangeProps, ...rest } = fieldConfig;
+  const {
+    name,
+    label,
+    inputType,
+    unit,
+    selectOptions,
+    dateRangeProps,
+    onFileUpload,
+    onDeleteFile,
+    inputProps,
+    ...rest
+  } = fieldConfig;
 
   const Component: React.ComponentType<FieldProps<T>> =
     inputComponents[inputType] || (() => <Box>No Field Type Found</Box>);
@@ -59,6 +75,9 @@ function FormInputRender<T extends FieldValues>({
           field={field}
           error={error}
           helperText={helperText}
+          onFileUpload={onFileUpload}
+          onDeleteFile={onDeleteFile}
+          inputProps={inputProps}
           unit={unit}
           selectOptions={selectOptions}
           dateInfo={dateRangeProps}

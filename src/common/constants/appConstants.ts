@@ -1,10 +1,13 @@
 export const TIMEOUT = 10000;
 export const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const VIMEOKEY = import.meta.env.VITE_VIMEOKEY;
-  
+
 export const APP_COMMON_API_PATH = {
   LOGIN: '/api/auth/token-signin',
 };
+
+export const ACCESS_TOKEN = 'accessToken';
+export const REFRESH_TOKEN = 'refreshToken';
 
 export const COMMON_CONSTANTS = {
   COURSE: 'course',

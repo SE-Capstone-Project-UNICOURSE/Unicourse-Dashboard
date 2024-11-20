@@ -1,8 +1,7 @@
 import FormInputRender from '@app/common/components/forms/components/FormInputRender';
-import { useAppDispatch } from '@app/stores';
 import { yupResolver } from '@hookform/resolvers/yup';
-import CloseIcon from '@mui/icons-material/Close';
 import { Box, Grid, IconButton, Typography } from '@mui/material';
+import { GridDeleteIcon } from '@mui/x-data-grid';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useCourseCalendarFormFields } from '../../configs/useCourseCalendarFormFields';
 import { courseMentorSessionSchema } from '../../schema/courseMentorSession.schema';
@@ -10,25 +9,34 @@ import {
   CourseMentorSessionFormValues,
   courseMentorSessionFormValues,
 } from '../../types/courseMentorSessionFormValues';
-import { GridDeleteIcon } from '@mui/x-data-grid';
 
 type CreateCourseCalendarFormProps = {
   indexItem: number;
   onDelete: (formId: number) => void;
+  formRef?: (ref: any) => void;
 };
 
-const CreateCourseCalendarForm = ({ indexItem, onDelete }: CreateCourseCalendarFormProps) => {
-  const dispatch = useAppDispatch();
+const CreateCourseCalendarForm = ({
+  indexItem,
+  onDelete,
+  formRef,
+}: CreateCourseCalendarFormProps) => {
   const formFields = useCourseCalendarFormFields();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
+    trigger, // Thêm trigger để validate
   } = useForm<CourseMentorSessionFormValues>({
     resolver: yupResolver(courseMentorSessionSchema),
     defaultValues: courseMentorSessionFormValues,
   });
+
+  // Gửi ref ra ngoài để cha quản lý
+  if (formRef) {
+    formRef({ trigger, handleSubmit });
+  }
 
   const onSubmit: SubmitHandler<CourseMentorSessionFormValues> = (data) => {
     console.log('Submitted Data:', data);
@@ -36,7 +44,6 @@ const CreateCourseCalendarForm = ({ indexItem, onDelete }: CreateCourseCalendarF
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)} position="relative">
-      {/* Delete Button */}
       <IconButton
         onClick={() => onDelete(indexItem)}
         style={{
@@ -44,6 +51,7 @@ const CreateCourseCalendarForm = ({ indexItem, onDelete }: CreateCourseCalendarF
           top: 8,
           right: 8,
           marginBottom: 30,
+          color: 'red',
         }}
         aria-label="delete"
       >
