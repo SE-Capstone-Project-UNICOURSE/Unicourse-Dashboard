@@ -34,6 +34,7 @@ interface FormFieldConfig<T extends FieldValues> {
   onDeleteFile?: (fileUrl: string) => void;
   showPreview?: boolean;
   helperText?: string;
+  isDisable?: boolean;
 }
 
 export type { FormFieldConfig };

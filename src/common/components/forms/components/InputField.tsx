@@ -12,6 +12,7 @@ interface InputFieldProps<T extends FieldValues> {
   type?: React.HTMLInputTypeAttribute;
   unit?: 'VND' | 'USD';
   inputProps?: InputBaseProps['inputProps'];
+  isDisable?: boolean;
 }
 
 export type UnitCurrency = 'VND' | 'USD';
@@ -24,6 +25,7 @@ function InputField<T extends FieldValues>({
   type = 'text',
   unit,
   inputProps,
+  isDisable,
 }: InputFieldProps<T>) {
   const [inputValue, setInputValue] = useState<string>(field.value?.toString() || '');
 
@@ -50,6 +52,7 @@ function InputField<T extends FieldValues>({
       label={unit ? `${label} (${unit})` : label}
       variant="outlined"
       fullWidth
+      disabled={isDisable}
       error={error}
       helperText={helperText}
       value={inputValue}

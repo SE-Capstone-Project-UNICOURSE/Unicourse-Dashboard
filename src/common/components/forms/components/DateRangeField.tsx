@@ -23,9 +23,14 @@ export interface DateRangeProps {
 interface DateRangeFieldProps<T extends FieldValues> {
   field: ControllerRenderProps<T>;
   dateInfo: DateRangeProps;
+  isDisable: boolean;
 }
 
-function DateRangeField<T extends FieldValues>({ field, dateInfo }: DateRangeFieldProps<T>) {
+function DateRangeField<T extends FieldValues>({
+  field,
+  dateInfo,
+  isDisable,
+}: DateRangeFieldProps<T>) {
   const { onChange } = field;
 
   return (
@@ -35,6 +40,7 @@ function DateRangeField<T extends FieldValues>({ field, dateInfo }: DateRangeFie
         name={dateInfo.start.name}
         inputRef={field.ref}
         value={field.value?.[dateInfo.start.name] ? dayjs(field.value[dateInfo.start.name]) : null}
+        disabled={isDisable}
         onChange={(date: Dayjs | null) =>
           onChange({
             ...field.value,
@@ -53,6 +59,7 @@ function DateRangeField<T extends FieldValues>({ field, dateInfo }: DateRangeFie
       <DatePicker
         label={dateInfo.end.label}
         name={dateInfo.end.name}
+        disabled={isDisable}
         value={field.value?.[dateInfo.end.name] ? dayjs(field.value[dateInfo.end.name]) : null}
         inputRef={field.ref}
         onChange={(date: Dayjs | null) =>

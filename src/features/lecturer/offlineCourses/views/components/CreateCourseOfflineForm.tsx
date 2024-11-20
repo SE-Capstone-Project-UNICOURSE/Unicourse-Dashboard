@@ -7,7 +7,7 @@ import GradientButton from '@app/common/components/atoms/GradientButton';
 import FormInputRender from '@app/common/components/forms/components/FormInputRender';
 import useGetAccessRefreshToken from '@app/hooks/useGetAccessRefreshToken';
 import useCourseMentorFormFields from '../../configs/useCourseMentorFormFields';
-import { setActiveStep } from '../../slices';
+import { setActiveStep, setOfflineCourseRequest } from '../../slices';
 import { getCenters, getCourseDetail } from '../../slices/actions';
 import { courseMentorCreationFormValues } from '../../types/courseMentorCreationFormValues';
 import CourseDetailInfoCreate from './CourseDetailInfoCreate';
@@ -32,6 +32,23 @@ const CreateCourseOfflineForm = ({ methods }: CreateCourseOfflineFormProps) => {
 
   const onSubmit: SubmitHandler<courseMentorCreationFormValues> = (data) => {
     console.log(data);
+    if (!selectedCourseId) {
+      return;
+    }
+    dispatch(
+      setOfflineCourseRequest({
+        course_id: selectedCourseId,
+        amount: data.amount,
+        center_id: data.center_id,
+        description: data.description,
+        discount: data.discount,
+        image: data.image,
+        mentor_sessions: [],
+        title: data.title,
+        start_date: data.date_range.start_date,
+        end_date: data.date_range.end_date,
+      })
+    );
     handleNext();
   };
 

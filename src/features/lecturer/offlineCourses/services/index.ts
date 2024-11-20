@@ -4,6 +4,7 @@ import type { AxiosRequestConfig } from 'axios';
 import { OFFLINE_COURSE_LECTURER_API_PATH } from '../constants';
 import { Center } from '../models/CenterCourseModel';
 import { CourseOnlinePublishModel } from '../models/CourseOnlinePublishModel';
+import Room from '../models/RoomCourseModel';
 
 class LectureOfflineCourseServices {
   public async getPublishCourses(
@@ -41,6 +42,25 @@ class LectureOfflineCourseServices {
     };
 
     const response = await httpClient.get<DataResponse<Center[]>>(route, config);
+
+    return response.data;
+  }
+
+  public async getRooms(
+    accessToken: string,
+    centerId: number,
+    fromDate: string,
+    toDate: string
+  ): Promise<DataResponse<Room[]>> {
+    const route = `${OFFLINE_COURSE_LECTURER_API_PATH.GET_CENTER}/${centerId}?from=${fromDate}&to=${toDate}`;
+
+    const config: AxiosRequestConfig = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    const response = await httpClient.get<DataResponse<Room[]>>(route, config);
 
     return response.data;
   }

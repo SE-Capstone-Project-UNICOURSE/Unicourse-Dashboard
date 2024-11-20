@@ -1,7 +1,7 @@
 import ClearIcon from '@mui/icons-material/Clear';
 import UploadIcon from '@mui/icons-material/Upload';
-import { Box, Button, Typography } from '@mui/material';
-import React, { useRef, useState, useEffect } from 'react';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
 interface UploadFieldProps<T extends FieldValues> {
@@ -22,6 +22,7 @@ function UploadField<T extends FieldValues>({
   showPreview = false,
 }: UploadFieldProps<T>) {
   const [preview, setPreview] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false); // Trạng thái loading
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   // Cập nhật preview từ `field.value` khi render lại
@@ -36,6 +37,7 @@ function UploadField<T extends FieldValues>({
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      setLoading(true); // Bật trạng thái loading
       try {
         const fileUrl = await onFileUpload?.(file);
         if (fileUrl) {
@@ -46,10 +48,12 @@ function UploadField<T extends FieldValues>({
         }
       } catch (error) {
         console.error('Upload failed:', error);
-      }
-      // Reset giá trị input
-      if (inputRef.current) {
-        inputRef.current.value = '';
+      } finally {
+        setLoading(false); // Tắt trạng thái loading
+        // Reset giá trị input
+        if (inputRef.current) {
+          inputRef.current.value = '';
+        }
       }
     }
   };
@@ -68,18 +72,22 @@ function UploadField<T extends FieldValues>({
   return (
     <Box>
       <Typography>{label}</Typography>
-      {!field.value ? (
+      {!field.value && !loading ? ( // Hiển thị nút upload khi không tải ảnh
         <Button variant="contained" component="label" startIcon={<UploadIcon />}>
           Upload
           <input ref={inputRef} accept={accept} type="file" hidden onChange={handleFileChange} />
         </Button>
-      ) : (
+      ) : loading ? ( // Hiển thị loading trong quá trình tải ảnh
         <Button
-          variant="contained"
-          color="secondary"
-          startIcon={<ClearIcon />}
-          onClick={handleClear}
+          variant="outlined"
+          component="label"
+          startIcon={<CircularProgress size={'16'} color="info" />}
         >
+          Uploading...
+        </Button>
+      ) : (
+        // Hiển thị nút xóa khi đã có ảnh
+        <Button variant="contained" color="error" startIcon={<ClearIcon />} onClick={handleClear}>
           Delete
         </Button>
       )}

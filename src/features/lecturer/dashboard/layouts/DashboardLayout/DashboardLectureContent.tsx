@@ -11,7 +11,6 @@ const DashboardLectureContent = ({
   sx,
   children,
   disablePadding,
-  maxWidth = 'xl',
   ...other
 }: DashboardLectureContentProps) => {
   const theme = useTheme();
@@ -20,15 +19,16 @@ const DashboardLectureContent = ({
   return (
     <Container
       className={layoutClasses.content}
-      maxWidth={maxWidth || false}
+      maxWidth={false}
       sx={{
+        maxWidth: '95%',
         display: 'flex',
         flex: '1 1 auto',
         flexDirection: 'column',
         pt: 'var(--layout-dashboard-content-pt)',
         pb: 'var(--layout-dashboard-content-pb)',
         ...(disablePadding
-          ? { p: 0 } // Remove padding if disablePadding is true
+          ? { p: 0 }
           : {
               [theme.breakpoints.up(layoutQuery)]: {
                 px: 'var(--layout-dashboard-content-px)',

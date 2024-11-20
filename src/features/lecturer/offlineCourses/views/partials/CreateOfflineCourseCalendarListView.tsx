@@ -1,24 +1,53 @@
 import GradientButton from '@app/common/components/atoms/GradientButton';
+import useGetAccessRefreshToken from '@app/hooks/useGetAccessRefreshToken';
+import useRouter from '@app/routes/hooks/useRouter';
 import { useAppDispatch, useAppSelector } from '@app/stores';
-import { showDialog } from '@app/stores/slices/dialogSlice';
+import { hideDialog, showDialog } from '@app/stores/slices/dialogSlice';
 import { DialogType } from '@app/stores/types/dialogSlice.type';
 import { Box } from '@mui/material';
-import { useState, useRef } from 'react';
-import { setActiveStep } from '../../slices';
+import { addDays } from 'date-fns';
+import { useEffect, useRef } from 'react';
+import { setActiveStep, setTotalForm } from '../../slices';
+import { getRooms } from '../../slices/actions';
 import CreateCourseCalendarForm from '../components/CreateCourseCalendarForm';
 
 const CreateOfflineCourseCalendarListView = () => {
-  const [forms, setForms] = useState<number[]>([0]);
-  const formRefs = useRef<{ [key: number]: any }>({}); // Lưu ref của từng form
+  const formRefs = useRef<{ [key: number]: any }>({});
   const dispatch = useAppDispatch();
-  const { activeStep } = useAppSelector((state) => state.listCourseOfflineLecture);
+  const { activeStep, totalForm, offlineCourseRequest } = useAppSelector(
+    (state) => state.listCourseOfflineLecture
+  );
+  const { accessToken } = useGetAccessRefreshToken();
+  const router = useRouter();
 
   const addNewForm = () => {
-    setForms((prev) => [...prev, prev.length]);
+    dispatch(setTotalForm([...totalForm, totalForm.length]));
   };
 
+  useEffect(() => {
+    const handleFetchingRooms = () => {
+      if (!accessToken) {
+        router.push('/login');
+        return;
+      }
+      const fromDate = new Date(); // Ngày hôm nay
+      const toDate = addDays(fromDate, 3); // Thêm 3 ngày từ ngày hôm nay
+
+      dispatch(
+        getRooms({
+          accessToken,
+          centerId: offlineCourseRequest?.center_id || 0,
+          fromDate: fromDate.toISOString(), // Chuyển thành ISO format
+          toDate: toDate.toISOString(), // Chuyển thành ISO format
+        })
+      );
+    };
+
+    handleFetchingRooms();
+  }, []);
+
   const deleteForm = (formId: number) => {
-    if (forms.length === 1) {
+    if (totalForm.length === 1) {
       dispatch(
         showDialog({
           title: 'Warning',
@@ -28,16 +57,40 @@ const CreateOfflineCourseCalendarListView = () => {
       );
       return;
     }
-    setForms((prev) => {
-      const updatedForms = prev.filter((id) => id !== formId);
-      return updatedForms.map((_, index) => index);
-    });
-    delete formRefs.current[formId]; // Xóa ref của form đã xóa
+    dispatch(
+      showDialog({
+        title: 'Xác nhận',
+        content: `Bạn có chắc chắn muốn xoá mô tả buổi ${formId + 1} không ?`,
+        type: DialogType.ALERT,
+        confirmButtonText: 'Có',
+        onConfirm() {
+          const updatedForms = totalForm.filter((id) => id !== formId);
+          dispatch(setTotalForm(updatedForms.map((_, index) => index)));
+          delete formRefs.current[formId];
+          dispatch(hideDialog());
+        },
+      })
+    );
   };
 
   const handleSaveAllForms = async () => {
+    const formValues = await Promise.all(
+      totalForm.map(async (formId) => {
+        const formRef = formRefs.current[formId];
+        if (formRef) {
+          const isValid = await formRef.trigger(); // Validate form
+          if (isValid) {
+            return formRef.getValues(); // Lấy giá trị từ form
+          }
+        }
+        return null; // Trả về null nếu form không hợp lệ
+      })
+    );
+
+    console.log(formValues);
+
     const isAllValid = await Promise.all(
-      forms.map(async (formId) => {
+      totalForm.map(async (formId) => {
         const formRef = formRefs.current[formId];
         if (formRef) {
           const isValid = await formRef.trigger(); // Validate form
@@ -48,7 +101,6 @@ const CreateOfflineCourseCalendarListView = () => {
     );
 
     if (isAllValid.every((valid) => valid)) {
-      console.log('All forms are valid!');
       dispatch(setActiveStep(activeStep + 1));
     } else {
       console.error('Some forms are invalid');
@@ -64,10 +116,11 @@ const CreateOfflineCourseCalendarListView = () => {
 
   return (
     <>
-      {forms.map((formId) => (
+      {totalForm.map((formId) => (
         <CreateCourseCalendarForm
           key={formId}
           indexItem={formId}
+          addNewForm={addNewForm}
           onDelete={deleteForm}
           formRef={(ref) => {
             formRefs.current[formId] = ref;
@@ -80,12 +133,7 @@ const CreateOfflineCourseCalendarListView = () => {
           Trở về
         </GradientButton>
 
-        <Box>
-          <GradientButton variant="outlined" onClick={addNewForm}>
-            Thêm buổi mới
-          </GradientButton>
-          <GradientButton onClick={handleSaveAllForms}>Lưu Tất Cả Lịch</GradientButton>
-        </Box>
+        <GradientButton onClick={handleSaveAllForms}>Lưu Tất Cả Lịch</GradientButton>
       </Box>
     </>
   );

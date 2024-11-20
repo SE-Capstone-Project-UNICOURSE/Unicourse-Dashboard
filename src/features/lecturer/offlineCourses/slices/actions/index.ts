@@ -71,3 +71,38 @@ export const getCenters = createAsyncThunk<
     });
   }
 });
+
+export const getRooms = createAsyncThunk(
+  'offlineLectures/gerRooms',
+  async (
+    {
+      accessToken,
+      centerId,
+      fromDate,
+      toDate,
+    }: { accessToken: string; centerId: number; fromDate: string; toDate: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await offlineLectureCourseServices.getRooms(
+        accessToken,
+        centerId,
+        fromDate,
+        toDate
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return rejectWithValue({
+          message: error.response.data.message,
+          statusCode: error.response.status,
+          errorCode: error.response.data.errorCode,
+        });
+      }
+      return rejectWithValue({
+        message: 'Fail to get centers! please try again!',
+        statusCode: 500,
+      });
+    }
+  }
+);

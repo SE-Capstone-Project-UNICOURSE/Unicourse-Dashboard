@@ -15,6 +15,7 @@ interface FormInputRenderProps<T extends FieldValues> {
   control: Control<T>;
   error?: boolean;
   helperText?: string;
+  isDisable?: boolean;
 }
 
 type FieldProps<T extends FieldValues> = {
@@ -31,6 +32,7 @@ type FieldProps<T extends FieldValues> = {
   onDeleteFile?: (fileUrl: string) => void;
   showPreview?: boolean;
   accept?: string;
+  isDisable?: boolean;
 };
 
 // Render ra component form
@@ -49,6 +51,7 @@ function FormInputRender<T extends FieldValues>({
   control,
   error,
   helperText,
+  isDisable,
 }: FormInputRenderProps<T>) {
   const {
     name,
@@ -82,6 +85,7 @@ function FormInputRender<T extends FieldValues>({
           selectOptions={selectOptions}
           dateInfo={dateRangeProps}
           sx={rest.sx}
+          isDisable={rest.isDisable}
           {...rest}
         />
       )}
