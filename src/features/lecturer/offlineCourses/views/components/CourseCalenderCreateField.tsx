@@ -29,7 +29,7 @@ const CourseCalenderCreateField = ({ methods, isDisable }: CourseCalendarCreated
           <FormInputRender
             fieldConfig={{
               ...fieldConfig,
-              isDisable: true,
+              isDisable,
             }}
             control={control}
             error={!!errors[fieldConfig.name]}
