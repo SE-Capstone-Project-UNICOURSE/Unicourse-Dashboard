@@ -1,5 +1,6 @@
 import { useAppSelector } from '@app/stores';
 import {
+  Box,
   Button,
   Paper,
   Table,
@@ -28,9 +29,14 @@ const OfflineCourseLectureView: React.FC = () => {
         <CreateOfflineCourseView />
       ) : (
         <>
-          <Typography variant="h4" gutterBottom>
-            Danh sách khóa học trực tiếp
-          </Typography>
+          <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+            <Typography variant="h4" gutterBottom>
+              Danh sách khóa học trực tiếp
+            </Typography>
+            <Button variant="contained" color="primary" onClick={handleCreateNewCourse}>
+              Tạo khóa học mới
+            </Button>
+          </Box>
 
           {courseList.length > 0 ? (
             <TableContainer component={Paper}>
@@ -60,9 +66,6 @@ const OfflineCourseLectureView: React.FC = () => {
               <Typography variant="body1" paragraph>
                 Hiện tại chưa có khóa học trực tiếp nào.
               </Typography>
-              <Button variant="contained" color="primary" onClick={handleCreateNewCourse}>
-                Tạo khóa học mới
-              </Button>
             </div>
           )}
         </>

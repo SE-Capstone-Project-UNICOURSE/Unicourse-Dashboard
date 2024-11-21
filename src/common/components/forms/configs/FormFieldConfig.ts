@@ -1,15 +1,25 @@
-import { CheckboxProps, TextFieldProps } from '@mui/material';
+import { CheckboxProps, InputBaseProps, SxProps } from '@mui/material';
+import { Theme } from '@mui/material/styles';
 import { FieldValues } from 'react-hook-form';
 import { DateRangeProps } from '../components/DateRangeField';
 
-type InputType = 'input' | 'select' | 'checkbox' | 'date' | 'editor' | 'upload' | 'date-range' | 'array' | 'textarea';
+export type InputType =
+  | 'input'
+  | 'select'
+  | 'checkbox'
+  | 'editor'
+  | 'upload'
+  | 'dateRange'
+  | 'datePicker'
+  | 'array'
+  | 'textarea';
 
 export type SelectOption = {
   value: string | number;
   label: string;
 };
 
-// Base field configuration with common properties
+// Quy định chung cho các config field
 interface FormFieldConfig<T extends FieldValues> {
   name: keyof T;
   label: string;
@@ -18,13 +28,20 @@ interface FormFieldConfig<T extends FieldValues> {
   inputType: InputType;
   selectOptions?: SelectOption[];
   type?: React.HTMLInputTypeAttribute;
-  inputProps?: TextFieldProps | CheckboxProps;
-  dateRangeProps?: DateRangeProps<T>;
   arrayFieldProps?: {
     placeholder: string;
     minItems: number;
     maxItems: number;
   };
+  inputProps?: InputBaseProps['inputProps'] | CheckboxProps;
+  dateRangeProps?: DateRangeProps;
+  sx?: SxProps<Theme>;
+  accept?: string; // for handling upload file
+  onFileUpload?: (file: File) => void;
+  onDeleteFile?: (fileUrl: string) => void;
+  showPreview?: boolean;
+  helperText?: string;
+  isDisable?: boolean;
 }
 
 export type { FormFieldConfig };

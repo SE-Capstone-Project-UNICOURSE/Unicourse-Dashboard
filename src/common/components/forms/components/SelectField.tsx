@@ -1,7 +1,7 @@
-import React from 'react';
-import { TextField, MenuItem, TextFieldProps } from '@mui/material';
+import { MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 import { SelectOption } from '../configs/FormFieldConfig';
+import { memo } from 'react';
 
 interface SelectFieldProps<T extends FieldValues> {
   label: string;
@@ -10,6 +10,7 @@ interface SelectFieldProps<T extends FieldValues> {
   helperText?: string;
   selectOptions: SelectOption[];
   inputProps?: TextFieldProps;
+  isDisable: boolean;
 }
 
 function SelectField<T extends FieldValues>({
@@ -19,6 +20,7 @@ function SelectField<T extends FieldValues>({
   helperText,
   selectOptions,
   inputProps,
+  isDisable,
 }: SelectFieldProps<T>) {
   return (
     <TextField
@@ -27,6 +29,7 @@ function SelectField<T extends FieldValues>({
       variant="outlined"
       fullWidth
       error={error}
+      disabled={isDisable}
       helperText={helperText}
       {...field}
       {...(inputProps as TextFieldProps)}
@@ -40,4 +43,4 @@ function SelectField<T extends FieldValues>({
   );
 }
 
-export default SelectField;
+export default memo(SelectField);

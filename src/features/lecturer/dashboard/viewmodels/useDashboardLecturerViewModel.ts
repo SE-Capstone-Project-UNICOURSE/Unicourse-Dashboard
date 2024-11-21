@@ -1,5 +1,7 @@
 import useRouter from '@app/routes/hooks/useRouter';
 import { useAppDispatch, useAppSelector } from '@app/stores';
+import { showDialog } from '@app/stores/slices/dialogSlice';
+import { DialogType } from '@app/stores/types/dialogSlice.type';
 import { SelectChangeEvent } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { DailyData } from '../models/ReportDataModel';
@@ -9,7 +11,7 @@ import {
   setReportTotalEnrolled,
   setReportTotalFeedback,
 } from '../slices';
-import { getReportData } from '../slices/actions';
+import { getLectureInfo, getReportData } from '../slices/actions';
 
 type OptionSelectedFilter = 'Month' | 'Year';
 
@@ -18,19 +20,9 @@ const useDashboardLectureViewModel = () => {
   const [optionSelected, setOptionSelected] = useState<OptionSelectedFilter>('Month');
   const router = useRouter();
 
+  const { userInfo } = useAppSelector((state) => state.authState.auth);
   const { reportData } = useAppSelector((state) => state.dashboardLecture);
   const accessToken = localStorage.getItem('accessToken');
-
-  // // State for labels and totals
-  // const [labelDataReport, setLabelDataReport] = useState<string[]>([]);
-  // const [totalAmountTransactionForLabelDataReport, setTotalAmountTransactionForLabelDataReport] =
-  //   useState<number[]>([]);
-  // const [totalEnrolledForLabelDataReport, setTotalEnrolledForLabelDataReport] = useState<number[]>(
-  //   []
-  // );
-  // const [totalFeedbackForLabelDataReport, setTotalFeedbackForLabelDataReport] = useState<number[]>(
-  //   []
-  // );
 
   const processReportData = () => {
     if (!reportData) return;
@@ -53,7 +45,6 @@ const useDashboardLectureViewModel = () => {
       Object.keys(monthData).forEach((week) => {
         const weekData = monthData[week] as DailyData;
 
-        // Sum up totals for each week within the month
         monthlyTotals.totalAmount += weekData.total_amount_transaction || 0;
         monthlyTotals.totalEnrolled += weekData.total_student_enrollments || 0;
         monthlyTotals.totalFeedback += weekData.total_courses_feedback || 0;
@@ -70,12 +61,6 @@ const useDashboardLectureViewModel = () => {
     dispatch(setReportTotalAmountTransaction(amountTransactions));
     dispatch(setReportTotalEnrolled(enrollments));
     dispatch(setReportTotalFeedback(feedbacks));
-
-    // Logging for debugging
-    console.log('Label Data Report (Months):', labels);
-    console.log('Total Amount Transactions (Monthly Totals):', amountTransactions);
-    console.log('Total Enrollments (Monthly Totals):', enrollments);
-    console.log('Total Feedback (Monthly Totals):', feedbacks);
   };
 
   // Fetch report data
@@ -85,17 +70,32 @@ const useDashboardLectureViewModel = () => {
     } else {
       dispatch(getReportData({ accessToken: accessToken || '', filterBy: optionSelected }));
     }
-  }, [accessToken, optionSelected, dispatch, router]);
+  }, []);
 
   // Process report data when it changes
   useEffect(() => {
-    if (reportData) {
-      processReportData();
+    processReportData();
+    handleGetInfo();
+  }, []);
+
+  const handleGetInfo = () => {
+    if (!userInfo?.lecturer.id || !accessToken) {
+      dispatch(
+        showDialog({
+          title: 'Thông báo',
+          content: 'Vui lòng đăng nhập lại',
+          type: DialogType.ERROR,
+        })
+      );
+      return;
     }
-  }, [reportData]);
+
+    dispatch(getLectureInfo({ accessToken, lectureId: Number(userInfo?.lecturer.id) }));
+  };
 
   const handleChange = (event: SelectChangeEvent<OptionSelectedFilter>) => {
     setOptionSelected(event.target.value as OptionSelectedFilter);
+    dispatch(getReportData({ accessToken: accessToken || '', filterBy: optionSelected }));
   };
 
   return {
