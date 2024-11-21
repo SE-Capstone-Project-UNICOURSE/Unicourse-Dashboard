@@ -88,7 +88,7 @@ const CourseDetailInfoCreate = () => {
               dangerouslySetInnerHTML={{
                 __html: showFullDescription
                   ? courseDetail.description
-                  : `${courseDetail.description.slice(0, 200)}...`,
+                  : `${courseDetail.description.slice(0, 2000)}...`,
               }}
             />
             <Button

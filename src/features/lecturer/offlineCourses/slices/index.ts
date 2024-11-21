@@ -3,7 +3,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { PaginateResponse } from '@app/stores/models';
 import { CourseOnlinePublishModel } from '../models/CourseOnlinePublishModel';
-import { getCenters, getCourseDetail, getPublishCourses } from './actions';
+import { OfflineCourse } from '../models/OfflineCourseRequestModel';
+import { getCenters, getCourseDetail, getPublishCourses, getRooms } from './actions';
 import { initialListCourseOfflineState, ScreenState } from './types';
 
 const listCourseOfflineLectureSlice = createSlice({
@@ -31,7 +32,13 @@ const listCourseOfflineLectureSlice = createSlice({
     setSelectedCourseId(state, action) {
       state.selectedCourseId = action.payload;
     },
-    reset: () => initialListCourseOfflineState,
+    setTotalForm: (state, action) => {
+      state.totalForm = action.payload;
+    },
+    setOfflineCourseRequest: (state, action: PayloadAction<OfflineCourse>) => {
+      state.offlineCourseRequest = action.payload;
+    },
+    resetCourseOfflineLectureState: () => initialListCourseOfflineState,
   },
   extraReducers: (builder) => {
     builder
@@ -63,27 +70,42 @@ const listCourseOfflineLectureSlice = createSlice({
         state.selectedCourseDetail.isLoading = false;
       });
 
-    builder.addCase(getCenters.pending, (state) => {
-      state.centers.isLoading = true;
-    });
-    builder.addCase(getCenters.fulfilled, (state, action) => {
-      state.centers.isLoading = false;
-      state.centers.data = action.payload;
-    });
-    builder.addCase(getCenters.rejected, (state) => {
-      state.centers.isLoading = false;
-    });
+    builder
+      .addCase(getCenters.pending, (state) => {
+        state.centers.isLoading = true;
+      })
+      .addCase(getCenters.fulfilled, (state, action) => {
+        state.centers.isLoading = false;
+        state.centers.data = action.payload;
+      })
+      .addCase(getCenters.rejected, (state) => {
+        state.centers.isLoading = false;
+      });
+
+    builder
+      .addCase(getRooms.pending, (state) => {
+        state.rooms.isLoadingGetRooms = true;
+      })
+      .addCase(getRooms.fulfilled, (state, action) => {
+        state.rooms.isLoadingGetRooms = false;
+        state.rooms.data = action.payload ?? [];
+      })
+      .addCase(getRooms.rejected, (state) => {
+        state.rooms.isLoadingGetRooms = false;
+      });
   },
 });
 
 export const {
   setIsLoadingListCourse,
   setListCourse,
-  reset,
+  resetCourseOfflineLectureState,
   setScreenState,
   setActiveStep,
   setOnlineActiveCoursePage,
   setCreateCourseInstruction,
   setSelectedCourseId,
+  setTotalForm,
+  setOfflineCourseRequest,
 } = listCourseOfflineLectureSlice.actions;
 export default listCourseOfflineLectureSlice.reducer;

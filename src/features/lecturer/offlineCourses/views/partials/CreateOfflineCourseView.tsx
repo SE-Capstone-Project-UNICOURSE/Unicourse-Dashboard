@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
 import GradientButton from '@app/common/components/atoms/GradientButton';
 import { APP_COLOR } from '@app/common/constants/appConstants';
 import { useAppDispatch, useAppSelector } from '@app/stores';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { CheckCircleRounded, RadioButtonChecked } from '@mui/icons-material';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import {
@@ -17,10 +17,18 @@ import {
   useTheme,
 } from '@mui/material';
 import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { steps } from '../../constants';
+import { courseMentorCreation } from '../../schema/courseMentorCreation.schema';
 import { setCreateCourseInstruction } from '../../slices';
+import {
+  courseMentorCreationDefaultFormValues,
+  courseMentorCreationFormValues,
+} from '../../types/courseMentorCreationFormValues';
 import CreateCourseOfflineForm from '../components/CreateCourseOfflineForm';
 import VerticalStepInstruction from '../components/VerticalStepInstruction';
+import ConfirmCreateOfflineCourseView from './ConfirmCreateOfflineCourseView';
+import CreateOfflineCourseCalendarListView from './CreateOfflineCourseCalendarListView';
 import ListOnlineCourseLecturer from './ListOnlineCourseLecturer';
 
 const CreateOfflineCourseView: React.FC = () => {
@@ -30,6 +38,11 @@ const CreateOfflineCourseView: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const dispatch = useAppDispatch();
+
+  const methods = useForm<courseMentorCreationFormValues>({
+    resolver: yupResolver(courseMentorCreation),
+    defaultValues: courseMentorCreationDefaultFormValues,
+  });
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (
@@ -47,15 +60,15 @@ const CreateOfflineCourseView: React.FC = () => {
       case 0:
         return <ListOnlineCourseLecturer />;
       case 1:
-        return <CreateCourseOfflineForm />;
-      case 2:
-        return <Box>Step 3</Box>;
-      case 3:
         return (
-          <Box>
-            <Typography variant="h6">Xác nhận thông tin</Typography>
-          </Box>
+          <FormProvider {...methods}>
+            <CreateCourseOfflineForm methods={methods} />
+          </FormProvider>
         );
+      case 2:
+        return <CreateOfflineCourseCalendarListView />;
+      case 3:
+        return <ConfirmCreateOfflineCourseView />;
       default:
         return null;
     }
@@ -64,7 +77,7 @@ const CreateOfflineCourseView: React.FC = () => {
   return (
     <Paper elevation={3} style={{ padding: '20px' }}>
       <Typography variant="h4" align="center" gutterBottom>
-        Tạo khóa học offline
+        Tạo khóa học trực tiếp
       </Typography>
 
       <GradientButton style={{ marginBottom: 20 }} variant="outlined" onClick={toggleDrawer(true)}>

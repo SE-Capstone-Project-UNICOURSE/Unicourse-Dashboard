@@ -85,6 +85,8 @@ const DialogManager: React.FC = () => {
     <Dialog
       open={isVisible}
       onClose={handleCancel}
+      maxWidth={getDialogMaxWidth()}
+      fullWidth
       sx={{
         display: 'flex',
         justifyContent: 'center',
@@ -95,6 +97,13 @@ const DialogManager: React.FC = () => {
           left: '50%',
           transform: 'translate(-50%, -50%)',
           position: 'absolute',
+          width: {
+            xs: '90%', // Chiều rộng 90% trên màn hình nhỏ (xs)
+            sm: '80%', // Chiều rộng 80% trên màn hình trung bình (sm)
+            md: '60%', // Chiều rộng 60% trên màn hình lớn hơn (md)
+            lg: '50%', // Chiều rộng 50% trên màn hình lớn (lg)
+          },
+          maxWidth: getDialogMaxWidth(),
         },
       }}
     >
