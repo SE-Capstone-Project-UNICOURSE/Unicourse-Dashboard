@@ -26,7 +26,8 @@ const useCourseDetailViewModel = ({ courseId }: { courseId: number }) => {
 
   // Fetch categories and call if not already fetched
   useEffect(() => {
-    if (!isFirstLoadCategory) {
+    console.log('First load category:', isFirstLoadCategory);
+    if (isFirstLoadCategory) {
       dispatch(getCategories());
     }
   }, [isFirstLoadCategory]);

@@ -1,11 +1,17 @@
 import { FormFieldConfig } from '@app/common/components/forms/configs/FormFieldConfig';
 import { useAppSelector } from '@app/stores';
-import { courseDetailCreationFormValues } from '../types/courseDetailCreationFormValues';
+import { CourseFormValues } from '../views/components/CourseDetailInfo/core/schema/courseDetailInfo.schema';
 
-export const useCourseDetailFormFields = (): FormFieldConfig<courseDetailCreationFormValues>[] => {
-  const { data } = useAppSelector((state) => state.listCourseOfflineLecture.centers);
-
-  const config: FormFieldConfig<courseDetailCreationFormValues>[] = [
+export const useCourseDetailFormFields = (): FormFieldConfig<CourseFormValues>[] => {
+  const { categories } = useAppSelector((state) => state.courseDetailLecture);
+ 
+  const config: FormFieldConfig<CourseFormValues>[] = [
+    {
+      name: 'thumbnail',
+      label: 'URL hình ảnh',
+      inputType: 'upload',
+      grid: { xs: 12, sm: 6, md: 12 },
+    },
     {
       name: 'title',
       label: 'Tiêu đề',
@@ -13,59 +19,36 @@ export const useCourseDetailFormFields = (): FormFieldConfig<courseDetailCreatio
       grid: { xs: 12, sm: 6, md: 12 },
     },
     {
-      name: 'amount',
-      label: 'Số tiền',
+      name: 'price',
+      label: 'Giá',
       inputType: 'input',
       type: 'number',
       grid: { xs: 12, sm: 6, md: 12 },
       unit: 'VND',
     },
     {
-      name: 'discount',
-      label: 'Giảm giá',
-      inputType: 'input',
-      type: 'number',
+      name: 'category_id',
+      label: 'Danh mục',
+      inputType: 'select',
       grid: { xs: 12, sm: 6, md: 12 },
-      unit: '%',
+      selectOptions: categories.data?.map((category) => ({
+        value: category.id,
+        label: category.name,
+      })) || [],
+    },
+    {
+      name: 'title_description',
+      label: 'Mô tả ngắn',
+      inputType: 'textarea',
+      grid: { xs: 12, sm: 6, md: 12 },
+      inputProps: { multiline: true, rows: 4 },
     },
     {
       name: 'description',
-      label: 'Mô tả',
+      label: 'Mô tả chi tiết',
       inputType: 'editor',
       grid: { xs: 12, sm: 6, md: 12 },
-    },
-    {
-      name: 'image',
-      label: 'URL hình ảnh',
-      inputType: 'upload',
-      grid: { xs: 12, sm: 6, md: 12 },
-    },
-    {
-      name: 'center_id',
-      label: 'Trung tâm',
-      inputType: 'select',
-      grid: { xs: 12, sm: 6, md: 12 },
-      selectOptions: data.map((item) => ({
-        value: item.id,
-        label: item.address,
-      })),
-    },
-    {
-      name: 'date_range',
-      label: 'Khoảng thời gian',
-      inputType: 'date-range',
-      grid: { xs: 12, sm: 6, md: 12 },
-      dateRangeProps: {
-        start: {
-          name: 'start_date',
-          label: 'Ngày bắt đầu',
-        },
-        end: {
-          name: 'end_date',
-          label: 'Ngày kết thúc',
-        },
-      },
-    },
+    }
   ];
 
   return config;

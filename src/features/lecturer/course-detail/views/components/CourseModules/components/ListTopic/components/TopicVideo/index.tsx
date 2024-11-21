@@ -1,13 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Topic, Video } from '@app/common/models/Course';
 import { Box, Card } from '@mui/material';
-import {
-  EMBED_YOUTUBE,
-  GET_SOURCE_VIDEO,
-  Platform,
-} from '../../../../../../../models/TopicVideo';
 import useTopicViewModel from '@app/features/lecturer/course-detail/viewmodels/useTopicViewModel';
 import { useAppSelector } from '@app/stores';
+import { EMBED_YOUTUBE, GET_SOURCE_VIDEO, Platform } from '@app/features/lecturer/course-detail/constants';
 
 interface TopicVideoProps {
   topic: Topic | null;

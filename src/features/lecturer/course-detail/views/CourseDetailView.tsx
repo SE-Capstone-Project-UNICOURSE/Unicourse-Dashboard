@@ -10,11 +10,12 @@ import useCourseDetailViewModel from '../viewmodels/useCourseDetailViewModel';
 import CourseDetailHeader from './components/CourseDetailHeader';
 import CourseDetailInfo from './components/CourseDetailInfo';
 import CourseModules from './components/CourseModules';
+import CourseReview from './components/CourseReview';
 
 const CourseDetailView = () => {
   const { id } = useParams();
   const router = useRouter();
-  const { courseDetail, categories } = useAppSelector((state) => state.courseDetailLecture);
+  const { courseDetail } = useAppSelector((state) => state.courseDetailLecture);
   const { editMode, setEditMode } = useCourseDetailViewModel({ courseId: Number(id) });
 
   const breadcrumbItems = [
@@ -34,7 +35,8 @@ const CourseDetailView = () => {
       <GlobalBreadcrumb items={breadcrumbItems} />
       <div className="course-detail-view">
         <CourseDetailHeader editMode={editMode} setEditMode={setEditMode} loading={courseDetail.isLoadingGetCourseDetail} courseDetail={courseDetail.data} />
-        <CourseDetailInfo loading={courseDetail.isLoadingGetCourseDetail} courseDetail={courseDetail.data} categories={categories} editMode={editMode} setEditMode={setEditMode} />
+        <CourseReview loading={courseDetail.isLoadingGetCourseDetail} courseDetail={courseDetail.data}/>
+        <CourseDetailInfo loading={courseDetail.isLoadingGetCourseDetail} courseDetail={courseDetail.data} editMode={editMode} setEditMode={setEditMode} />
         <CourseModules loading={courseDetail.isLoadingGetCourseDetail} courseDetail={courseDetail.data}/>
       </div>
     </DashboardContent>

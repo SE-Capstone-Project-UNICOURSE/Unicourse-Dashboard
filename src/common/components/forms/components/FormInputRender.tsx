@@ -33,6 +33,7 @@ const inputComponents: Record<string, React.FC<any>> = {
   'date-range': DateRangeField,
   upload: UploadField,
   editor: EditorField,
+  textarea: InputField,
 };
 
 function FormInputRender<T extends FieldValues>({
@@ -41,7 +42,16 @@ function FormInputRender<T extends FieldValues>({
   error,
   helperText,
 }: FormInputRenderProps<T>) {
-  const { name, label, inputType, unit, selectOptions, dateRangeProps, ...rest } = fieldConfig;
+  const {
+    name,
+    label,
+    inputType,
+    unit,
+    selectOptions,
+    dateRangeProps,
+    arrayFieldProps,
+    ...rest
+  } = fieldConfig;
 
   const Component: React.ComponentType<FieldProps<T>> =
     inputComponents[inputType] || (() => <Box>No Field Type Found</Box>);
@@ -59,6 +69,7 @@ function FormInputRender<T extends FieldValues>({
           unit={unit}
           selectOptions={selectOptions}
           dateInfo={dateRangeProps}
+          {...arrayFieldProps}
           {...rest}
         />
       )}

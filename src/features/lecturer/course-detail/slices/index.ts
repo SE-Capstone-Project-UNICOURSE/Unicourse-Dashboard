@@ -45,10 +45,12 @@ const courseDetailSlice = createSlice({
       })
       .addCase(getCategories.fulfilled, (state, action) => {
         state.categories.isLoadingGetCategories = false;
+        state.isFirstLoadCategory = false;
         state.categories.data = action.payload;
       })
       .addCase(getCategories.rejected, (state) => {
         state.categories.isLoadingGetCategories = false;
+        state.isFirstLoadCategory = true;
       });
     builder
       .addCase(getVideoVimeoWithAccessToken.pending, (state) => {
