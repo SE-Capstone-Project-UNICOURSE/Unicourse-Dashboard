@@ -1,3 +1,4 @@
+import useGetAccessRefreshToken from '@app/hooks/useGetAccessRefreshToken';
 import useRouter from '@app/routes/hooks/useRouter';
 import { useAppDispatch, useAppSelector } from '@app/stores';
 import { PaginatedRequestParams } from '@app/stores/models';
@@ -10,8 +11,7 @@ import { getPublishCourses } from '../slices/actions';
 const useListOnlineCourseLecturerViewModel = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const accessToken = localStorage.getItem('accessToken');
-
+  const { accessToken } = useGetAccessRefreshToken();
   const { pageSize, page } = useAppSelector(
     (state) => state.listCourseOfflineLecture.listPublishCourses
   );
@@ -34,9 +34,8 @@ const useListOnlineCourseLecturerViewModel = () => {
       router.push('/sign-in');
       localStorage.clear();
     }
-  }, [dispatch, page, pageSize, accessToken]);
+  }, [page, pageSize, accessToken]);
 
-  // Handlers for changing steps
   const handleNextStep = useCallback(() => {
     if (selectedCourseId === null) {
       dispatch(
@@ -58,12 +57,10 @@ const useListOnlineCourseLecturerViewModel = () => {
     }
   }, [dispatch, activeStep]);
 
-  // Handler for selecting a course
   const handleSelectCourse = (courseId: number) => {
     dispatch(setSelectedCourseId(courseId));
   };
 
-  // Handler for changing pages
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     dispatch(setOnlineActiveCoursePage(value));
   };

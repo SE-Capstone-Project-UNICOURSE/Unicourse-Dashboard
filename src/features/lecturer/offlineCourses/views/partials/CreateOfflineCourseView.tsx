@@ -27,6 +27,7 @@ import {
 } from '../../types/courseMentorCreationFormValues';
 import CreateCourseOfflineForm from '../components/CreateCourseOfflineForm';
 import VerticalStepInstruction from '../components/VerticalStepInstruction';
+import ConfirmCreateOfflineCourseView from './ConfirmCreateOfflineCourseView';
 import CreateOfflineCourseCalendarListView from './CreateOfflineCourseCalendarListView';
 import ListOnlineCourseLecturer from './ListOnlineCourseLecturer';
 
@@ -67,11 +68,7 @@ const CreateOfflineCourseView: React.FC = () => {
       case 2:
         return <CreateOfflineCourseCalendarListView />;
       case 3:
-        return (
-          <Box>
-            <Typography variant="h6">Xác nhận thông tin</Typography>
-          </Box>
-        );
+        return <ConfirmCreateOfflineCourseView />;
       default:
         return null;
     }

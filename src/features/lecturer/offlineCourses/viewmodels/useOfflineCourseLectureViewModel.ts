@@ -1,11 +1,17 @@
 import { useAppDispatch } from '@app/stores';
 import { hideDialog, showDialog } from '@app/stores/slices/dialogSlice';
 import { DialogType } from '@app/stores/types/dialogSlice.type';
-import { setScreenState } from '../slices';
+import { resetCourseOfflineLectureState, setScreenState } from '../slices';
+import { useEffect } from 'react';
 
 const useOfflineCourseLectureViewModel = () => {
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    return () => {
+      dispatch(resetCourseOfflineLectureState());
+    };
+  }, []);
   const handleCreateNewCourse = () => {
     dispatch(
       showDialog({

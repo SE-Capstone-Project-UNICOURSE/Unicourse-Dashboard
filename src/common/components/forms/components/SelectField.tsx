@@ -1,6 +1,7 @@
 import { MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 import { SelectOption } from '../configs/FormFieldConfig';
+import { memo } from 'react';
 
 interface SelectFieldProps<T extends FieldValues> {
   label: string;
@@ -42,4 +43,4 @@ function SelectField<T extends FieldValues>({
   );
 }
 
-export default SelectField;
+export default memo(SelectField);

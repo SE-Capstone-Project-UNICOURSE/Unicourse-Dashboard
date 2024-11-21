@@ -1,52 +1,50 @@
+/* eslint-disable camelcase */
 import GradientButton from '@app/common/components/atoms/GradientButton';
-import { useAppSelector } from '@app/stores';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useAppDispatch, useAppSelector } from '@app/stores';
 import { Box, Divider, IconButton, Typography } from '@mui/material';
 import { GridAddIcon, GridDeleteIcon } from '@mui/x-data-grid';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { courseMentorSessionSchema } from '../../schema/courseMentorSession.schema';
-import {
-  CourseMentorSessionFormValues,
-  courseMentorSessionFormValues,
-} from '../../types/courseMentorSessionFormValues';
+import { FormProvider } from 'react-hook-form';
+import { setTotalForm } from '../../slices';
+import useCreateCourseCalendarFormViewModel from '../../viewmodels/useCreateCourseCalendarFormViewModel';
 import CourseCalenderCreateField from './CourseCalenderCreateField';
 
 type CreateCourseCalendarFormProps = {
   indexItem: number;
   onDelete: (formId: number) => void;
-  addNewForm: () => void;
   formRef?: (ref: any) => void;
 };
 
 const CreateCourseCalendarForm = ({
   indexItem,
   onDelete,
-  addNewForm,
   formRef,
 }: CreateCourseCalendarFormProps) => {
   const { totalForm } = useAppSelector((state) => state.listCourseOfflineLecture);
-  const isLastItem = indexItem === totalForm.length - 1; // Kiểm tra nếu đây là form cuối cùng
+  const isLastItem = indexItem === totalForm.length;
+  const dispatch = useAppDispatch();
 
-  const methods = useForm<CourseMentorSessionFormValues>({
-    resolver: yupResolver(courseMentorSessionSchema),
-    defaultValues: courseMentorSessionFormValues,
-  });
-
+  const { methods, onSubmit } = useCreateCourseCalendarFormViewModel(indexItem);
   const { handleSubmit, trigger } = methods;
 
   if (formRef) {
-    formRef({ trigger, handleSubmit });
+    formRef({ trigger, handleSubmit: handleSubmit(onSubmit) });
   }
 
-  const onSubmit: SubmitHandler<CourseMentorSessionFormValues> = (data) => {
-    console.log('Submitted Data:', data);
+  const handleAddNewForm = async () => {
+    const isValid = await trigger();
+    if (isValid) {
+      await handleSubmit(onSubmit)();
+      dispatch(setTotalForm([...totalForm, totalForm.length + 1]));
+    } else {
+      console.error('Form không hợp lệ');
+    }
   };
 
   return (
     <FormProvider {...methods}>
       <Box component="form" onSubmit={handleSubmit(onSubmit)} position="relative">
         <Box my={2}>
-          {isLastItem && ( // Chỉ cho phép xóa nếu là form cuối cùng
+          {isLastItem && (
             <IconButton
               onClick={() => onDelete(indexItem)}
               style={{
@@ -62,23 +60,23 @@ const CreateCourseCalendarForm = ({
             </IconButton>
           )}
           <Typography variant="h4" gutterBottom>
-            Tạo Mô Tả Buổi {indexItem + 1}
+            Tạo Mô Tả Buổi {indexItem}
           </Typography>
         </Box>
 
-        {/* Truyền prop `isDisabled` xuống các trường */}
         <CourseCalenderCreateField methods={methods} isDisable={!isLastItem} />
+
+        {isLastItem && (
+          <Box display="flex" justifyContent="flex-end" mt={2}>
+            <GradientButton variant="outlined" onClick={handleAddNewForm}>
+              <GridAddIcon /> Thêm buổi mới
+            </GradientButton>
+          </Box>
+        )}
       </Box>
       <Divider textAlign="center">
         <GridAddIcon />
       </Divider>
-      {isLastItem && ( // Chỉ hiển thị nút thêm buổi mới nếu là form cuối cùng
-        <Box display="flex" justifyContent="flex-end" mt={2}>
-          <GradientButton variant="outlined" onClick={addNewForm}>
-            <GridAddIcon /> Thêm buổi mới
-          </GradientButton>
-        </Box>
-      )}
     </FormProvider>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Checkbox, CheckboxProps } from '@mui/material';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
@@ -11,4 +11,4 @@ function CheckboxField<T extends FieldValues>({ field, inputProps }: CheckboxFie
   return <Checkbox checked={Boolean(field.value)} {...field} {...(inputProps as CheckboxProps)} />;
 }
 
-export default CheckboxField;
+export default memo(CheckboxField);

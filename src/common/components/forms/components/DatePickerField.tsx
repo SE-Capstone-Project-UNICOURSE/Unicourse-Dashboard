@@ -1,5 +1,6 @@
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
+import { memo } from 'react';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
 interface DatePickerFieldProps<T extends FieldValues> {
@@ -30,4 +31,4 @@ function DatePickerField<T extends FieldValues>({
   );
 }
 
-export default DatePickerField;
+export default memo(DatePickerField);

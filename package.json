@@ -39,6 +39,8 @@
     "@mui/material": "^5.16.7",
     "@mui/x-data-grid": "^7.22.0",
     "@mui/x-date-pickers": "^7.22.2",
+    "@mui/x-date-pickers-pro": "^7.22.2",
+    "@react-google-maps/api": "^2.20.3",
     "@reduxjs/toolkit": "^2.2.7",
     "@tinymce/tinymce-react": "^5.1.1",
     "apexcharts": "^3.52.0",

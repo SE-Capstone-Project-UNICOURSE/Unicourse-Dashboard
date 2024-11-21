@@ -1,6 +1,7 @@
-import { Box, TextFieldProps } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
-import dayjs, { Dayjs } from 'dayjs';
+import { Box, Divider, TextFieldProps } from '@mui/material';
+import { DesktopDateTimePicker } from '@mui/x-date-pickers';
+import dayjs from 'dayjs';
+import { memo } from 'react';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
 export interface DateRangeProps {
@@ -10,6 +11,8 @@ export interface DateRangeProps {
     inputProps?: TextFieldProps;
     error?: boolean;
     helperText?: string;
+    maxDate?: Date;
+    minDate?: Date;
   };
   end: {
     name: string;
@@ -17,6 +20,8 @@ export interface DateRangeProps {
     inputProps?: TextFieldProps;
     error?: boolean;
     helperText?: string;
+    maxDate?: Date;
+    minDate?: Date;
   };
 }
 
@@ -34,50 +39,61 @@ function DateRangeField<T extends FieldValues>({
   const { onChange } = field;
 
   return (
-    <Box display="flex" alignItems="center" gap={2}>
-      <DatePicker
-        label={dateInfo.start.label}
-        name={dateInfo.start.name}
-        inputRef={field.ref}
-        value={field.value?.[dateInfo.start.name] ? dayjs(field.value[dateInfo.start.name]) : null}
-        disabled={isDisable}
-        onChange={(date: Dayjs | null) =>
-          onChange({
-            ...field.value,
-            [dateInfo.start.name]: date ? date.toISOString().split('T')[0] : '',
-          })
-        }
-        slotProps={{
-          textField: {
-            error: dateInfo.start.error,
-            helperText: dateInfo.start.helperText,
-            fullWidth: true,
-          },
-        }}
-      />
+    <Box display="flex" alignItems="center" gap={1}>
+      <Box width={'50%'}>
+        <DesktopDateTimePicker
+          label={dateInfo.start.label}
+          name={dateInfo.start.name}
+          inputRef={field.ref}
+          value={
+            field.value?.[dateInfo.start.name] ? dayjs(field.value[dateInfo.start.name]) : null
+          }
+          disabled={isDisable}
+          maxDate={dateInfo.start.maxDate ? dayjs(dateInfo.start.maxDate) : undefined}
+          minDate={dateInfo.start.minDate ? dayjs(dateInfo.start.minDate) : undefined}
+          onChange={(date) =>
+            onChange({
+              ...field.value,
+              [dateInfo.start.name]: date ? date.toISOString() : '',
+            })
+          }
+          slotProps={{
+            textField: {
+              error: dateInfo.start.error,
+              helperText: dateInfo.start.helperText,
+              fullWidth: true,
+            },
+          }}
+        />
+      </Box>
 
-      <DatePicker
-        label={dateInfo.end.label}
-        name={dateInfo.end.name}
-        disabled={isDisable}
-        value={field.value?.[dateInfo.end.name] ? dayjs(field.value[dateInfo.end.name]) : null}
-        inputRef={field.ref}
-        onChange={(date: Dayjs | null) =>
-          onChange({
-            ...field.value,
-            [dateInfo.end.name]: date ? date.toISOString().split('T')[0] : '',
-          })
-        }
-        slotProps={{
-          textField: {
-            error: dateInfo.end.error,
-            helperText: dateInfo.end.helperText,
-            fullWidth: true,
-          },
-        }}
-      />
+      <Divider orientation="horizontal" style={{ width: 10 }} />
+      <Box width={'50%'}>
+        <DesktopDateTimePicker
+          label={dateInfo.end.label}
+          name={dateInfo.end.name}
+          disabled={isDisable}
+          value={field.value?.[dateInfo.end.name] ? dayjs(field.value[dateInfo.end.name]) : null}
+          inputRef={field.ref}
+          onChange={(date) =>
+            onChange({
+              ...field.value,
+              [dateInfo.end.name]: date ? date.toISOString() : '',
+            })
+          }
+          maxDate={dateInfo.end.maxDate ? dayjs(dateInfo.end.maxDate) : undefined}
+          minDate={dateInfo.end.minDate ? dayjs(dateInfo.end.minDate) : undefined}
+          slotProps={{
+            textField: {
+              error: dateInfo.end.error,
+              helperText: dateInfo.end.helperText,
+              fullWidth: true,
+            },
+          }}
+        />
+      </Box>
     </Box>
   );
 }
 
-export default DateRangeField;
+export default memo(DateRangeField);

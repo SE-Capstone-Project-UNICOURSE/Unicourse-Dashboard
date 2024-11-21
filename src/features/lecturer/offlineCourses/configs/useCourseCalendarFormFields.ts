@@ -4,12 +4,27 @@ import { useFormContext } from 'react-hook-form';
 import { CourseMentorSessionFormValues } from '../types/courseMentorSessionFormValues';
 
 export const useCourseCalendarFormFields = (): FormFieldConfig<CourseMentorSessionFormValues>[] => {
-  const { data, isLoadingGetRooms } = useAppSelector(
-    (state) => state.listCourseOfflineLecture.rooms
-  );
+  const {
+    rooms: { data },
+    offlineCourseRequest,
+  } = useAppSelector((state) => state.listCourseOfflineLecture);
   const {
     formState: { errors },
   } = useFormContext<CourseMentorSessionFormValues>();
+
+  const mentorSessions = offlineCourseRequest?.mentor_sessions || [];
+  const courseStartDate = new Date(offlineCourseRequest?.start_date || '');
+  const courseEndDate = new Date(offlineCourseRequest?.end_date || '');
+
+  // Tìm phiên cuối cùng (nếu có)
+  const lastSession = mentorSessions.length ? mentorSessions[mentorSessions.length - 1] : null;
+
+  // Tính `minDate` và `maxDate` cho date range
+  const minDate = lastSession
+    ? new Date(lastSession.end_time) // Sau `end_time` của phiên trước
+    : courseStartDate; // Ngày bắt đầu của khóa học nếu không có phiên trước
+
+  const maxDate = courseEndDate; // Ngày kết thúc của khóa học
 
   const config: FormFieldConfig<CourseMentorSessionFormValues>[] = [
     {
@@ -35,12 +50,16 @@ export const useCourseCalendarFormFields = (): FormFieldConfig<CourseMentorSessi
           label: 'Ngày bắt đầu',
           error: !!errors.date_range?.start_date?.message,
           helperText: errors.date_range?.start_date?.message,
+          minDate,
+          maxDate,
         },
         end: {
           name: 'end_date',
           label: 'Ngày kết thúc',
           error: !!errors.date_range?.end_date?.message,
           helperText: errors.date_range?.end_date?.message,
+          minDate, // Sau phiên trước hoặc khóa học bắt đầu
+          maxDate, // Trước ngày kết thúc của khóa học
         },
       },
     },

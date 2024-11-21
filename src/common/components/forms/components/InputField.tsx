@@ -1,7 +1,7 @@
 import { handleKeyDown, handlePaste } from '@app/utils/inputUtils';
 import { InputAdornment, InputBaseProps, TextField } from '@mui/material';
 import { isNaN } from 'lodash';
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
 interface InputFieldProps<T extends FieldValues> {
@@ -67,4 +67,4 @@ function InputField<T extends FieldValues>({
   );
 }
 
-export default InputField;
+export default memo(InputField);

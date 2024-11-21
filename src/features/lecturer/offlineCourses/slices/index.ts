@@ -38,7 +38,7 @@ const listCourseOfflineLectureSlice = createSlice({
     setOfflineCourseRequest: (state, action: PayloadAction<OfflineCourse>) => {
       state.offlineCourseRequest = action.payload;
     },
-    reset: () => initialListCourseOfflineState,
+    resetCourseOfflineLectureState: () => initialListCourseOfflineState,
   },
   extraReducers: (builder) => {
     builder
@@ -99,7 +99,7 @@ const listCourseOfflineLectureSlice = createSlice({
 export const {
   setIsLoadingListCourse,
   setListCourse,
-  reset,
+  resetCourseOfflineLectureState,
   setScreenState,
   setActiveStep,
   setOnlineActiveCoursePage,

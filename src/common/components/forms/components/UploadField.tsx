@@ -1,7 +1,7 @@
 import ClearIcon from '@mui/icons-material/Clear';
 import UploadIcon from '@mui/icons-material/Upload';
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
 interface UploadFieldProps<T extends FieldValues> {
@@ -25,10 +25,9 @@ function UploadField<T extends FieldValues>({
   const [loading, setLoading] = useState<boolean>(false); // Trạng thái loading
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  // Cập nhật preview từ `field.value` khi render lại
   useEffect(() => {
     if (field.value && typeof field.value === 'string' && showPreview) {
-      setPreview(field.value); // Dùng URL đã lưu
+      setPreview(field.value);
     } else {
       setPreview(null);
     }
@@ -86,7 +85,6 @@ function UploadField<T extends FieldValues>({
           Uploading...
         </Button>
       ) : (
-        // Hiển thị nút xóa khi đã có ảnh
         <Button variant="contained" color="error" startIcon={<ClearIcon />} onClick={handleClear}>
           Delete
         </Button>
@@ -103,4 +101,4 @@ function UploadField<T extends FieldValues>({
   );
 }
 
-export default UploadField;
+export default memo(UploadField);

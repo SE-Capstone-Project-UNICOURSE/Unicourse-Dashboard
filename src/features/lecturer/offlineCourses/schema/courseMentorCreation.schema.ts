@@ -11,12 +11,11 @@ const courseMentorCreation = Yup.object().shape({
   image: Yup.string().url().max(555).required('Bắt buộc phải có hình ảnh'),
   center_id: Yup.number().required('Vui lòng chọn trung tâm'),
   date_range: Yup.object({
-    start_date: Yup.string()
-      .required('Bắt buộc phải có ngày bắt đầu')
-      .matches(/^\d{4}-\d{2}-\d{2}$/, 'Start date must be in YYYY-MM-DD format'),
+    start_date: Yup.string().required('Bắt buộc phải có ngày bắt đầu'),
+    // .matches(/^\d{4}-\d{2}-\d{2}$/, 'Start date must be in YYYY-MM-DD format'),
     end_date: Yup.string()
       .required('Bắt buộc phải có ngày kết thúc')
-      .matches(/^\d{4}-\d{2}-\d{2}$/, 'End date must be in YYYY-MM-DD format')
+      // .matches(/^\d{4}-\d{2}-\d{2}$/, 'End date must be in YYYY-MM-DD format')
       .test('is-greater', 'End date should be after start date', function (value) {
         const { start_date } = this.parent;
         return start_date && value && new Date(value) > new Date(start_date);

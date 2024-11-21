@@ -73,7 +73,7 @@ const initialListCourseOfflineState: ListCourseOfflineState = {
     isLoading: false,
     data: [],
   },
-  totalForm: [0],
+  totalForm: [1],
   rooms: {
     data: [],
     isLoadingGetRooms: false,
