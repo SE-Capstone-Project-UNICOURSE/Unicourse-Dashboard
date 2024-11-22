@@ -3,7 +3,7 @@ interface courseMentorCreationFormValues {
   amount: number;
   discount?: number;
   description?: string | null;
-  image: string;
+  image: File | string;
   center_id: number;
   date_range: {
     start_date: string;

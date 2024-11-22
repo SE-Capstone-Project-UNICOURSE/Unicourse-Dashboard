@@ -7,8 +7,12 @@ import CreateCourseCalendarForm from '../components/CreateCourseCalendarForm';
 
 const CreateOfflineCourseCalendarListView = () => {
   const dispatch = useAppDispatch();
-  const { activeStep, totalForm } = useAppSelector((state) => state.listCourseOfflineLecture);
+  const { activeStep, totalForm, offlineCourseRequest } = useAppSelector(
+    (state) => state.listCourseOfflineLecture
+  );
   const { deleteForm, formRefs, handleSaveAllForms } = useCreateCourseOfflineCalendarViewModel();
+
+  console.log(offlineCourseRequest);
 
   return (
     <>

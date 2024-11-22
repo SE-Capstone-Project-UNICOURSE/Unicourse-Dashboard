@@ -3,22 +3,23 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { PaginateResponse } from '@app/stores/models';
 import { CourseOnlinePublishModel } from '../models/CourseOnlinePublishModel';
+import { OfflineCourseMentor } from '../models/OfflineCourseMentorResponseModel';
 import { OfflineCourse } from '../models/OfflineCourseRequestModel';
-import { getCenters, getCourseDetail, getPublishCourses, getRooms } from './actions';
+import {
+  getCenters,
+  getCourseDetail,
+  getOfflineCourseMentor,
+  getPublishCourses,
+  getRooms,
+} from './actions';
 import { initialListCourseOfflineState, ScreenState } from './types';
 
 const listCourseOfflineLectureSlice = createSlice({
   name: 'listCourseOfflineLecture',
   initialState: initialListCourseOfflineState,
   reducers: {
-    setIsLoadingListCourse(state, action) {
-      state.listCourse = action.payload;
-    },
     setScreenState(state, action: PayloadAction<ScreenState>) {
       state.screenState = action.payload;
-    },
-    setListCourse(state, action) {
-      state.listCourse = action.payload;
     },
     setActiveStep(state, action) {
       state.activeStep = action.payload;
@@ -37,6 +38,16 @@ const listCourseOfflineLectureSlice = createSlice({
     },
     setOfflineCourseRequest: (state, action: PayloadAction<OfflineCourse>) => {
       state.offlineCourseRequest = action.payload;
+    },
+    // For List Offline Course Mentor
+    setPageOfflineCourse: (state, action) => {
+      state.listOfflineCourse.page = action.payload;
+    },
+    setOfflineCourseStatus: (state, action) => {
+      state.listOfflineCourse.statusCourse = action.payload;
+    },
+    setPreviewImage: (state, action) => {
+      state.previewImage = action.payload;
     },
     resetCourseOfflineLectureState: () => initialListCourseOfflineState,
   },
@@ -93,12 +104,26 @@ const listCourseOfflineLectureSlice = createSlice({
       .addCase(getRooms.rejected, (state) => {
         state.rooms.isLoadingGetRooms = false;
       });
+    builder
+      .addCase(getOfflineCourseMentor.pending, (state) => {
+        state.listOfflineCourse.isLoadingGetListOfflineCourse = true;
+      })
+      .addCase(
+        getOfflineCourseMentor.fulfilled,
+        (state, action: PayloadAction<PaginateResponse<OfflineCourseMentor[]>>) => {
+          state.listOfflineCourse.isLoadingGetListOfflineCourse = false;
+          state.listOfflineCourse.data = action.payload.data ?? [];
+          state.listOfflineCourse.total = action.payload.total ?? 0;
+          state.listOfflineCourse.totalPages = action.payload.totalPages ?? 0;
+        }
+      )
+      .addCase(getOfflineCourseMentor.rejected, (state) => {
+        state.listOfflineCourse.isLoadingGetListOfflineCourse = false;
+      });
   },
 });
 
 export const {
-  setIsLoadingListCourse,
-  setListCourse,
   resetCourseOfflineLectureState,
   setScreenState,
   setActiveStep,
@@ -107,5 +132,8 @@ export const {
   setSelectedCourseId,
   setTotalForm,
   setOfflineCourseRequest,
+  setPageOfflineCourse,
+  setOfflineCourseStatus,
+  setPreviewImage,
 } = listCourseOfflineLectureSlice.actions;
 export default listCourseOfflineLectureSlice.reducer;

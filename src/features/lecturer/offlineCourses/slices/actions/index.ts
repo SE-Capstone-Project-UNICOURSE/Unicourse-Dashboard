@@ -106,3 +106,32 @@ export const getRooms = createAsyncThunk(
     }
   }
 );
+
+export const getOfflineCourseMentor = createAsyncThunk<
+  any,
+  { accessToken: string; request: PaginatedRequestParams },
+  { rejectValue: ErrorResponse }
+>(
+  'offlineLectures/getOfflineCourseMentors',
+  async ({ accessToken, request }, { rejectWithValue }) => {
+    try {
+      const response = await offlineLectureCourseServices.getListOfflineCourses(
+        accessToken,
+        request
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return rejectWithValue({
+          message: error.response.data.message,
+          statusCode: error.response.status,
+          errorCode: error.response.data.errorCode,
+        });
+      }
+      return rejectWithValue({
+        message: 'Failed to fetch offline courses. Please try again later.',
+        statusCode: 500,
+      });
+    }
+  }
+);

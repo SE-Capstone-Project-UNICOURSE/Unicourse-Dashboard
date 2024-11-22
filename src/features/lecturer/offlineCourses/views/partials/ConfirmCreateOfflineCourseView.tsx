@@ -8,17 +8,20 @@ import dayjs from 'dayjs';
 import { setActiveStep } from '../../slices';
 import useConfirmCreateCourseOfflineViewModel from '../../viewmodels/useConfirmCreateCourseOfflineViewModel';
 import CourseDetailInfoCreate from '../components/CourseDetailInfoCreate';
+import LoadingIndicator from '@app/common/components/LoadingIndicator';
 
 const ConfirmCreateOfflineCourseView = () => {
   const {
     offlineCourseRequest,
     activeStep,
     centers: { data },
+    previewImage,
   } = useAppSelector((state) => state.listCourseOfflineLecture);
   const dispatch = useAppDispatch();
 
   const selectedCenter = data.find((center) => center.id === offlineCourseRequest?.center_id);
-  const { handleConfirmationCreateCourseOffline } = useConfirmCreateCourseOfflineViewModel();
+  const { handleConfirmationCreateCourseOffline, isLoadingCreateCourseOffline } =
+    useConfirmCreateCourseOfflineViewModel();
 
   if (!offlineCourseRequest) {
     return (
@@ -33,6 +36,7 @@ const ConfirmCreateOfflineCourseView = () => {
 
   return (
     <Box>
+      {isLoadingCreateCourseOffline && <LoadingIndicator loading />}
       <Typography textAlign={'center'} variant="h4" gutterBottom>
         Xác nhận thông tin khóa học
       </Typography>
@@ -42,7 +46,7 @@ const ConfirmCreateOfflineCourseView = () => {
           <Box gap={2}>
             <Box mb={2}>
               <img
-                src={image || '/default-thumbnail.jpg'}
+                src={previewImage}
                 alt="Thumbnail"
                 style={{
                   width: '100%',

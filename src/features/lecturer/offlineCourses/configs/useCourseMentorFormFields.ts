@@ -1,17 +1,20 @@
 import { FormFieldConfig } from '@app/common/components/forms/configs/FormFieldConfig';
-import useUploadFileToFirebase from '@app/hooks/useUploadFileToFirebase';
-import { useAppSelector } from '@app/stores';
+import { useAppDispatch, useAppSelector } from '@app/stores';
 import { useFormContext } from 'react-hook-form';
+import { setPreviewImage } from '../slices';
 import { courseMentorCreationFormValues } from '../types/courseMentorCreationFormValues';
 
 const useCourseMentorFormFields = (): FormFieldConfig<courseMentorCreationFormValues>[] => {
   const { data } = useAppSelector((state) => state.listCourseOfflineLecture.centers);
+  const dispatch = useAppDispatch();
 
   const {
     formState: { errors },
   } = useFormContext<courseMentorCreationFormValues>();
 
-  const { uploadFileToFirebase, deleteFileFromFirebase } = useUploadFileToFirebase();
+  const handleUpdatePreviewImage = (imageUrl: string) => {
+    dispatch(setPreviewImage(imageUrl));
+  };
 
   const config: FormFieldConfig<courseMentorCreationFormValues>[] = [
     {
@@ -49,8 +52,7 @@ const useCourseMentorFormFields = (): FormFieldConfig<courseMentorCreationFormVa
       inputType: 'upload',
       grid: { xs: 12, sm: 12, md: 12 },
       accept: 'image/png,image/jpeg',
-      onFileUpload: (file) => uploadFileToFirebase(file, 'Course/Offline'),
-      onDeleteFile: (fileUrl) => deleteFileFromFirebase(fileUrl),
+      onFileUpload: (imageUrl) => handleUpdatePreviewImage(imageUrl),
       showPreview: true,
     },
     {
