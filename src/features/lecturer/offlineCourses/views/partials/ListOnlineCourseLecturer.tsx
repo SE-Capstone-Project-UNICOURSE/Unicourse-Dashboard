@@ -1,11 +1,11 @@
 import GradientButton from '@app/common/components/atoms/GradientButton';
-import LoadingIndicator from '@app/common/components/LoadingIndicator';
 import { APP_COLOR } from '@app/common/constants/appConstants';
 import { useAppSelector } from '@app/stores';
 import helpers from '@app/utils/helpers';
 import { InfoOutlined } from '@mui/icons-material';
 import { Box, Card, CardContent, CardMedia, Grid, Pagination, Typography } from '@mui/material';
 import useListOnlineCourseLecturerViewModel from '../../viewmodels/useListOnlineCourseLecturerViewModel';
+import SkeletonCourseOfflineCard from '../components/SkeletonCourseOfflineCard';
 
 const ListOnlineCourseLecturer = () => {
   const { handleNextStep, handlePageChange, handlePrevStep, handleSelectCourse } =
@@ -33,11 +33,11 @@ const ListOnlineCourseLecturer = () => {
       </Box>
 
       {isLoadingPublishCourse ? (
-        <LoadingIndicator loading={isLoadingPublishCourse} />
+        <SkeletonCourseOfflineCard />
       ) : (
         <Grid container spacing={2}>
           {data.map((course) => (
-            <Grid item xs={12} sm={6} md={3} key={course.id}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={course.id}>
               <Card
                 onClick={() => handleSelectCourse(course.id)}
                 sx={{
@@ -53,12 +53,28 @@ const ListOnlineCourseLecturer = () => {
               >
                 <CardMedia
                   component="img"
-                  height="220"
+                  sx={{
+                    width: '100%',
+                    height: { xs: '200px', sm: '180px', md: '140px', lg: '180px' },
+                    objectFit: 'cover',
+                  }}
                   image={course.thumbnail}
                   alt={course.title}
                 />
+
                 <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    sx={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      display: '-webkit-box',
+                      WebkitLineClamp: 1,
+                      WebkitBoxOrient: 'vertical',
+                      mb: 1,
+                    }}
+                  >
                     {course.title}
                   </Typography>
                   <Typography

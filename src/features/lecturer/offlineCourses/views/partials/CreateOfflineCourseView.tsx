@@ -3,6 +3,7 @@ import { APP_COLOR } from '@app/common/constants/appConstants';
 import { useAppDispatch, useAppSelector } from '@app/stores';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { CheckCircleRounded, RadioButtonChecked } from '@mui/icons-material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import {
   Box,
@@ -20,7 +21,7 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { steps } from '../../constants';
 import { courseMentorCreation } from '../../schema/courseMentorCreation.schema';
-import { setCreateCourseInstruction } from '../../slices';
+import { setCreateCourseInstruction, setScreenState } from '../../slices';
 import {
   courseMentorCreationDefaultFormValues,
   courseMentorCreationFormValues,
@@ -80,9 +81,23 @@ const CreateOfflineCourseView: React.FC = () => {
         Tạo khóa học trực tiếp
       </Typography>
 
-      <GradientButton style={{ marginBottom: 20 }} variant="outlined" onClick={toggleDrawer(true)}>
-        Hiển thị hướng dẫn
-      </GradientButton>
+      <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
+        <GradientButton
+          style={{ marginBottom: 20 }}
+          variant="outlined"
+          onClick={() => dispatch(setScreenState('list'))}
+        >
+          <ArrowBackIosIcon /> Danh sách khoá học
+        </GradientButton>
+
+        <GradientButton
+          style={{ marginBottom: 20 }}
+          variant="outlined"
+          onClick={toggleDrawer(true)}
+        >
+          Hiển thị hướng dẫn
+        </GradientButton>
+      </Box>
 
       <Drawer
         anchor={isMobile ? 'bottom' : 'right'}

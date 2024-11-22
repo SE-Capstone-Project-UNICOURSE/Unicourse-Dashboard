@@ -14,7 +14,7 @@ interface OfflineCourse {
   amount: number;
   discount?: number;
   description?: string | null;
-  image: string;
+  image: string | File;
   center_id: number;
   start_date: string; // ISO 8601 format
   end_date: string; // ISO 8601 format

@@ -29,7 +29,7 @@ const CreateCourseOfflineForm = ({ methods }: CreateCourseOfflineFormProps) => {
 
   return (
     <Grid container spacing={4}>
-      <Grid item xs={12} lg={8} md={9}>
+      <Grid item xs={12} lg={8} md={7}>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)} {...methods}>
             <Grid container spacing={2}>
@@ -66,7 +66,7 @@ const CreateCourseOfflineForm = ({ methods }: CreateCourseOfflineFormProps) => {
         </FormProvider>
       </Grid>
 
-      <Grid item xs={12} lg={4} md={3}>
+      <Grid item xs={12} lg={4} md={5}>
         <CourseDetailInfoCreate />
       </Grid>
     </Grid>

@@ -3,7 +3,9 @@ import httpClient from '@app/utils/httpClient';
 import type { AxiosRequestConfig } from 'axios';
 import { OFFLINE_COURSE_LECTURER_API_PATH } from '../constants';
 import { Center } from '../models/CenterCourseModel';
+import CourseOfflineCreatedResponseModel from '../models/CourseOfflineCreatedResponseModel';
 import { CourseOnlinePublishModel } from '../models/CourseOnlinePublishModel';
+import { OfflineCourseMentor } from '../models/OfflineCourseMentorResponseModel';
 import { OfflineCourse } from '../models/OfflineCourseRequestModel';
 import Room from '../models/RoomCourseModel';
 
@@ -69,7 +71,7 @@ class LectureOfflineCourseServices {
   public async createOfflineCourses(
     accessToken: string,
     courseOffline: OfflineCourse
-  ): Promise<DataResponse<any>> {
+  ): Promise<DataResponse<CourseOfflineCreatedResponseModel>> {
     const route = OFFLINE_COURSE_LECTURER_API_PATH.CREATE_COURSE_OFFLINE;
 
     const config: AxiosRequestConfig = {
@@ -78,8 +80,32 @@ class LectureOfflineCourseServices {
       },
     };
 
-    const response = await httpClient.post<DataResponse<Room[]>>(route, courseOffline, config);
+    const response = await httpClient.post<DataResponse<CourseOfflineCreatedResponseModel>>(
+      route,
+      courseOffline,
+      config
+    );
 
+    return response.data;
+  }
+
+  public async getListOfflineCourses(
+    accessToken: string,
+    request: PaginatedRequestParams
+  ): Promise<DataResponse<PaginateResponse<OfflineCourseMentor[]>>> {
+    const route = OFFLINE_COURSE_LECTURER_API_PATH.GET_LIST_OFFLINE_COURSE;
+
+    const config: AxiosRequestConfig = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    const response = await httpClient.post<DataResponse<PaginateResponse<OfflineCourseMentor[]>>>(
+      route,
+      request,
+      config
+    );
     return response.data;
   }
 }

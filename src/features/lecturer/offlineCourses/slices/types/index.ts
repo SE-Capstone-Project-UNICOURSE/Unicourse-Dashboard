@@ -1,21 +1,24 @@
 import { Center } from '../../models/CenterCourseModel';
-import { CourseOffline } from '../../models/CourseOfflineModel';
 import {
   CourseOnlineDetailModel,
   CourseOnlinePublishModel,
 } from '../../models/CourseOnlinePublishModel';
+import { OfflineCourseMentor } from '../../models/OfflineCourseMentorResponseModel';
 import { OfflineCourse } from '../../models/OfflineCourseRequestModel';
 import Room from '../../models/RoomCourseModel';
 
 export type ScreenState = 'list' | 'add';
 
 interface ListCourseOfflineState {
-  listCourse: {
-    isLoadingGetListCourse: boolean;
-    data: CourseOffline[];
+  listOfflineCourse: {
+    isLoadingGetListOfflineCourse: boolean;
+    data: OfflineCourseMentor[];
     page: number;
     pageSize: number;
     total: number;
+    totalPages: number;
+    statusCourse: 'DRAFT' | 'PUBLISHED';
+    sortByCreatedDate: 'desc' | 'asc';
   };
   listPublishCourses: {
     isLoadingPublishCourse: boolean;
@@ -43,15 +46,19 @@ interface ListCourseOfflineState {
     isLoadingGetRooms: boolean;
   };
   offlineCourseRequest: OfflineCourse | null;
+  previewImage: string;
 }
 
 const initialListCourseOfflineState: ListCourseOfflineState = {
-  listCourse: {
+  listOfflineCourse: {
+    isLoadingGetListOfflineCourse: false,
     data: [],
-    isLoadingGetListCourse: false,
     page: 1,
     pageSize: 10,
     total: 0,
+    totalPages: 0,
+    statusCourse: 'DRAFT',
+    sortByCreatedDate: 'desc',
   },
   listPublishCourses: {
     isLoadingPublishCourse: false,
@@ -79,6 +86,7 @@ const initialListCourseOfflineState: ListCourseOfflineState = {
     isLoadingGetRooms: false,
   },
   offlineCourseRequest: null,
+  previewImage: '',
 };
 
 export { initialListCourseOfflineState };
