@@ -77,11 +77,17 @@ const OfflineCourseLectureView: React.FC = () => {
                             display: '-webkit-box',
                             overflow: 'hidden',
                             WebkitBoxOrient: 'vertical',
-                            WebkitLineClamp: 2, // Giới hạn tối đa 3 dòng
+                            WebkitLineClamp: 3,
+                            padding: 0,
+                            '& *': {
+                              margin: 0,
+                              padding: 0,
+                            },
                           }}
-                        >
-                          {course.description || 'Không có mô tả'}
-                        </Typography>
+                          dangerouslySetInnerHTML={{
+                            __html: course.description ?? 'Không có mô tả khóa học',
+                          }}
+                        />
 
                         {/* Giá */}
                         <Box display="flex" alignItems="center" mt={1}>
@@ -106,11 +112,11 @@ const OfflineCourseLectureView: React.FC = () => {
                         >
                           <CalendarMonthIcon fontSize="small" color="primary" />
                           <Typography variant="body2" color="textSecondary">
-                            {helpers.formatDate(new Date(course.start_date))}
+                            {helpers.formatDateToVN(course.start_date)}
                           </Typography>
                           -
                           <Typography variant="body2" color="textSecondary">
-                            {helpers.formatDate(new Date(course.end_date))}
+                            {helpers.formatDateToVN(course.end_date)}
                           </Typography>
                         </Box>
                       </CardContent>

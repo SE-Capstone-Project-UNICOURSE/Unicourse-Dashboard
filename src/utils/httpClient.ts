@@ -51,9 +51,11 @@ class HttpClient {
               if (!refreshToken) throw new Error('No refresh token available');
 
               const response = await this.refreshToken(refreshToken);
-              const newAccessToken = response.data.accessToken;
+              const newAccessToken = response.data.accessToken.split(' ')[1];
+              const newRefreshToken = response.data.refreshToken.split(' ')[1];
 
               localStorage.setItem(ACCESS_TOKEN, newAccessToken);
+              localStorage.setItem(REFRESH_TOKEN, newRefreshToken);
               this.onTokenRefreshed(newAccessToken);
 
               return await this.client(originalRequest);
@@ -91,7 +93,7 @@ class HttpClient {
 
   private async refreshToken(refreshToken: string): Promise<AxiosResponse<any>> {
     return axios.post(`${BASE_URL}/api/auth/refresh-token`, {
-      refresh_token: refreshToken,
+      refresh_token: `Bearer ${refreshToken}`,
     });
   }
 
@@ -111,7 +113,10 @@ class HttpClient {
         content: message,
         type: DialogType.ERROR,
         onConfirm: () => {
+          localStorage.removeItem(ACCESS_TOKEN);
+          localStorage.removeItem(REFRESH_TOKEN);
           store.dispatch(hideDialog());
+          window.location.href = '/sign-in';
         },
       })
     );
