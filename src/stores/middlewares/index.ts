@@ -1,8 +1,11 @@
+import ErrorResponse from '@app/common/models/ErrorResponse';
 import type { Middleware } from '@reduxjs/toolkit';
 import { isRejectedWithValue } from '@reduxjs/toolkit';
-import { showDialog } from '../slices/dialogSlice';
+import { createBrowserHistory } from 'history';
+import { hideDialog, showDialog } from '../slices/dialogSlice';
 import { DialogType } from '../types/dialogSlice.type';
-import ErrorResponse from '@app/common/models/ErrorResponse';
+
+const history = createBrowserHistory();
 
 const apiMiddleware: Middleware =
   ({ dispatch }) =>
@@ -20,10 +23,17 @@ const apiMiddleware: Middleware =
             title: 'Session Expired',
             content: 'Your session has expired. Please log in again.',
             type: DialogType.ERROR,
+            onConfirm() {
+              dispatch(hideDialog());
+              history.push('/sign-in');
+            },
+            onCancel() {
+              dispatch(hideDialog());
+              history.push('/sign-in');
+            },
           })
         );
       } else {
-        // Hiển thị hộp thoại lỗi cho các lỗi khác
         const errorMessage = message || 'Something went wrong';
         dispatch(
           showDialog({

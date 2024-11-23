@@ -1,6 +1,6 @@
 import { CheckboxProps, InputBaseProps, SxProps } from '@mui/material';
 import { Theme } from '@mui/material/styles';
-import { FieldValues } from 'react-hook-form';
+import { ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
 import { DateRangeProps } from '../components/DateRangeField';
 
 export type InputType =
@@ -26,6 +26,7 @@ interface FormFieldConfig<T extends FieldValues> {
   unit?: string;
   grid?: { xs?: number; sm?: number; md?: number };
   inputType: InputType;
+  error?: boolean;
   selectOptions?: SelectOption[];
   type?: React.HTMLInputTypeAttribute;
   arrayFieldProps?: {
@@ -36,8 +37,8 @@ interface FormFieldConfig<T extends FieldValues> {
   inputProps?: InputBaseProps['inputProps'] | CheckboxProps;
   dateRangeProps?: DateRangeProps;
   sx?: SxProps<Theme>;
-  accept?: string; // for handling upload file
-  onFileUpload?: (file: File) => void;
+  accept?: string;
+  onFileUpload?: (fileUrl: string) => void;
   onDeleteFile?: (fileUrl: string) => void;
   showPreview?: boolean;
   helperText?: string;

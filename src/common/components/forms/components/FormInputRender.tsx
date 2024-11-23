@@ -28,7 +28,7 @@ type FieldProps<T extends FieldValues> = {
   dateInfo?: { start: any; end: any };
   inputProps?: InputBaseProps['inputProps'] | CheckboxProps;
   sx?: SxProps<Theme>;
-  onFileUpload?: (file: File) => void;
+  onFileUpload?: (fileUrl: string) => void;
   onDeleteFile?: (fileUrl: string) => void;
   showPreview?: boolean;
   accept?: string;
@@ -52,7 +52,6 @@ function FormInputRender<T extends FieldValues>({
   control,
   error,
   helperText,
-  isDisable,
 }: FormInputRenderProps<T>) {
   const {
     name,
@@ -76,8 +75,8 @@ function FormInputRender<T extends FieldValues>({
       control={control}
       render={({ field }) => (
         <Component
-          label={label}
           field={field}
+          label={label}
           error={error}
           helperText={helperText}
           onFileUpload={onFileUpload}

@@ -119,7 +119,12 @@ const DialogManager: React.FC = () => {
               src={image}
               alt="Dialog Icon"
               variant="square"
-              sx={{ height: 160, width: 160 }}
+              sx={{
+                height: { xs: 180, sm: 180, md: 200, lg: 220 }, // Adjust height for different breakpoints
+                width: { xs: 120, sm: 180, md: 200, lg: 220 }, // Adjust width for different breakpoints
+                borderRadius: '8px', // Optional: Add some rounding for aesthetics
+                objectFit: 'cover', // Ensure the image scales well within the container
+              }}
             />
           </Grid>
           <Grid item xs={12}>

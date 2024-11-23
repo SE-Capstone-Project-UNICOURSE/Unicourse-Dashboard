@@ -1,27 +1,36 @@
 import { useAppSelector } from '@app/stores';
+import helpers from '@app/utils/helpers';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import {
   Box,
   Button,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Grid,
+  Pagination,
   Typography,
 } from '@mui/material';
 import React from 'react';
 import DashboardLectureContent from '../../dashboard/layouts/DashboardLayout/DashboardLectureContent';
 import useOfflineCourseLectureViewModel from '../viewmodels/useOfflineCourseLectureViewModel';
+import SkeletonCourseOfflineCard from './components/SkeletonCourseOfflineCard';
 import CreateOfflineCourseView from './partials/CreateOfflineCourseView';
+
+// Icons
 
 const OfflineCourseLectureView: React.FC = () => {
   const {
-    listCourse: { data: courseList },
     screenState,
+    listOfflineCourse: {
+      data: listOfflineCourses,
+      totalPages,
+      page,
+      isLoadingGetListOfflineCourse,
+    },
   } = useAppSelector((state) => state.listCourseOfflineLecture);
-  const { handleCreateNewCourse } = useOfflineCourseLectureViewModel();
+  const { handleCreateNewCourse, handleChangePage } = useOfflineCourseLectureViewModel();
 
   return (
     <DashboardLectureContent>
@@ -38,29 +47,103 @@ const OfflineCourseLectureView: React.FC = () => {
             </Button>
           </Box>
 
-          {courseList.length > 0 ? (
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>ID</TableCell>
-                    <TableCell>Tên khóa học</TableCell>
-                    <TableCell>Giảng viên</TableCell>
-                    <TableCell>Thời lượng</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {courseList.map((course) => (
-                    <TableRow key={course.id}>
-                      <TableCell>{course.id}</TableCell>
-                      <TableCell>{course.name}</TableCell>
-                      <TableCell>{course.instructor}</TableCell>
-                      <TableCell>{course.duration}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+          {isLoadingGetListOfflineCourse ? (
+            <SkeletonCourseOfflineCard />
+          ) : listOfflineCourses.length > 0 ? (
+            <>
+              <Grid container spacing={2}>
+                {listOfflineCourses.map((course) => (
+                  <Grid item xs={12} sm={6} md={4} lg={3} key={course.id}>
+                    <Card>
+                      <CardMedia
+                        component="img"
+                        sx={{
+                          width: '100%',
+                          height: { sm: '120px', md: '140px', lg: '180px' },
+                          objectFit: 'cover',
+                        }}
+                        image={course.image}
+                        alt={course.title}
+                      />
+                      <CardContent>
+                        <Typography variant="h6" gutterBottom>
+                          {course.title}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          gutterBottom
+                          sx={{
+                            display: '-webkit-box',
+                            overflow: 'hidden',
+                            WebkitBoxOrient: 'vertical',
+                            WebkitLineClamp: 3,
+                            padding: 0,
+                            '& *': {
+                              margin: 0,
+                              padding: 0,
+                            },
+                          }}
+                          dangerouslySetInnerHTML={{
+                            __html: course.description ?? 'Không có mô tả khóa học',
+                          }}
+                        />
+
+                        {/* Giá */}
+                        <Box display="flex" alignItems="center" mt={1}>
+                          <Typography variant="body1" color="primary" fontWeight={'bold'}>
+                            {helpers.formatCurrencyVND(course.amount)} VND
+                          </Typography>
+                        </Box>
+
+                        {/* Giảm giá */}
+                        <Box display="flex" alignItems="center" mt={1}>
+                          <Typography variant="body2" color="textSecondary">
+                            Giảm giá: {course.discount}%
+                          </Typography>
+                        </Box>
+
+                        {/* Thời gian */}
+                        <Box
+                          display="flex"
+                          justifyContent={'space-between'}
+                          alignItems="center"
+                          mt={1}
+                        >
+                          <CalendarMonthIcon fontSize="small" color="primary" />
+                          <Typography variant="body2" color="textSecondary">
+                            {helpers.formatDateToVN(course.start_date)}
+                          </Typography>
+                          -
+                          <Typography variant="body2" color="textSecondary">
+                            {helpers.formatDateToVN(course.end_date)}
+                          </Typography>
+                        </Box>
+                      </CardContent>
+                      <CardActions>
+                        <Button size="small" color="primary">
+                          Chi tiết
+                        </Button>
+                        <Button size="small" color="secondary">
+                          Chỉnh sửa
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+
+              {/* Pagination Component */}
+              <Box display="flex" justifyContent="center" my={3}>
+                <Pagination
+                  count={totalPages}
+                  page={page}
+                  onChange={(event, value) => handleChangePage(value)}
+                  variant="outlined"
+                  color="primary"
+                />
+              </Box>
+            </>
           ) : (
             <div style={{ textAlign: 'center', marginTop: '20px' }}>
               <Typography variant="body1" paragraph>
