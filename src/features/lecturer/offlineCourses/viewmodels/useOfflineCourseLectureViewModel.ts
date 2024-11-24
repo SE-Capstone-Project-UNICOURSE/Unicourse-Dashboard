@@ -6,15 +6,18 @@ import { hideDialog, showDialog } from '@app/stores/slices/dialogSlice';
 import { DialogType } from '@app/stores/types/dialogSlice.type';
 import { useEffect } from 'react';
 import { resetCourseOfflineLectureState, setPageOfflineCourse, setScreenState } from '../slices';
-import { getOfflineCourseMentor } from '../slices/actions';
+import { getCourseOfflineDetail, getOfflineCourseMentor } from '../slices/actions';
+import { useParams } from 'react-router-dom';
 
 const useOfflineCourseLectureViewModel = () => {
   const dispatch = useAppDispatch();
   const { accessToken } = useGetAccessRefreshToken();
-  const { page, pageSize, statusCourse, sortByCreatedDate } = useAppSelector(
-    (state) => state.listCourseOfflineLecture.listOfflineCourse
-  );
+  const {
+    listOfflineCourse: { page, pageSize, statusCourse, sortByCreatedDate },
+    screenState,
+  } = useAppSelector((state) => state.listCourseOfflineLecture);
   const router = useRouter();
+  const { courseId } = useParams();
 
   const handleGetListOfflineCourseByLecture = async (pageCourse: number) => {
     if (!accessToken) {
@@ -43,11 +46,37 @@ const useOfflineCourseLectureViewModel = () => {
   };
 
   useEffect(() => {
-    handleGetListOfflineCourseByLecture(page);
+    const handleInitCourseOfflineLecturer = () => {
+      if (!accessToken) {
+        router.push('/sign-in');
+        return;
+      }
+
+      if (!courseId) {
+        dispatch(setScreenState('list'));
+        handleGetListOfflineCourseByLecture(page);
+        return;
+      }
+
+      switch (screenState) {
+        case 'list':
+          dispatch(setScreenState('detail'));
+          handleGetListOfflineCourseByLecture(page);
+          break;
+        case 'detail':
+          dispatch(setScreenState('detail'));
+          dispatch(getCourseOfflineDetail({ accessToken, courseMentorId: Number(courseId) }));
+          break;
+        default:
+          break;
+      }
+    };
+    handleInitCourseOfflineLecturer();
     return () => {
       dispatch(resetCourseOfflineLectureState());
     };
-  }, []);
+  }, [accessToken, courseId, router, screenState]);
+
   const handleCreateNewCourse = () => {
     dispatch(
       showDialog({

@@ -1,4 +1,5 @@
 import { Center } from '../../models/CenterCourseModel';
+import CourseOfflineDetailResponseModel from '../../models/CourseOfflineDetailResponseModel';
 import {
   CourseOnlineDetailModel,
   CourseOnlinePublishModel,
@@ -7,7 +8,7 @@ import { OfflineCourseMentor } from '../../models/OfflineCourseMentorResponseMod
 import { OfflineCourse } from '../../models/OfflineCourseRequestModel';
 import Room from '../../models/RoomCourseModel';
 
-export type ScreenState = 'list' | 'add';
+export type ScreenState = 'list' | 'add' | 'detail' | 'edit';
 
 interface ListCourseOfflineState {
   listOfflineCourse: {
@@ -44,6 +45,10 @@ interface ListCourseOfflineState {
   rooms: {
     data: Room[];
     isLoadingGetRooms: boolean;
+  };
+  courseOfflineDetail: {
+    isLoadingGetCourseOfflineDetail: boolean;
+    data: CourseOfflineDetailResponseModel | null;
   };
   offlineCourseRequest: OfflineCourse | null;
   previewImage: string;
@@ -84,6 +89,10 @@ const initialListCourseOfflineState: ListCourseOfflineState = {
   rooms: {
     data: [],
     isLoadingGetRooms: false,
+  },
+  courseOfflineDetail: {
+    isLoadingGetCourseOfflineDetail: false,
+    data: null,
   },
   offlineCourseRequest: null,
   previewImage: '',

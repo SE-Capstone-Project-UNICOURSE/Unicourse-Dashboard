@@ -4,6 +4,7 @@ import type { AxiosRequestConfig } from 'axios';
 import { OFFLINE_COURSE_LECTURER_API_PATH } from '../constants';
 import { Center } from '../models/CenterCourseModel';
 import CourseOfflineCreatedResponseModel from '../models/CourseOfflineCreatedResponseModel';
+import CourseOfflineDetailResponseModel from '../models/CourseOfflineDetailResponseModel';
 import { CourseOnlinePublishModel } from '../models/CourseOnlinePublishModel';
 import { OfflineCourseMentor } from '../models/OfflineCourseMentorResponseModel';
 import { OfflineCourse } from '../models/OfflineCourseRequestModel';
@@ -104,6 +105,25 @@ class LectureOfflineCourseServices {
     const response = await httpClient.post<DataResponse<PaginateResponse<OfflineCourseMentor[]>>>(
       route,
       request,
+      config
+    );
+    return response.data;
+  }
+
+  public async getCourseOfflineDetail(
+    accessToken: string,
+    courseMentorId: number
+  ): Promise<DataResponse<CourseOfflineDetailResponseModel>> {
+    const route = `${OFFLINE_COURSE_LECTURER_API_PATH.GET_OFFLINE_COURSE_DETAIL}/${courseMentorId}`;
+
+    const config: AxiosRequestConfig = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    const response = await httpClient.get<DataResponse<CourseOfflineDetailResponseModel>>(
+      route,
       config
     );
     return response.data;

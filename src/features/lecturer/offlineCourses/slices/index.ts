@@ -8,6 +8,7 @@ import { OfflineCourse } from '../models/OfflineCourseRequestModel';
 import {
   getCenters,
   getCourseDetail,
+  getCourseOfflineDetail,
   getOfflineCourseMentor,
   getPublishCourses,
   getRooms,
@@ -119,6 +120,17 @@ const listCourseOfflineLectureSlice = createSlice({
       )
       .addCase(getOfflineCourseMentor.rejected, (state) => {
         state.listOfflineCourse.isLoadingGetListOfflineCourse = false;
+      });
+    builder
+      .addCase(getCourseOfflineDetail.pending, (state) => {
+        state.courseOfflineDetail.isLoadingGetCourseOfflineDetail = true;
+      })
+      .addCase(getCourseOfflineDetail.fulfilled, (state, action) => {
+        state.courseOfflineDetail.data = action.payload;
+        state.courseOfflineDetail.isLoadingGetCourseOfflineDetail = false;
+      })
+      .addCase(getCourseOfflineDetail.rejected, (state) => {
+        state.courseOfflineDetail.isLoadingGetCourseOfflineDetail = false;
       });
   },
 });
