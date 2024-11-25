@@ -8,10 +8,7 @@ import CreateOfflineCourseView from './partials/CreateOfflineCourseView';
 import ListOfflineCourseLecturer from './partials/ListOfflineCourseLecturer';
 
 const OfflineCourseLectureView: React.FC = () => {
-  const {
-    screenState,
-    listOfflineCourse: { data: listOfflineCourses },
-  } = useAppSelector((state) => state.listCourseOfflineLecture);
+  const { screenState } = useAppSelector((state) => state.listCourseOfflineLecture);
   const { handleCreateNewCourse, handleChangePage } = useOfflineCourseLectureViewModel();
 
   const renderContent = () => {

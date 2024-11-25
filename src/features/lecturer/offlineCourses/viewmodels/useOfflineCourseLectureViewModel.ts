@@ -2,12 +2,10 @@ import useGetAccessRefreshToken from '@app/hooks/useGetAccessRefreshToken';
 import useRouter from '@app/routes/hooks/useRouter';
 import { useAppDispatch, useAppSelector } from '@app/stores';
 import { PaginatedRequestParams } from '@app/stores/models';
-import { hideDialog, showDialog } from '@app/stores/slices/dialogSlice';
-import { DialogType } from '@app/stores/types/dialogSlice.type';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { resetCourseOfflineLectureState, setPageOfflineCourse, setScreenState } from '../slices';
 import { getCourseOfflineDetail, getOfflineCourseMentor } from '../slices/actions';
-import { useParams } from 'react-router-dom';
 
 const useOfflineCourseLectureViewModel = () => {
   const dispatch = useAppDispatch();
@@ -59,10 +57,6 @@ const useOfflineCourseLectureViewModel = () => {
       }
 
       switch (screenState) {
-        case 'list':
-          dispatch(setScreenState('detail'));
-          handleGetListOfflineCourseByLecture(page);
-          break;
         case 'detail':
           dispatch(setScreenState('detail'));
           dispatch(getCourseOfflineDetail({ accessToken, courseMentorId: Number(courseId) }));
@@ -75,24 +69,11 @@ const useOfflineCourseLectureViewModel = () => {
     return () => {
       dispatch(resetCourseOfflineLectureState());
     };
-  }, [accessToken, courseId, router, screenState]);
+  }, [accessToken, courseId, page]);
 
-  const handleCreateNewCourse = () => {
-    dispatch(
-      showDialog({
-        title: 'Xác nhận',
-        content: 'Bạn có chắc rằng là muốn tạo khoá học trực tiếp mới chứ ?',
-        type: DialogType.ALERT,
-        onCancel() {
-          dispatch(hideDialog());
-        },
-        onConfirm() {
-          dispatch(setScreenState('add'));
-          dispatch(hideDialog());
-        },
-      })
-    );
-  };
+  const handleCreateNewCourse = useCallback(() => {
+    dispatch(setScreenState('add'));
+  }, []);
   return { handleCreateNewCourse, handleChangePage };
 };
 
