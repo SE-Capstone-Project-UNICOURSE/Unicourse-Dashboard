@@ -1,60 +1,47 @@
-import { Category, Course } from '@app/common/models/Course';
+import GradientButton from '@app/common/components/atoms/GradientButton';
+import FormInputRender from '@app/common/components/forms/components/FormInputRender';
+import { FormFieldConfig } from '@app/common/components/forms/configs/FormFieldConfig';
+import { Course } from '@app/common/models/Course';
+import { useAppDispatch, useAppSelector } from '@app/stores';
 import { yupResolver } from '@hookform/resolvers/yup';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Close';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import {
-  Box,
-  Button,
-  FormHelperText,
-  Grid,
-  IconButton,
-  Modal,
-  TextField,
-  Typography
-} from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
-import CardDescription from './components/CardDescription';
-import { VisuallyHiddenInput } from './components/VisuallyHiddenInput';
+import { useForm } from 'react-hook-form';
+import { useCourseDetailFormFields } from '../../../configs/useCourseDetailFormFields';
 import {
   courseDetailInfoValue,
   CourseFormValues,
   validationSchema,
 } from './core/schema/courseDetailInfo.schema';
-import { validationArrayString } from './core/services/validateService';
 import './CourseDetailInfo.scss';
-import { useCourseDetailFormFields } from '../../../configs/useCourseDetailFormFields';
-import { useAppDispatch } from '@app/stores';
-import FormInputRender from '@app/common/components/forms/components/FormInputRender';
-import GradientButton from '@app/common/components/atoms/GradientButton';
+import { resetDynamicArrayField, submitDynamicArrayField, reset as resetData, setCourseDetail } from '../../../slices';
 
 interface CourseDetailProps {
+  id: number;
   loading: boolean;
   courseDetail: Course | undefined;
-  editMode: boolean;
-  setEditMode: (value: boolean) => void;
+  originalCourse: Course | undefined;
 }
 
 const CourseDetailInfo: React.FC<CourseDetailProps> = ({
+  id,
   loading,
   courseDetail,
-  editMode,
-  setEditMode,
+  originalCourse
 }) => {
+  const [formFields, setFormFields] = useState<FormFieldConfig<CourseFormValues>[]>([]);
+  const [reRender, setReRender] = useState(false);
+  
+  const formFieldsFromHook = useCourseDetailFormFields({ reRender });
   const dispatch = useAppDispatch();
-  const formFields = useCourseDetailFormFields();
-  const [imageFile, setImageFile] = useState<string>('');
-  const [descriptionModalOpen, setDescriptionModalOpen] = useState(false);
 
   // FORM ZONE
-  // Use useForm to manage form state
   const {
     control,
-    register,
     handleSubmit,
     reset,
     formState: { errors },
+    trigger,
   } = useForm<CourseFormValues>({
     resolver: yupResolver(validationSchema),
     defaultValues: courseDetailInfoValue,
@@ -62,40 +49,61 @@ const CourseDetailInfo: React.FC<CourseDetailProps> = ({
 
   // INITIALIZE ZONE
   useEffect(() => {
-    if (courseDetail) {
+    console.log('formFields', formFields);
+    console.log('formFieldsFromHook', formFieldsFromHook);
+    if (originalCourse && originalCourse.id === id) {
+
+      setFormFields(formFieldsFromHook);
+
       reset({
-        title: courseDetail.title,
-        price: courseDetail.price,
-        title_description: courseDetail.title_description,
-        description: courseDetail.description,
-        learning_outcome: courseDetail.learning_outcome,
-        requirements: courseDetail.requirements,
-        category_id: courseDetail.category_id,
+        title: originalCourse.title,
+        price: originalCourse.price,
+        title_description: originalCourse.title_description,
+        description: originalCourse.description,
+        learning_outcome: originalCourse.learning_outcome || [],  // Ensure it's an array
+        requirements: originalCourse.requirements || [],          // Ensure it's an array
+        category_id: originalCourse.category_id,
       });
     }
-  }, [courseDetail, reset]);
+  }, [id, originalCourse, formFields, formFieldsFromHook]); // Add reset here to ensure form resets on courseDetail change
 
-  // Call reset form from another component
-  useEffect(() => {
-    if (!editMode) {
-      reset();
-      setImageFile('');
+  // Access Redux state for dynamic array fields outside the onSubmit function
+  const newLearningOutcome = useAppSelector(
+    (state) => state.courseDetailLecture.dynamicArrayFields.learning_outcome
+  );
+  const newRequirements = useAppSelector(
+    (state) => state.courseDetailLecture.dynamicArrayFields.requirements
+  );
+
+  const onSubmit = async (data: CourseFormValues) => {
+    // Trigger validation for all fields
+    const isValidForm= await trigger();
+    dispatch(submitDynamicArrayField('learning_outcome'));
+    dispatch(submitDynamicArrayField('requirements'));
+
+    // Check if the form is valid and if dynamic array fields are valid
+    if (!isValidForm || !newLearningOutcome.isValid || !newRequirements.isValid) {
+      return; // Prevent form submission if invalid
     }
-  }, [editMode]);
 
-  const onSubmit = (data: CourseFormValues) => {
-    console.log('Form submitted:', data);
+    // Proceed with form submission
+    const finalData = {
+      ...data,
+      learning_outcome: newLearningOutcome.items,
+      requirements: newRequirements.items,
+    };
+    console.log('Form submitted:', finalData);
   };
 
-  const hanleResetForm = () => {
+  const handleResetForm = () => {
+    if (!originalCourse) {
+      return;
+    }
+  
+    dispatch(resetDynamicArrayField('learning_outcome'));
+    dispatch(resetDynamicArrayField('requirements'));
     reset();
-    setEditMode(false);
-  }
-
-  const selectFile = (files: any) => {
-    const file = URL.createObjectURL(files[0]);
-    setImageFile(file);
-    setEditMode(true);
+    setReRender(!reRender);
   };
 
   if (loading || !courseDetail) {
@@ -125,74 +133,9 @@ const CourseDetailInfo: React.FC<CourseDetailProps> = ({
         </Grid>
 
         <Box display="flex" justifyContent="space-between" mt={2}>
-          <GradientButton variant="outlined">Hủy</GradientButton>
-
+          <GradientButton variant="outlined" onClick={() => handleResetForm()}>Hủy</GradientButton>
           <GradientButton type="submit">Lưu thay đổi</GradientButton>
         </Box>
-
-        {/* Dynamic Sections: Learning Outcomes */}
-        {/* <Box className="course-info__section" mt={4}>
-          <Typography className="course-info__section-title" variant="h6">
-            Mục tiêu học tập
-          </Typography>
-          {outcomeFields.map((field, index) => (
-            <Grid container key={field.id} alignItems="center" spacing={2}>
-              <Grid item xs={10}>
-                <FormInputRender
-                  fieldConfig={{
-                    name: `learning_outcome.${index}`,
-                    label: '',
-                    inputType: 'input',
-                    grid: { xs: 12 },
-                  }}
-                  control={control}
-                  error={!!errors.learning_outcome?.[index]}
-                  helperText={errors.learning_outcome?.[index]?.message}
-                />
-              </Grid>
-              <Grid item xs={2}>
-                <IconButton color="error" onClick={() => removeOutcome(index)}>
-                  <DeleteIcon />
-                </IconButton>
-              </Grid>
-            </Grid>
-          ))}
-          <Button startIcon={<AddIcon />} onClick={() => appendOutcome('')}>
-            Thêm mục tiêu
-          </Button>
-        </Box> */}
-
-        {/* Dynamic Sections: Requirements */}
-        {/* <Box className="course-info__section" mt={4}>
-          <Typography className="course-info__section-title" variant="h6">
-            Yêu cầu khóa học
-          </Typography>
-          {requirementFields.map((field, index) => (
-            <Grid container key={field.id} alignItems="center" spacing={2}>
-              <Grid item xs={10}>
-                <FormInputRender
-                  fieldConfig={{
-                    name: `requirements.${index}`,
-                    label: '',
-                    inputType: 'input',
-                    grid: { xs: 12 },
-                  }}
-                  control={control}
-                  error={!!errors.requirements?.[index]}
-                  helperText={errors.requirements?.[index]?.message}
-                />
-              </Grid>
-              <Grid item xs={2}>
-                <IconButton color="error" onClick={() => removeRequirement(index)}>
-                  <DeleteIcon />
-                </IconButton>
-              </Grid>
-            </Grid>
-          ))}
-          <Button startIcon={<AddIcon />} onClick={() => appendRequirement('')}>
-            Thêm yêu cầu
-          </Button>
-        </Box> */}
       </Box>
     </form>
   );

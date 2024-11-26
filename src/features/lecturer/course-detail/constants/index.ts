@@ -16,5 +16,7 @@ enum Platform {
   VIMEO = 'vimeo',
 }
 
+export const steps = ['Chọn khoá học', 'Tạo khoá học', 'Tạo lịch học', 'Xác nhận'];
+
 
 export { COURSE_DETAIL_LECTURE_API_PATH, TOPIC_VIDEO_API_PATH, GET_SOURCE_VIDEO, EMBED_YOUTUBE, Platform };

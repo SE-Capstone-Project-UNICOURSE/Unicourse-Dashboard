@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
 interface CourseFormValues {
-  thumbnail: string;
+  // thumbnail: string;
   title: string;
   price: number;
   title_description: string;
@@ -12,26 +12,18 @@ interface CourseFormValues {
 }
 
 const courseDetailInfoValue: CourseFormValues = {
-  thumbnail: '',
+  // thumbnail: '',
   title: '',
   price: 0,
   title_description: '',
   category_id: 0,
   description: '',
+  learning_outcome: [''],
+  requirements: [''],
 };
 
-// Yup.object().shape({
-//   learning_outcome: Yup.array()
-//     .of(
-//       Yup.string()
-//         .required('Mục tiêu không được để trống')
-//         .min(10, 'Mục tiêu cần ít nhất 10 ký tự'),
-//     )
-//     .min(1, 'Cần ít nhất một mục tiêu'),
-// })
-
 const validationSchema = Yup.object().shape({
-  thumbnail: Yup.string().required('Hình ảnh là bắt buộc'),
+  // thumbnail: Yup.string().required('Hình ảnh là bắt buộc'),
   title: Yup.string().required('Tiêu đề là bắt buộc').min(10, 'Tiêu đề cần ít nhất 10 ký tự'),
   price: Yup.number().required('Giá là bắt buộc'),
   title_description: Yup.string()

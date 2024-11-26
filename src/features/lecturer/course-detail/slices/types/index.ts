@@ -1,5 +1,11 @@
 import { Category, Course, Vimeo } from "../../models";
 
+interface DynamicArrayField {
+    items: string[];
+    errors: boolean[];
+    isValid: boolean;
+  }
+
 export interface CourseDetailScreenState {
     courseDetail: {
         isLoadingGetCourseDetail: boolean;
@@ -13,7 +19,9 @@ export interface CourseDetailScreenState {
     vimeoVideo: {
         isLoadingVimeoVideo: boolean;
         data: Vimeo | undefined;
-    }
+    };
+    previewImage: string;
+    dynamicArrayFields: Record<string, DynamicArrayField>;
 }
 
 export const initialCourseDetailScreenState: CourseDetailScreenState = {
@@ -29,5 +37,7 @@ export const initialCourseDetailScreenState: CourseDetailScreenState = {
     vimeoVideo: {
         data: undefined,
         isLoadingVimeoVideo: false,
-    }
+    },
+    previewImage: '',
+    dynamicArrayFields: {},
 };

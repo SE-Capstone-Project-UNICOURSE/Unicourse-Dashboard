@@ -56,6 +56,8 @@ function InputField<T extends FieldValues>({
       error={error}
       helperText={helperText}
       value={inputValue}
+      multiline={inputProps?.multiline}
+      rows={inputProps?.rows}
       InputProps={{
         endAdornment: unit ? <InputAdornment position="end">{unit}</InputAdornment> : null,
       }}

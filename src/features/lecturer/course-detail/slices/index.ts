@@ -1,8 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   getCategories,
   getCourseDetailById,
-  getVideoVimeoWithAccessToken
+  getVideoVimeoWithAccessToken,
 } from './actions';
 import { initialCourseDetailScreenState } from './types';
 
@@ -11,21 +11,71 @@ const courseDetailSlice = createSlice({
   initialState: initialCourseDetailScreenState,
   reducers: {
     setCourseDetail(state, action) {
-        state.courseDetail.data = action.payload;
+      state.courseDetail.data = action.payload;
     },
     setIsLoadingGetCourseDetail(state, action) {
-        state.courseDetail.isLoadingGetCourseDetail = action.payload;
+      state.courseDetail.isLoadingGetCourseDetail = action.payload;
     },
     setCategories(state, action) {
-        state.categories.data = action.payload;
+      state.categories.data = action.payload;
     },
     setFirstLoadCategories(state, action) {
-        state.isFirstLoadCategory = action.payload;
+      state.isFirstLoadCategory = action.payload;
     },
     setVideoVimeo(state, action) {
       state.vimeoVideo.data = action.payload;
     },
-    reset: () => initialCourseDetailScreenState,
+    setPreviewImage: (state, action) => {
+      state.previewImage = action.payload;
+    },
+    setDynamicArrayItems(state, action) {
+      const { fieldName, items } = action.payload;
+      state.dynamicArrayFields[fieldName] = {
+        items,
+        errors: items.map((item) => item.trim() === ''),
+        isValid: items.every((item) => item.trim() !== ''),
+      };
+    },
+    addDynamicArrayItem(state, action: PayloadAction<string>) {
+      const fieldName = action.payload;
+      const field = state.dynamicArrayFields[fieldName];
+      if (field) {
+        field.items.push('');
+        field.errors.push(false);
+        field.isValid = false;
+      }
+    },
+    removeDynamicArrayItem(state, action: PayloadAction<{ fieldName: string; index: number }>) {
+      const { fieldName, index } = action.payload;
+      const field = state.dynamicArrayFields[fieldName];
+      if (field) {
+        field.items.splice(index, 1);
+        field.errors.splice(index, 1);
+        field.isValid = field.items.every((item) => item.trim() !== '');
+      }
+    },
+    updateDynamicArrayItem(state, action) {
+      const { fieldName, index, value } = action.payload;
+      const field = state.dynamicArrayFields[fieldName];
+      if (field) {
+        field.items[index] = value;
+        field.errors[index] = value.trim() === '';
+        field.isValid = field.items.every((item) => item.trim() !== '');
+      }
+    },
+    resetDynamicArrayField(state, action: PayloadAction<string>) {
+      const fieldName = action.payload;
+      delete state.dynamicArrayFields[fieldName];
+    },
+    submitDynamicArrayField(state, action: PayloadAction<string>) {
+      const fieldName = action.payload;
+      const field = state.dynamicArrayFields[fieldName];
+      if (field) {
+        field.isValid = field.items.every((item) => item.trim() !== '');
+        field.errors = field.items.map((item) => item.trim() === '');
+      }
+    },
+    reset: () => initialCourseDetailScreenState
   },
   extraReducers: (builder) => {
     builder
@@ -72,6 +122,14 @@ export const {
   setCategories,
   setFirstLoadCategories,
   setVideoVimeo,
+  setPreviewImage,
+  setDynamicArrayItems,
+  addDynamicArrayItem,
+  removeDynamicArrayItem,
+  updateDynamicArrayItem,
+  resetDynamicArrayField,
+  submitDynamicArrayField,
   reset,
 } = courseDetailSlice.actions;
+
 export default courseDetailSlice.reducer;
