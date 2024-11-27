@@ -1,21 +1,8 @@
 import { Course } from '@app/common/models/Course';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  List,
-  ListItem,
-  Rating,
-  Stack,
-  Typography,
-} from '@mui/material';
-import { GridExpandMoreIcon } from '@mui/x-data-grid';
+import { Box, Card, CardContent, CardMedia, Rating, Stack, Typography } from '@mui/material';
+import { labels } from '../../../constants';
 import React from 'react';
+import StatusChip from '../../../../../../common/components/Chip';
 
 interface CourseReviewProps {
   loading: boolean;
@@ -50,6 +37,16 @@ const CourseReview: React.FC<CourseReviewProps> = ({ loading, courseDetail }) =>
                   Đánh giá:
                 </Typography>
                 <Rating size="small" name="read-only" value={courseDetail.rating} readOnly />
+              </Stack>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Typography variant="subtitle2" component="div" sx={{ color: 'text.secondary' }}>
+                  Trạng thái:
+                </Typography>
+                <StatusChip
+                  value={courseDetail.status}
+                  size="small"
+                  label={labels}
+                />
               </Stack>
             </Stack>
           </CardContent>

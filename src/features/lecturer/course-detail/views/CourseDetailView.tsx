@@ -35,7 +35,6 @@ const CourseDetailView = () => {
           courseDetail={courseDetail.data}
         />
 
-        {/* MUI Tabs */}
         <Box>
           <Tabs
             value={activeTab}
