@@ -32,6 +32,7 @@ type FieldProps<T extends FieldValues> = {
   sx?: SxProps<Theme>;
   onFileUpload?: (fileUrl: string) => void;
   onDeleteFile?: (fileUrl: string) => void;
+  onBlur?: () => void;
   showPreview?: boolean;
   accept?: string;
   isDisable?: boolean;
@@ -65,6 +66,7 @@ function FormInputRender<T extends FieldValues>({
     arrayProps,
     onFileUpload,
     onDeleteFile,
+    onBlur,
     inputProps,
     ...rest
   } = fieldConfig;
@@ -83,6 +85,7 @@ function FormInputRender<T extends FieldValues>({
           helperText={helperText}
           onFileUpload={onFileUpload}
           onDeleteFile={onDeleteFile}
+          onBlur={onBlur}
           inputProps={inputProps}
           arrayProps={arrayProps}
           unit={unit}

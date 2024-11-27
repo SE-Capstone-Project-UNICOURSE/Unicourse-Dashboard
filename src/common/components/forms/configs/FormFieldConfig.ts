@@ -36,6 +36,7 @@ interface FormFieldConfig<T extends FieldValues> {
   accept?: string;
   onFileUpload?: (fileUrl: string) => void;
   onDeleteFile?: (fileUrl: string) => void;
+  onBlur?: () => void;
   showPreview?: boolean;
   helperText?: string;
   isDisable?: boolean;

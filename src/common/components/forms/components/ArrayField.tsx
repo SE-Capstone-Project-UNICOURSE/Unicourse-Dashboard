@@ -9,8 +9,6 @@ export interface ArrayProps {
   buttonText: string;
   initialValues?: string[];
   fieldName?: string;
-  onValueChange?: (value: string[]) => void;
-  notifyIsValid?: (isValid: boolean) => void;
 }
 
 export interface ArrayFieldProps {
@@ -21,9 +19,7 @@ export interface ArrayFieldProps {
 const ArrayField: React.FC<ArrayFieldProps> = ({ label, arrayProps }) => {
   const { items, errors, isValid, handleInputChange, addItem, removeItem } = useDynamicArrayField({
     fieldName: arrayProps.fieldName || '',
-    onValueChange: arrayProps.onValueChange,
-    notifyIsValid: arrayProps.notifyIsValid,
-    initialValues: arrayProps.initialValues || [''], // Default to a single empty item if no initial values are provided
+    initialValues: arrayProps.initialValues || [''],
   });
 
   return (

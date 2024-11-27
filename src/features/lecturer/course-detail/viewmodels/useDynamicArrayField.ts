@@ -10,15 +10,11 @@ import {
 interface UseDynamicArrayFieldProps {
   fieldName: string;
   initialValues?: string[];  // Initial values to set
-  onValueChange?: (values: string[]) => void;  // Callback to notify the parent about updates
-  notifyIsValid?: (isValid: boolean) => void;  // Notify parent of validation state
 }
 
 const useDynamicArrayField = ({
   fieldName,
   initialValues = [],
-  onValueChange,
-  notifyIsValid,
 }: UseDynamicArrayFieldProps) => {
   const dispatch = useAppDispatch();
   
@@ -37,14 +33,6 @@ const useDynamicArrayField = ({
       dispatch(setDynamicArrayItems({ fieldName, items: initialValuesRef.current }));
     }
   }, [dispatch, fieldName, field]);  // Ensure effect is tied to fieldName and field state
-
-  // Second effect: Notify parent on changes to field items or validation state
-  useEffect(() => {
-    if (field) {
-      onValueChange?.(field.items);
-      notifyIsValid?.(field.isValid);
-    }
-  }, [field?.items, field?.isValid, onValueChange, notifyIsValid]); // Optimized dependencies
 
   // Memoized handlers to avoid re-renders
   const handleInputChange = useCallback((index: number, value: string) => {

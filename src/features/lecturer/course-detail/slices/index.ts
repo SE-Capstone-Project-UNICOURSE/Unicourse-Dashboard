@@ -10,24 +10,31 @@ const courseDetailSlice = createSlice({
   name: 'courseDetail',
   initialState: initialCourseDetailScreenState,
   reducers: {
+    // Manage Course Detail data
     setCourseDetail(state, action) {
       state.courseDetail.data = action.payload;
     },
     setIsLoadingGetCourseDetail(state, action) {
       state.courseDetail.isLoadingGetCourseDetail = action.payload;
     },
+
+    // Manage Categories
     setCategories(state, action) {
       state.categories.data = action.payload;
     },
     setFirstLoadCategories(state, action) {
       state.isFirstLoadCategory = action.payload;
     },
+
+    // Manage Video type
     setVideoVimeo(state, action) {
       state.vimeoVideo.data = action.payload;
     },
     setPreviewImage: (state, action) => {
       state.previewImage = action.payload;
     },
+
+    // Manage Dynamic Array
     setDynamicArrayItems(state, action) {
       const { fieldName, items } = action.payload;
       state.dynamicArrayFields[fieldName] = {
@@ -74,6 +81,11 @@ const courseDetailSlice = createSlice({
         field.isValid = field.items.every((item) => item.trim() !== '');
         field.errors = field.items.map((item) => item.trim() === '');
       }
+    },
+
+    // Manage Tab State
+    setActiveTab(state, action) {
+      state.activeTab = action.payload
     },
     reset: () => initialCourseDetailScreenState
   },
@@ -129,6 +141,7 @@ export const {
   updateDynamicArrayItem,
   resetDynamicArrayField,
   submitDynamicArrayField,
+  setActiveTab,
   reset,
 } = courseDetailSlice.actions;
 
