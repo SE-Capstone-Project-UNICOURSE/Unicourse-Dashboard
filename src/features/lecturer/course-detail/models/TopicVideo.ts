@@ -1,4 +1,4 @@
-interface Vimeo {
+type Vimeo = {
   type: string;
   version: string;
   provider_name: string;
@@ -22,19 +22,10 @@ interface Vimeo {
   uri: string;
 }
 
-interface VimeoRequest {
+type VimeoRequest = {
   videoUrl: string;
   width: number;
   height: number;
 }
 
-enum Platform {
-  YOUTUBE = 'youtube',
-  VIMEO = 'vimeo',
-}
-
-const GET_SOURCE_VIDEO = /src="([^"]+)"/;
-const EMBED_YOUTUBE = 'https://www.youtube.com/embed';
-
-export { Platform, GET_SOURCE_VIDEO, EMBED_YOUTUBE };
 export type { Vimeo, VimeoRequest };

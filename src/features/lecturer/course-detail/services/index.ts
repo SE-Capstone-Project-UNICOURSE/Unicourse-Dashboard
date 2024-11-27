@@ -1,10 +1,9 @@
 import type { DataResponse } from '@app/stores/models';
 import httpClient from '@app/utils/httpClient';
 import type { AxiosRequestConfig } from 'axios';
-import { COURSE_DETAIL_LECTURE_API_PATH } from '../constants';
+import { COURSE_DETAIL_LECTURE_API_PATH, TOPIC_VIDEO_API_PATH } from '../constants';
 import { Category, Course } from '../models';
-import { TOPIC_VIDEO_API_PATH } from '../constants/TopicVideoAPI';
-import { Vimeo } from '../constants/TopicVideoType';
+import { Vimeo } from '../models/TopicVideo';
 import cryptoJSService from './cryptoJSService';
 
 class CourseDetailLecturerViewServices {
