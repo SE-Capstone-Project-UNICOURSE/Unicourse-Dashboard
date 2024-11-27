@@ -3,8 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import { CONFIG } from 'src/utils/config-global';
 import CourseDetailView from './views/CourseDetailView';
 
-// ----------------------------------------------------------------------
-
 const CourseDetailLecturerPages = () => (
   <>
     <Helmet>

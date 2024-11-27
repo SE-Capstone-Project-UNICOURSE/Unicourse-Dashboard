@@ -1,7 +1,8 @@
 import { CheckboxProps, InputBaseProps, SxProps } from '@mui/material';
 import { Theme } from '@mui/material/styles';
-import { ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
+import { FieldValues } from 'react-hook-form';
 import { DateRangeProps } from '../components/DateRangeField';
+import { ArrayFieldProps, ArrayProps } from '../components/ArrayField';
 
 export type InputType =
   | 'input'
@@ -10,7 +11,8 @@ export type InputType =
   | 'editor'
   | 'upload'
   | 'dateRange'
-  | 'datePicker';
+  | 'datePicker'
+  | 'array';
 
 export type SelectOption = {
   value: string | number;
@@ -28,14 +30,17 @@ interface FormFieldConfig<T extends FieldValues> {
   selectOptions?: SelectOption[];
   type?: React.HTMLInputTypeAttribute;
   inputProps?: InputBaseProps['inputProps'] | CheckboxProps;
+  arrayProps?: ArrayProps;
   dateRangeProps?: DateRangeProps;
   sx?: SxProps<Theme>;
   accept?: string;
   onFileUpload?: (fileUrl: string) => void;
   onDeleteFile?: (fileUrl: string) => void;
+  onBlur?: () => void;
   showPreview?: boolean;
   helperText?: string;
   isDisable?: boolean;
+  column?: number;
 }
 
 export type { FormFieldConfig };

@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import { PaginateResponse } from '@app/stores/models';
 import {
-  Box,
   Paper,
-  Skeleton,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
+  Typography
 } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Course } from '../../../models';
 import './CourseTable.scss';
 import ActionButton from './components/ActionButton';
-import StatusChip from './components/StatusChip';
-import { PaginateResponse } from '@app/stores/models';
-import { Course } from '../../../models';
 import TableLoading from './components/TableLoading';
 import { columns } from './core/services';
+import StatusChip from '@app/common/components/Chip';
+import { labels } from '../../../constants';
 
 const CourseTable = ({ isLoadingGetListCourse, data }: { isLoadingGetListCourse: boolean; data: PaginateResponse<Array<Course>> | undefined}) => {
   const [rows, setRows] = useState<Array<Course>>([]);
@@ -61,12 +60,17 @@ const CourseTable = ({ isLoadingGetListCourse, data }: { isLoadingGetListCourse:
                   return (
                     <TableCell key={column.id} align={column.align}>
                       {column.id === 'thumbnail' ? (
-                        <img loading="lazy" className='course-image' src={row.thumbnail} alt={row.title} />
+                        <img
+                          loading="lazy"
+                          className="course-image"
+                          src={row.thumbnail}
+                          alt={row.title}
+                        />
                       ) : column.id === 'action' ? ( // Display action buttons
                         <ActionButton course={row} sx={{ justifyContent: 'center' }} />
                       ) : column.format ? ( // Format value if column has format function
                         column.id === 'status' ? (
-                          <StatusChip value={value} />
+                          <StatusChip value={value} label={labels} />
                         ) : (
                           <Typography variant="subtitle2">{column.format(value)}</Typography>
                         )

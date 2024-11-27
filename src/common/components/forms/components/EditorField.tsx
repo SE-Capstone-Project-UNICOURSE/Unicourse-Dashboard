@@ -1,5 +1,5 @@
 // EditorField.tsx
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Editor } from '@tinymce/tinymce-react';
 import { memo } from 'react';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
@@ -7,9 +7,11 @@ import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 interface EditorFieldProps<T extends FieldValues> {
   label: string;
   field: ControllerRenderProps<T>;
+  error?: boolean;
+  helperText?: string;
 }
 
-function EditorField<T extends FieldValues>({ label, field }: EditorFieldProps<T>) {
+function EditorField<T extends FieldValues>({ label, field, error, helperText }: EditorFieldProps<T>) {
   return (
     <Box>
       <Box mb={1}>{label}</Box>
@@ -20,6 +22,11 @@ function EditorField<T extends FieldValues>({ label, field }: EditorFieldProps<T
           field.onChange(editor.getContent());
         }}
       />
+      {error && ( // Display error if any
+        <Typography variant="body2" color="error" mt={1}>
+          { helperText }
+        </Typography>
+      )}
     </Box>
   );
 }

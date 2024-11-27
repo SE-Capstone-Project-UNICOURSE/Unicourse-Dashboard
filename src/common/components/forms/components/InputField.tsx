@@ -1,7 +1,7 @@
 import { handleKeyDown, handlePaste } from '@app/utils/inputUtils';
 import { InputAdornment, InputBaseProps, TextField } from '@mui/material';
 import { isNaN } from 'lodash';
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
 interface InputFieldProps<T extends FieldValues> {
@@ -13,6 +13,7 @@ interface InputFieldProps<T extends FieldValues> {
   unit?: 'VND' | 'USD';
   inputProps?: InputBaseProps['inputProps'];
   isDisable?: boolean;
+  onBlur?: () => void;
 }
 
 export type UnitCurrency = 'VND' | 'USD';
@@ -26,6 +27,7 @@ function InputField<T extends FieldValues>({
   unit,
   inputProps,
   isDisable,
+  onBlur
 }: InputFieldProps<T>) {
   const [inputValue, setInputValue] = useState<string>(field.value?.toString() || '');
 
@@ -44,6 +46,15 @@ function InputField<T extends FieldValues>({
     }
   };
 
+  useEffect(() => {
+    if (type === 'number') {
+      const formattedValue = formatNumber(field.value || 0);
+      setInputValue(formattedValue);
+    } else {
+      setInputValue(field.value?.toString() || '');
+    }
+  }, [field.value, type]);
+
   const formatNumber = (value: string | number) =>
     new Intl.NumberFormat('en-US').format(Number(value));
 
@@ -56,6 +67,8 @@ function InputField<T extends FieldValues>({
       error={error}
       helperText={helperText}
       value={inputValue}
+      multiline
+      rows={inputProps?.rows}
       InputProps={{
         endAdornment: unit ? <InputAdornment position="end">{unit}</InputAdornment> : null,
       }}
@@ -63,6 +76,7 @@ function InputField<T extends FieldValues>({
       onKeyDown={(e) => type === 'number' && handleKeyDown(e, type)}
       onPaste={(e) => type === 'number' && handlePaste(e, type)}
       onChange={handleChange}
+      onBlur={onBlur}
     />
   );
 }

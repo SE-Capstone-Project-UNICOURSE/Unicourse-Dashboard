@@ -9,6 +9,7 @@ import EditorField from './EditorField';
 import InputField from './InputField';
 import SelectField from './SelectField';
 import UploadField from './UploadField';
+import ArrayField, { ArrayProps } from './ArrayField';
 
 interface FormInputRenderProps<T extends FieldValues> {
   fieldConfig: FormFieldConfig<T>;
@@ -27,9 +28,11 @@ type FieldProps<T extends FieldValues> = {
   selectOptions?: { value: string | number; label: string }[];
   dateInfo?: { start: any; end: any };
   inputProps?: InputBaseProps['inputProps'] | CheckboxProps;
+  arrayProps?: ArrayProps;
   sx?: SxProps<Theme>;
   onFileUpload?: (fileUrl: string) => void;
   onDeleteFile?: (fileUrl: string) => void;
+  onBlur?: () => void;
   showPreview?: boolean;
   accept?: string;
   isDisable?: boolean;
@@ -44,6 +47,7 @@ const inputComponents: Record<InputType, React.FC<any>> = {
   upload: UploadField,
   editor: EditorField,
   datePicker: DatePickerField,
+  array: ArrayField
 };
 
 function FormInputRender<T extends FieldValues>({
@@ -59,8 +63,10 @@ function FormInputRender<T extends FieldValues>({
     unit,
     selectOptions,
     dateRangeProps,
+    arrayProps,
     onFileUpload,
     onDeleteFile,
+    onBlur,
     inputProps,
     ...rest
   } = fieldConfig;
@@ -79,7 +85,9 @@ function FormInputRender<T extends FieldValues>({
           helperText={helperText}
           onFileUpload={onFileUpload}
           onDeleteFile={onDeleteFile}
+          onBlur={onBlur}
           inputProps={inputProps}
+          arrayProps={arrayProps}
           unit={unit}
           selectOptions={selectOptions}
           dateInfo={dateRangeProps}
