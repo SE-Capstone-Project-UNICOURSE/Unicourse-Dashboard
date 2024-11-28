@@ -11,45 +11,48 @@ import {
 } from '../views/components/CourseDetailInfo/core/schema/courseDetailInfo.schema';
 import { useParams } from 'react-router-dom';
 import { submitDynamicArrayField } from '../slices';
+import CourseDetailService from '../services';
+import { updateCoursePayload } from '../types/courseDetailCreationFormValues';
+import { hideDialog, showDialog } from '@app/stores/slices/dialogSlice';
+import { DialogType } from '@app/stores/types/dialogSlice.type';
 
-const useCourseDetailViewModel = ({ courseId }: { courseId: number }) => {
+const useCourseDetailViewModel = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const accessToken = localStorage.getItem('accessToken');
-  const { isFirstLoadCategory } = useAppSelector((state) => state.courseDetailLecture);
   const { courseDetail } = useAppSelector((state) => state.courseDetailLecture);
   const { id } = useParams();
-
-  // FORM ZONE
   const methods = useForm<CourseFormValues>({
     resolver: yupResolver(validationSchema),
     defaultValues: courseDetailInfoValue,
   });
 
-  // Fetch course details for the given courseId if token exists
+  // INITIALIZATION ZONE
+  useEffect(() => {
+    if (!id) {
+      router.push('/lecturer/courses');
+    }
+  }, [id]);
+
   useEffect(() => {
     // If no access token, redirect to sign-in
     if (!accessToken) {
       router.push('/sign-in');
-    } else if (courseId) {
+    } else if (id) {
       // Dispatch action to get course details by id
       dispatch(
         getCourseDetailById({
           accessToken: accessToken || '',
-          courseId,
+          courseId: Number(id),
         })
       );
     }
-  }, [accessToken, courseId, dispatch, router]); // Add `dispatch` and `router` as dependencies
+  }, [accessToken, id, dispatch, router]);
 
-  // Fetch categories only if it's the first time loading
   useEffect(() => {
-    if (isFirstLoadCategory) {
-      dispatch(getCategories());
-    }
-  }, [isFirstLoadCategory, dispatch]); // Ensure dispatch is included as a dependency
+    dispatch(getCategories());
+  }, [dispatch]); // Ensure dispatch is included as a dependency
 
-  // INITIALIZE ZONE
   useEffect(() => {
     if (courseDetail.data) {
       methods.reset({
@@ -60,6 +63,7 @@ const useCourseDetailViewModel = ({ courseId }: { courseId: number }) => {
         learning_outcome: courseDetail.data.learning_outcome || [],
         requirements: courseDetail.data.requirements || [],
         category_id: courseDetail.data.category_id,
+        status: courseDetail.data.status,
       });
     }
   }, [courseDetail.data, id]);
@@ -72,7 +76,7 @@ const useCourseDetailViewModel = ({ courseId }: { courseId: number }) => {
     (state) => state.courseDetailLecture.dynamicArrayFields.requirements
   );
 
-  // REACT HOOK FORM
+  // REACT HOOK FORM ZONE: FORM FOR BASIC COURSE INFO
   const onSubmit = async (data: CourseFormValues) => {
     // Trigger validation for all fields
     dispatch(submitDynamicArrayField('learning_outcome'));
@@ -80,23 +84,68 @@ const useCourseDetailViewModel = ({ courseId }: { courseId: number }) => {
 
     // Check if the form is valid and if dynamic array fields are valid
     if (!newLearningOutcome.isValid || !newRequirements.isValid) {
-      return; // Prevent form submission if invalid
+      return;
     }
 
-    // Proceed with form submission
-    const finalData = {
-      ...data,
+    const payload: updateCoursePayload = {
+      id: Number(id),
+      title: data.title,
+      price: data.price,
+      title_description: data.title_description,
+      description: data.description,
       learning_outcome: newLearningOutcome.items,
       requirements: newRequirements.items,
+      category_id: data.category_id,
+      // thumbnail: data.thumbnail,
+      status: data.status,
     };
-    console.log('Form submitted:', finalData);
-  };
 
-  useEffect(() => {
-    if (!id) {
-      router.push('/lecturer/courses');
+    if (!accessToken) {
+      // Show error dialog if the user is not logged in
+      dispatch(
+        showDialog({
+          title: 'Lỗi',
+          content: 'Không tìm thấy người dùng vui lòng đăng nhập lại',
+          onConfirm() {
+            dispatch(hideDialog());
+            router.push('/sign-in');
+            localStorage.clear();
+          },
+          onCancel() {
+            dispatch(hideDialog());
+            router.push('/sign-in');
+            localStorage.clear();
+          },
+          type: DialogType.ERROR,
+        })
+      );
+      return;
     }
-  }, [id]);
+
+    // PROCESS API ZONE
+    try {
+      const response = await CourseDetailService.updateCourseDetail(payload, accessToken);
+      if (response.status === 201) {
+        dispatch(getCourseDetailById({ accessToken, courseId: Number(id) }));
+        dispatch(
+          showDialog({
+            title: 'Thành công',
+            content: 'Cập nhật khóa học thành công.',
+            type: DialogType.SUCCESS,
+          })
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch(
+        showDialog({
+          title: 'Lỗi',
+          content: 'Đã xảy ra lỗi cập nhật khóa học, vui lòng thử lại.',
+          type: DialogType.ERROR,
+        })
+      );
+    }
+  };
 
   return {
     methods,

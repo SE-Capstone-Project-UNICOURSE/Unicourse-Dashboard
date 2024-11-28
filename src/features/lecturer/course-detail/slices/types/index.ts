@@ -13,7 +13,6 @@ export interface CourseDetailScreenState {
     isLoadingGetCourseDetail: boolean;
     data: Course | undefined;
   };
-  isFirstLoadCategory: boolean;
   categories: {
     isLoadingGetCategories: boolean;
     data: Array<Category> | undefined;
@@ -30,9 +29,8 @@ export interface CourseDetailScreenState {
 export const initialCourseDetailScreenState: CourseDetailScreenState = {
   courseDetail: {
     data: undefined,
-    isLoadingGetCourseDetail: false,
+    isLoadingGetCourseDetail: false
   },
-  isFirstLoadCategory: true,
   categories: {
     data: undefined,
     isLoadingGetCategories: false,

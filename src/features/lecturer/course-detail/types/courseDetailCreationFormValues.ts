@@ -1,33 +1,29 @@
-// Type for course detail creation form values
-
-interface courseDetailCreationFormValues {
+interface updateCoursePayload {
+  id: number;
   title: string;
-  amount: number;
-  discount?: number;
-  description?: string | null;
-  image: string;
-  center_id: number;
-  date_range: {
-    start_date: string;
-    
-    
-    end_date: string;
-  };
+  price: number;
+  title_description: string;
+  description: string;
+  // thumbnail: string;
+  learning_outcome: string[];
+  requirements: string[];
+  category_id: number;
+  status: string;
 }
 
 // Default values
-const courseDetailCreationDefaultFormValues: courseDetailCreationFormValues = {
-  title: '',
-  amount: 0,
-  discount: undefined,
-  description: null,
-  image: '',
-  center_id: 0,
-  date_range: {
-    start_date: '',
-    end_date: '',
-  },
+const updateCoursePayloadDefaultFormValues: updateCoursePayload = {
+  id: 0,
+  title: "",
+  price: 0,
+  title_description: "",
+  description: "",
+  // thumbnail: "",
+  learning_outcome: [],
+  requirements: [],
+  category_id: 0,
+  status: "",
 };
 
-export { courseDetailCreationDefaultFormValues };
-export type { courseDetailCreationFormValues };
+export { updateCoursePayloadDefaultFormValues };
+export type { updateCoursePayload };

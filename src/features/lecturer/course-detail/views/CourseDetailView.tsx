@@ -14,7 +14,7 @@ import './CourseDetailView.scss';
 
 const CourseDetailView = () => {
   const { id } = useParams();
-  const { methods, onSubmit } = useCourseDetailViewModel({ courseId: Number(id) });
+  const { methods, onSubmit } = useCourseDetailViewModel();
   const { courseDetail } = useAppSelector((state) => state.courseDetailLecture);
 
   // BEHAVIOR STATE
@@ -61,10 +61,14 @@ const CourseDetailView = () => {
             </FormProvider>
           )}
           {activeTab === 'chapter' && (
-            <CourseModules
-              loading={courseDetail.isLoadingGetCourseDetail}
-              courseDetail={courseDetail.data}
-            />
+            <FormProvider {...methods}>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <CourseModules
+                  loading={courseDetail.isLoadingGetCourseDetail}
+                  courseDetail={courseDetail.data}
+                />
+              </form>
+            </FormProvider>
           )}
         </Box>
       </div>

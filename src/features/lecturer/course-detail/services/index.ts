@@ -60,6 +60,23 @@ class CourseDetailLecturerViewServices {
       `${TOPIC_VIDEO_API_PATH.GET_VIDEO_WITH_ACCESS_TOKEN}/?width=${width}&height=${height}`,
       config
     );
+
+    return response.data;
+  }
+
+  public async updateCourseDetail(payload: any, accessToken): Promise<DataResponse<any>> {
+    const route = TOPIC_VIDEO_API_PATH.PUT_COURSE_DETAIL;
+    const config: AxiosRequestConfig = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+    const response = await httpClient.put<DataResponse<any>>(
+      route,
+      payload,
+      config
+    );
+
     return response.data;
   }
 }
