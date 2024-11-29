@@ -8,3 +8,5 @@ export const OFFLINE_COURSE_LECTURER_API_PATH = {
 };
 
 export const steps = ['Chọn khoá học', 'Tạo khoá học', 'Tạo lịch học', 'Xác nhận'];
+
+export const editSteps = ['Chỉnh sửa khoá học', 'Chỉnh sửa lịch học', 'Xác nhận'];

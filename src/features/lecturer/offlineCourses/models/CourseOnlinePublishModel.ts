@@ -56,7 +56,7 @@ interface CourseOnlineDetailModel {
   category_id: number;
   lecture_id: number;
   description: string;
-  rating: number;
+  rating: number | null;
 }
 
 export type { CourseOnlinePublishModel, CourseOnlineDetailModel };

@@ -31,12 +31,15 @@ interface ListCourseOfflineState {
   };
   screenState: ScreenState;
   activeStep: number;
+  activeEditStep: number;
   openCreateCourseInstructor: boolean;
+  openEditCourseInstructior: boolean;
   selectedCourseId?: number;
   selectedCourseDetail: {
     data: CourseOnlineDetailModel | null;
     isLoading: boolean;
   };
+  selectedCourseEditId?: number;
   centers: {
     isLoading: boolean;
     data: Center[];
@@ -75,12 +78,15 @@ const initialListCourseOfflineState: ListCourseOfflineState = {
   },
   screenState: 'list',
   activeStep: 0,
+  activeEditStep: 0,
   openCreateCourseInstructor: false,
+  openEditCourseInstructior: false,
   selectedCourseId: undefined,
   selectedCourseDetail: {
     data: null,
     isLoading: false,
   },
+  selectedCourseEditId: 0,
   centers: {
     isLoading: false,
     data: [],

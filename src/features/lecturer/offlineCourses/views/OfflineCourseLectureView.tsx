@@ -5,6 +5,7 @@ import DashboardLectureContent from '../../dashboard/layouts/DashboardLayout/Das
 import useOfflineCourseLectureViewModel from '../viewmodels/useOfflineCourseLectureViewModel';
 import CourseOfflineDetailView from './partials/CourseOfflineDetailView';
 import CreateOfflineCourseView from './partials/CreateOfflineCourseView';
+import EditOfflineCourseView from './partials/EditOfflineCourseView';
 import ListOfflineCourseLecturer from './partials/ListOfflineCourseLecturer';
 
 const OfflineCourseLectureView: React.FC = () => {
@@ -15,6 +16,8 @@ const OfflineCourseLectureView: React.FC = () => {
     switch (screenState) {
       case 'add':
         return <CreateOfflineCourseView />;
+      case 'edit':
+        return <EditOfflineCourseView />;
       case 'list':
         return (
           <>

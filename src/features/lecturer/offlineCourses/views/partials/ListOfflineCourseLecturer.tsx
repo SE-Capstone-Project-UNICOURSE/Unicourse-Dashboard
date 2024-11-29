@@ -13,9 +13,9 @@ import {
   Pagination,
   Typography,
 } from '@mui/material';
-import { setScreenState } from '../../slices';
-import SkeletonCourseOfflineCard from '../components/SkeletonCourseOfflineCard';
 import { useCallback } from 'react';
+import { setScreenState, setSelectedCourseEditId } from '../../slices';
+import SkeletonCourseOfflineCard from '../components/SkeletonCourseOfflineCard';
 
 type ListOfflineCourseLecturerProps = {
   handleChangePage: (pageNumber: number) => void;
@@ -23,13 +23,11 @@ type ListOfflineCourseLecturerProps = {
 
 const ListOfflineCourseLecturer = ({ handleChangePage }: ListOfflineCourseLecturerProps) => {
   const {
-    listOfflineCourse: {
-      data: listOfflineCourses,
-      totalPages,
-      page,
-      isLoadingGetListOfflineCourse,
-    },
-  } = useAppSelector((state) => state.listCourseOfflineLecture);
+    data: listOfflineCourses,
+    totalPages,
+    page,
+    isLoadingGetListOfflineCourse,
+  } = useAppSelector((state) => state.listCourseOfflineLecture.listOfflineCourse);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -37,8 +35,6 @@ const ListOfflineCourseLecturer = ({ handleChangePage }: ListOfflineCourseLectur
     router.push(`/lecturer/offline-courses/${courseMentorId}`);
     dispatch(setScreenState('detail'));
   }, []);
-
-  console.log(isLoadingGetListOfflineCourse);
 
   return (
     <Box p={2}>
@@ -116,7 +112,14 @@ const ListOfflineCourseLecturer = ({ handleChangePage }: ListOfflineCourseLectur
                     >
                       Chi tiết
                     </Button>
-                    <Button size="small" color="secondary">
+                    <Button
+                      size="small"
+                      color="secondary"
+                      onClick={() => {
+                        dispatch(setSelectedCourseEditId(course.id));
+                        dispatch(setScreenState('edit'));
+                      }}
+                    >
                       Chỉnh sửa
                     </Button>
                   </CardActions>
