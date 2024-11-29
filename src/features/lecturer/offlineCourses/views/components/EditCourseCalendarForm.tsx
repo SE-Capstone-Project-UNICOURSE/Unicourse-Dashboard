@@ -5,8 +5,8 @@ import { Box, Divider, IconButton, Typography } from '@mui/material';
 import { GridAddIcon, GridDeleteIcon } from '@mui/x-data-grid';
 import { FormProvider } from 'react-hook-form';
 import { setTotalForm } from '../../slices';
-import useCreateCourseCalendarFormViewModel from '../../viewmodels/useCreateCourseCalendarFormViewModel';
-import CourseCalenderCreateField from './CourseCalenderCreateField';
+import useEditCourseCalendarFormViewModel from '../../viewmodels/useEditCourseCalendarFormViewModel';
+import CourseCalendarEditField from './CourseCalendarEditField';
 
 type EditCourseCalendarFormProps = {
   indexItem: number;
@@ -19,7 +19,7 @@ const EditCourseCalendarForm = ({ indexItem, onDelete, formRef }: EditCourseCale
   const isLastItem = indexItem === totalForm.length;
   const dispatch = useAppDispatch();
 
-  const { methods, onSubmit } = useCreateCourseCalendarFormViewModel(indexItem);
+  const { methods, onSubmit } = useEditCourseCalendarFormViewModel(indexItem);
   const { handleSubmit, trigger } = methods;
 
   if (formRef) {
@@ -60,7 +60,7 @@ const EditCourseCalendarForm = ({ indexItem, onDelete, formRef }: EditCourseCale
           </Typography>
         </Box>
 
-        <CourseCalenderCreateField methods={methods} isDisable={!isLastItem} />
+        <CourseCalendarEditField methods={methods} isDisable={!isLastItem} />
 
         {isLastItem && (
           <Box display="flex" justifyContent="flex-end" mt={2}>

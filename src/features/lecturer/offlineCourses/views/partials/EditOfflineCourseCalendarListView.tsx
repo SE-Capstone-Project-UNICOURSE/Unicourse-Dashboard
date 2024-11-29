@@ -2,13 +2,13 @@ import GradientButton from '@app/common/components/atoms/GradientButton';
 import { useAppDispatch, useAppSelector } from '@app/stores';
 import { Box } from '@mui/material';
 import { setActiveEditStep } from '../../slices';
-import useEditCourseCalendarFormViewModel from '../../viewmodels/useEditCourseCalendarFormViewModel';
+import useEditOfflineCourseCalendarListViewModel from '../../viewmodels/useEditOfflineCourseCalendarListViewModel';
 import EditCourseCalendarForm from '../components/EditCourseCalendarForm';
 
 const EditOfflineCourseCalendarListView = () => {
   const dispatch = useAppDispatch();
   const { activeEditStep, totalForm } = useAppSelector((state) => state.listCourseOfflineLecture);
-  const { deleteForm, formRefs, handleSaveAllForms } = useEditCourseCalendarFormViewModel();
+  const { deleteForm, formRefs, handleSaveAllForms } = useEditOfflineCourseCalendarListViewModel();
 
   return (
     <>
