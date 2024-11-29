@@ -17,15 +17,9 @@ export const useCourseCalendarEditFormFields =
     const courseStartDate = new Date(offlineCourseRequest?.start_date || '');
     const courseEndDate = new Date(offlineCourseRequest?.end_date || '');
 
-    // Tìm phiên cuối cùng (nếu có)
     const lastSession = mentorSessions.length ? mentorSessions[mentorSessions.length - 1] : null;
-
-    // Tính `minDate` và `maxDate` cho date range
-    const minDate = lastSession
-      ? new Date(lastSession.end_time) // Sau `end_time` của phiên trước
-      : courseStartDate; // Ngày bắt đầu của khóa học nếu không có phiên trước
-
-    const maxDate = courseEndDate; // Ngày kết thúc của khóa học
+    const minDate = lastSession ? new Date(lastSession.end_time) : courseStartDate;
+    const maxDate = courseEndDate;
 
     const config: FormFieldConfig<CourseMentorSessionFormValues>[] = [
       {
