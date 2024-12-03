@@ -135,3 +135,32 @@ export const getOfflineCourseMentor = createAsyncThunk<
     }
   }
 );
+
+export const getCourseOfflineDetail = createAsyncThunk<
+  any,
+  { accessToken: string; courseMentorId: number },
+  { rejectValue: ErrorResponse }
+>(
+  'offlineLectures/getCourseOfflineDetail',
+  async ({ accessToken, courseMentorId }, { rejectWithValue }) => {
+    try {
+      const response = await offlineLectureCourseServices.getCourseOfflineDetail(
+        accessToken,
+        courseMentorId
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return rejectWithValue({
+          message: error.response.data.message,
+          statusCode: error.response.status,
+          errorCode: error.response.data.errorCode,
+        });
+      }
+      return rejectWithValue({
+        message: 'Failed to fetch offline course detail. Please try again later.',
+        statusCode: 500,
+      });
+    }
+  }
+);

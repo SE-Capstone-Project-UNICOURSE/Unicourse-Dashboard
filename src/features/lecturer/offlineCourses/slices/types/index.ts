@@ -1,4 +1,5 @@
 import { Center } from '../../models/CenterCourseModel';
+import CourseOfflineDetailResponseModel from '../../models/CourseOfflineDetailResponseModel';
 import {
   CourseOnlineDetailModel,
   CourseOnlinePublishModel,
@@ -7,7 +8,7 @@ import { OfflineCourseMentor } from '../../models/OfflineCourseMentorResponseMod
 import { OfflineCourse } from '../../models/OfflineCourseRequestModel';
 import Room from '../../models/RoomCourseModel';
 
-export type ScreenState = 'list' | 'add';
+export type ScreenState = 'list' | 'add' | 'detail' | 'edit';
 
 interface ListCourseOfflineState {
   listOfflineCourse: {
@@ -30,20 +31,28 @@ interface ListCourseOfflineState {
   };
   screenState: ScreenState;
   activeStep: number;
+  activeEditStep: number;
   openCreateCourseInstructor: boolean;
+  openEditCourseInstructior: boolean;
   selectedCourseId?: number;
   selectedCourseDetail: {
     data: CourseOnlineDetailModel | null;
     isLoading: boolean;
   };
+  selectedCourseEditId?: number;
   centers: {
     isLoading: boolean;
     data: Center[];
   };
   totalForm: number[];
+  totalEditForm: number[];
   rooms: {
     data: Room[];
     isLoadingGetRooms: boolean;
+  };
+  courseOfflineDetail: {
+    isLoadingGetCourseOfflineDetail: boolean;
+    data: CourseOfflineDetailResponseModel | null;
   };
   offlineCourseRequest: OfflineCourse | null;
   previewImage: string;
@@ -70,20 +79,28 @@ const initialListCourseOfflineState: ListCourseOfflineState = {
   },
   screenState: 'list',
   activeStep: 0,
+  activeEditStep: 0,
   openCreateCourseInstructor: false,
+  openEditCourseInstructior: false,
   selectedCourseId: undefined,
   selectedCourseDetail: {
     data: null,
     isLoading: false,
   },
+  selectedCourseEditId: 0,
   centers: {
     isLoading: false,
     data: [],
   },
   totalForm: [1],
+  totalEditForm: [1],
   rooms: {
     data: [],
     isLoadingGetRooms: false,
+  },
+  courseOfflineDetail: {
+    isLoadingGetCourseOfflineDetail: false,
+    data: null,
   },
   offlineCourseRequest: null,
   previewImage: '',

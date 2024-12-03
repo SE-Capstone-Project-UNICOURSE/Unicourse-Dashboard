@@ -12,11 +12,11 @@ import SignInForm from './SignInForm';
 const SignInView = () => {
   const { signInWithGoogle, handlePressShowDialog } = useAuthViewModel();
 
-  const { isLoading } = useAppSelector((state) => state.authState.auth);
+  const { isLoading, isLoadingSignIn } = useAppSelector((state) => state.authState.auth);
 
   return (
     <>
-      <LoadingIndicator loading={isLoading} />
+      <LoadingIndicator loading={isLoading || isLoadingSignIn} />
       <Box display={'flex'} alignItems={'center'} justifyContent={'center'}>
         <Logo />
       </Box>

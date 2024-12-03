@@ -8,6 +8,7 @@ import { OfflineCourse } from '../models/OfflineCourseRequestModel';
 import {
   getCenters,
   getCourseDetail,
+  getCourseOfflineDetail,
   getOfflineCourseMentor,
   getPublishCourses,
   getRooms,
@@ -24,20 +25,38 @@ const listCourseOfflineLectureSlice = createSlice({
     setActiveStep(state, action) {
       state.activeStep = action.payload;
     },
+    setActiveEditStep(state, action) {
+      state.activeEditStep = action.payload;
+    },
     setOnlineActiveCoursePage(state, action) {
       state.listPublishCourses.page = action.payload;
     },
     setCreateCourseInstruction(state, action) {
       state.openCreateCourseInstructor = action.payload;
     },
+    setEditCourseInstruction(state, action) {
+      state.openEditCourseInstructior = action.payload;
+    },
+    setCourseOfflineDetail(state, action) {
+      state.courseOfflineDetail.data = action.payload;
+    },
     setSelectedCourseId(state, action) {
       state.selectedCourseId = action.payload;
+    },
+    setSelectedCourseEditId(state, action) {
+      state.selectedCourseEditId = action.payload;
     },
     setTotalForm: (state, action) => {
       state.totalForm = action.payload;
     },
+    setTotalEditForm: (state, action) => {
+      state.totalEditForm = action.payload;
+    },
     setOfflineCourseRequest: (state, action: PayloadAction<OfflineCourse>) => {
       state.offlineCourseRequest = action.payload;
+    },
+    setSelectedCourseData: (state, action) => {
+      state.selectedCourseDetail.data = action.payload;
     },
     // For List Offline Course Mentor
     setPageOfflineCourse: (state, action) => {
@@ -120,6 +139,17 @@ const listCourseOfflineLectureSlice = createSlice({
       .addCase(getOfflineCourseMentor.rejected, (state) => {
         state.listOfflineCourse.isLoadingGetListOfflineCourse = false;
       });
+    builder
+      .addCase(getCourseOfflineDetail.pending, (state) => {
+        state.courseOfflineDetail.isLoadingGetCourseOfflineDetail = true;
+      })
+      .addCase(getCourseOfflineDetail.fulfilled, (state, action) => {
+        state.courseOfflineDetail.data = action.payload;
+        state.courseOfflineDetail.isLoadingGetCourseOfflineDetail = false;
+      })
+      .addCase(getCourseOfflineDetail.rejected, (state) => {
+        state.courseOfflineDetail.isLoadingGetCourseOfflineDetail = false;
+      });
   },
 });
 
@@ -129,11 +159,17 @@ export const {
   setActiveStep,
   setOnlineActiveCoursePage,
   setCreateCourseInstruction,
+  setEditCourseInstruction,
   setSelectedCourseId,
   setTotalForm,
+  setTotalEditForm,
   setOfflineCourseRequest,
   setPageOfflineCourse,
   setOfflineCourseStatus,
   setPreviewImage,
+  setActiveEditStep,
+  setSelectedCourseEditId,
+  setCourseOfflineDetail,
+  setSelectedCourseData,
 } = listCourseOfflineLectureSlice.actions;
 export default listCourseOfflineLectureSlice.reducer;
