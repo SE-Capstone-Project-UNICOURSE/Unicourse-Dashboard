@@ -26,13 +26,21 @@ function UploadField<T extends FieldValues>({
   onDeleteFile,
   showPreview = false,
 }: UploadFieldProps<T>) {
-  const [preview, setPreview] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    if (field.value && typeof field.value === 'object' && showPreview) {
-      setPreview(field.value as File);
+    if (field.value) {
+      if (typeof field.value === 'string' && showPreview) {
+        // Nếu là chuỗi (link), set preview thành URL
+        setPreview(field.value);
+      } else if (typeof field.value === 'object' && showPreview) {
+        // Nếu là file, tạo URL tạm thời
+        setPreview(URL.createObjectURL(field.value as File));
+      } else {
+        setPreview(null);
+      }
     } else {
       setPreview(null);
     }
@@ -43,11 +51,11 @@ function UploadField<T extends FieldValues>({
     if (file) {
       setLoading(true);
       try {
-        const fileUrl = URL.createObjectURL(file);
-        onFileUpload?.(fileUrl);
-        field.onChange(file);
+        const fileUrl = URL.createObjectURL(file); // Tạo URL cho file
+        onFileUpload?.(fileUrl); // Callback để xử lý file (nếu cần)
+        field.onChange(file); // Lưu file vào `field.value`
         if (showPreview) {
-          setPreview(file);
+          setPreview(fileUrl); // Cập nhật preview
         }
       } catch (error) {
         console.error('Upload failed:', error);
@@ -62,9 +70,9 @@ function UploadField<T extends FieldValues>({
 
   const handleClear = () => {
     const fileUrl = field.value;
-    onDeleteFile?.(fileUrl);
-    field.onChange(null);
-    setPreview(null);
+    onDeleteFile?.(typeof fileUrl === 'string' ? fileUrl : ''); // Xử lý xóa link (nếu cần)
+    field.onChange(null); // Xóa giá trị trong `field`
+    setPreview(null); // Xóa preview
 
     if (inputRef.current) {
       inputRef.current.value = '';
@@ -74,22 +82,14 @@ function UploadField<T extends FieldValues>({
   const renderPreview = () => {
     if (!preview) return null;
 
-    const fileType = preview.type;
-
-    if (fileType.startsWith('image/')) {
-      // Render image preview
-      return (
-        <img
-          src={URL.createObjectURL(preview)}
-          alt="Preview"
-          style={{ maxWidth: '100%', borderRadius: '4px' }}
-        />
-      );
+    if (preview.startsWith('data:image/') || preview.startsWith('http')) {
+      // Nếu là ảnh, hiển thị preview
+      return <img src={preview} alt="Preview" style={{ maxWidth: '100%', borderRadius: '4px' }} />;
     } else {
-      // Default: Show file name if the type is unsupported
+      // Hiển thị tên file nếu không phải là ảnh
       return (
         <Typography variant="body2" color="textSecondary">
-          Uploaded File: {preview.name}
+          File uploaded: {typeof field.value === 'object' ? (field.value as File).name : 'Unknown'}
         </Typography>
       );
     }
@@ -99,13 +99,13 @@ function UploadField<T extends FieldValues>({
     <Box>
       <Typography>{label}</Typography>
       {!field.value && !loading ? (
-        // Upload Button
+        // Nút tải lên
         <Button variant="contained" component="label" startIcon={<UploadIcon />}>
           Upload
           <input ref={inputRef} accept={accept} type="file" hidden onChange={handleFileChange} />
         </Button>
       ) : loading ? (
-        // Loading Indicator
+        // Hiển thị vòng xoay khi đang tải lên
         <Button
           variant="outlined"
           component="label"
@@ -114,7 +114,7 @@ function UploadField<T extends FieldValues>({
           Uploading...
         </Button>
       ) : (
-        // Delete Button
+        // Nút xóa file
         <Button variant="contained" color="error" startIcon={<ClearIcon />} onClick={handleClear}>
           Delete
         </Button>
@@ -127,7 +127,7 @@ function UploadField<T extends FieldValues>({
           {renderPreview()}
         </Box>
       )}
-      {error && ( // Display error if any
+      {error && ( // Hiển thị lỗi nếu có
         <Typography variant="body2" color="error" mt={1}>
           {helperText}
         </Typography>

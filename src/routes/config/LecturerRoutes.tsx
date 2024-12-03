@@ -22,7 +22,7 @@ const lecturerRoutes = [
     children: [
       { element: <LecturerPages.HomeLecturerPage />, index: true }, // Đảm bảo đây là index
       { path: 'courses', element: <LecturerPages.CourseLecturerPage /> },
-      { path: 'offline-courses', element: <LecturerPages.OfflineCoursesLecturePage /> },
+      { path: 'offline-courses/:courseId?', element: <LecturerPages.OfflineCoursesLecturePage /> },
       { path: 'courses/:id', element: <LecturerPages.CourseDetailLecturerPages /> },
       { path: 'courses/:id/chapters/:chapterId', element: <LecturerPages.ChapterDetailLecturerPages /> },
       { path: 'blog', element: <LecturerPages.BlogLecturerPage /> },
