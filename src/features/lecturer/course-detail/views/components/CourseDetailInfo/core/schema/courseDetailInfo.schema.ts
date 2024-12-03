@@ -1,7 +1,7 @@
+import { COMMON_CONSTANTS } from '@app/common/constants/appConstants';
 import * as Yup from 'yup';
 
 interface CourseFormValues {
-  // thumbnail: string;
   title: string;
   price: number;
   title_description: string;
@@ -9,10 +9,10 @@ interface CourseFormValues {
   requirements?: string[];
   category_id: number;
   description: string;
+  status: string;
 }
 
 const courseDetailInfoValue: CourseFormValues = {
-  // thumbnail: '',
   title: '',
   price: 0,
   title_description: '',
@@ -20,10 +20,10 @@ const courseDetailInfoValue: CourseFormValues = {
   description: '',
   learning_outcome: [''],
   requirements: [''],
+  status: COMMON_CONSTANTS.DRAFT,
 };
 
 const validationSchema = Yup.object().shape({
-  // thumbnail: Yup.string().required('Hình ảnh là bắt buộc'),
   title: Yup.string().required('Tiêu đề là bắt buộc').min(10, 'Tiêu đề cần ít nhất 10 ký tự'),
   price: Yup.number().required('Giá là bắt buộc'),
   title_description: Yup.string()
@@ -33,6 +33,9 @@ const validationSchema = Yup.object().shape({
   description: Yup.string()
     .required('Mô tả khóa học là bắt buộc')
     .min(10, 'Mô tả cần ít nhất 10 ký tự'),
+  status: Yup.string()
+    .oneOf([COMMON_CONSTANTS.DRAFT, COMMON_CONSTANTS.PUBLISHED, COMMON_CONSTANTS.CLOSED], 'Trạng thái không hợp lệ')
+    .required('Trạng thái là bắt buộc'),
 });
 
 export { courseDetailInfoValue, validationSchema };

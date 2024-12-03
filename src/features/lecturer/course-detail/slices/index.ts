@@ -10,31 +10,21 @@ const courseDetailSlice = createSlice({
   name: 'courseDetail',
   initialState: initialCourseDetailScreenState,
   reducers: {
-    // Manage Course Detail data
     setCourseDetail(state, action) {
       state.courseDetail.data = action.payload;
     },
     setIsLoadingGetCourseDetail(state, action) {
       state.courseDetail.isLoadingGetCourseDetail = action.payload;
     },
-
-    // Manage Categories
     setCategories(state, action) {
       state.categories.data = action.payload;
     },
-    setFirstLoadCategories(state, action) {
-      state.isFirstLoadCategory = action.payload;
-    },
-
-    // Manage Video type
     setVideoVimeo(state, action) {
       state.vimeoVideo.data = action.payload;
     },
     setPreviewImage: (state, action) => {
       state.previewImage = action.payload;
     },
-
-    // Manage Dynamic Array
     setDynamicArrayItems(state, action) {
       const { fieldName, items } = action.payload;
       state.dynamicArrayFields[fieldName] = {
@@ -82,12 +72,10 @@ const courseDetailSlice = createSlice({
         field.errors = field.items.map((item) => item.trim() === '');
       }
     },
-
-    // Manage Tab State
     setActiveTab(state, action) {
-      state.activeTab = action.payload
+      state.activeTab = action.payload;
     },
-    reset: () => initialCourseDetailScreenState
+    reset: () => initialCourseDetailScreenState,
   },
   extraReducers: (builder) => {
     builder
@@ -107,12 +95,10 @@ const courseDetailSlice = createSlice({
       })
       .addCase(getCategories.fulfilled, (state, action) => {
         state.categories.isLoadingGetCategories = false;
-        state.isFirstLoadCategory = false;
         state.categories.data = action.payload;
       })
       .addCase(getCategories.rejected, (state) => {
         state.categories.isLoadingGetCategories = false;
-        state.isFirstLoadCategory = true;
       });
     builder
       .addCase(getVideoVimeoWithAccessToken.pending, (state) => {
@@ -132,7 +118,6 @@ export const {
   setCourseDetail,
   setIsLoadingGetCourseDetail,
   setCategories,
-  setFirstLoadCategories,
   setVideoVimeo,
   setPreviewImage,
   setDynamicArrayItems,

@@ -32,6 +32,7 @@ const HomeLecturerPage = lazy(
 );
 const EmptyLecturesPage = lazy(() => import('@app/features/lecturer/empty'));
 const OfflineCoursesLecturePage = lazy(() => import('@app/features/lecturer/offlineCourses'));
+const ChapterDetailLecturerPages = lazy(() => import('@app/features/lecturer/chapter'));
 
 const LecturerPages = {
   HomeLecturerPage,
@@ -43,5 +44,6 @@ const LecturerPages = {
   AccessDeniedPage,
   EmptyLecturesPage,
   OfflineCoursesLecturePage,
+  ChapterDetailLecturerPages
 };
 export { AdminPages, LecturerPages };
