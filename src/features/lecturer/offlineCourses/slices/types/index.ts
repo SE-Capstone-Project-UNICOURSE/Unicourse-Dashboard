@@ -45,6 +45,7 @@ interface ListCourseOfflineState {
     data: Center[];
   };
   totalForm: number[];
+  totalEditForm: number[];
   rooms: {
     data: Room[];
     isLoadingGetRooms: boolean;
@@ -92,6 +93,7 @@ const initialListCourseOfflineState: ListCourseOfflineState = {
     data: [],
   },
   totalForm: [1],
+  totalEditForm: [1],
   rooms: {
     data: [],
     isLoadingGetRooms: false,

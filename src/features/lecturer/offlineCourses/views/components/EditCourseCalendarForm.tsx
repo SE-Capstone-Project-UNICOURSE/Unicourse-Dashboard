@@ -15,8 +15,8 @@ type EditCourseCalendarFormProps = {
 };
 
 const EditCourseCalendarForm = ({ indexItem, onDelete, formRef }: EditCourseCalendarFormProps) => {
-  const { totalForm } = useAppSelector((state) => state.listCourseOfflineLecture);
-  const isLastItem = indexItem === totalForm.length;
+  const { totalEditForm } = useAppSelector((state) => state.listCourseOfflineLecture);
+  const isLastItem = indexItem === totalEditForm.length;
   const dispatch = useAppDispatch();
 
   const { methods, onSubmit } = useEditCourseCalendarFormViewModel(indexItem);
@@ -30,7 +30,7 @@ const EditCourseCalendarForm = ({ indexItem, onDelete, formRef }: EditCourseCale
     const isValid = await trigger();
     if (isValid) {
       await handleSubmit(onSubmit)();
-      dispatch(setTotalForm([...totalForm, totalForm.length + 1]));
+      dispatch(setTotalForm([...totalEditForm, totalEditForm.length + 1]));
     } else {
       console.error('Form không hợp lệ');
     }

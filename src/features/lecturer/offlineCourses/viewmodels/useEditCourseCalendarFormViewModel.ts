@@ -2,15 +2,16 @@
 import { useAppDispatch, useAppSelector } from '@app/stores';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { courseMentorSessionSchema } from '../schema/courseMentorSession.schema';
+import { courseMentorSessionEditSchema } from '../schema/courseMentorSessionEdit.schema';
 import { setOfflineCourseRequest } from '../slices';
 import { CourseMentorSessionEditFormValues } from '../types/courseMentorSessionEditFormValues';
-import { CourseMentorSessionFormValues } from '../types/courseMentorSessionFormValues';
 
 const useEditCourseCalendarFormViewModel = (indexItem: number) => {
-  const { offlineCourseRequest, totalForm } = useAppSelector(
-    (state) => state.listCourseOfflineLecture
-  );
+  const {
+    offlineCourseRequest,
+    totalEditForm,
+    courseOfflineDetail: { data: courseOfflineDetail },
+  } = useAppSelector((state) => state.listCourseOfflineLecture);
   const dispatch = useAppDispatch();
 
   const formValueItemBaseOnIndex = offlineCourseRequest?.mentor_sessions[indexItem - 1];
@@ -24,8 +25,8 @@ const useEditCourseCalendarFormViewModel = (indexItem: number) => {
     room_id: formValueItemBaseOnIndex?.room_id || 0,
   };
 
-  const methods = useForm<CourseMentorSessionFormValues>({
-    resolver: yupResolver(courseMentorSessionSchema),
+  const methods = useForm<CourseMentorSessionEditFormValues>({
+    resolver: yupResolver(courseMentorSessionEditSchema),
     defaultValues,
   });
 
@@ -76,7 +77,7 @@ const useEditCourseCalendarFormViewModel = (indexItem: number) => {
     } else {
       // Thêm mới nếu chưa tồn tại
       mentorSessions.push({
-        position: totalForm.length,
+        position: totalEditForm.length,
         room_id: data.room_id,
         title: data.title,
         description: data.description,

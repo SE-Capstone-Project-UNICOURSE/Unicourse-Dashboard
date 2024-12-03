@@ -5,14 +5,17 @@ import { hideDialog, showDialog } from '@app/stores/slices/dialogSlice';
 import { DialogType } from '@app/stores/types/dialogSlice.type';
 import { addDays } from 'date-fns';
 import { useEffect, useRef } from 'react';
-import { setActiveStep, setOfflineCourseRequest, setTotalForm } from '../slices';
+import { setActiveStep, setOfflineCourseRequest, setTotalEditForm, setTotalForm } from '../slices';
 import { getRooms } from '../slices/actions';
 
 const useEditOfflineCourseCalendarListViewModel = () => {
   const formRefs = useRef<{ [key: number]: any }>({});
-  const { offlineCourseRequest, totalForm, activeStep } = useAppSelector(
-    (state) => state.listCourseOfflineLecture
-  );
+  const {
+    offlineCourseRequest,
+    totalEditForm,
+    activeStep,
+    courseOfflineDetail: { data: courseOfflineDetail },
+  } = useAppSelector((state) => state.listCourseOfflineLecture);
   const { accessToken } = useGetAccessRefreshToken();
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -39,8 +42,22 @@ const useEditOfflineCourseCalendarListViewModel = () => {
     handleFetchingRooms();
   }, []);
 
+  useEffect(() => {
+    if (courseOfflineDetail?.mentor_session?.length) {
+      const updatedTotalEditForm = [...totalEditForm];
+
+      courseOfflineDetail.mentor_session.forEach((_, index) => {
+        updatedTotalEditForm.push(index + 1 + 1); // Add an incremental value for each session
+      });
+
+      console.log(updatedTotalEditForm);
+
+      dispatch(setTotalEditForm(updatedTotalEditForm));
+    }
+  }, []);
+
   const deleteForm = (formId: number) => {
-    if (totalForm.length === 1) {
+    if (totalEditForm.length === 1) {
       dispatch(
         showDialog({
           title: 'Warning',
@@ -57,7 +74,7 @@ const useEditOfflineCourseCalendarListViewModel = () => {
         type: DialogType.ALERT,
         confirmButtonText: 'Có',
         onConfirm() {
-          const updatedForms = totalForm.filter((id) => id !== formId);
+          const updatedForms = totalEditForm.filter((id) => id !== formId);
           dispatch(setTotalForm(updatedForms.map((_, index) => index)));
           delete formRefs.current[formId];
           if (offlineCourseRequest) {
@@ -78,7 +95,7 @@ const useEditOfflineCourseCalendarListViewModel = () => {
 
   const handleSaveAllForms = async () => {
     const isAllValid = await Promise.all(
-      totalForm.map(async (formId) => {
+      totalEditForm.map(async (formId) => {
         const formRef = formRefs.current[formId];
         if (formRef) {
           const isValid = await formRef.trigger();
@@ -89,9 +106,9 @@ const useEditOfflineCourseCalendarListViewModel = () => {
     );
 
     if (isAllValid.every((valid) => valid)) {
-      console.log(totalForm);
+      console.log(totalEditForm);
 
-      const lastFormId = totalForm[totalForm.length - 1];
+      const lastFormId = totalEditForm[totalEditForm.length - 1];
       console.log('lastFormId', lastFormId);
 
       if (lastFormId !== undefined && formRefs.current[lastFormId]) {

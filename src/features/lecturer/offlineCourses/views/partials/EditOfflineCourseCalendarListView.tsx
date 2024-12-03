@@ -7,12 +7,14 @@ import EditCourseCalendarForm from '../components/EditCourseCalendarForm';
 
 const EditOfflineCourseCalendarListView = () => {
   const dispatch = useAppDispatch();
-  const { activeEditStep, totalForm } = useAppSelector((state) => state.listCourseOfflineLecture);
+  const { activeEditStep, totalEditForm } = useAppSelector(
+    (state) => state.listCourseOfflineLecture
+  );
   const { deleteForm, formRefs, handleSaveAllForms } = useEditOfflineCourseCalendarListViewModel();
 
   return (
     <>
-      {totalForm.map((formId) => (
+      {totalEditForm.map((formId) => (
         <EditCourseCalendarForm
           key={formId}
           indexItem={formId}

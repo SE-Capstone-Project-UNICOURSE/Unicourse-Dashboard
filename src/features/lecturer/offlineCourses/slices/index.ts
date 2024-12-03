@@ -49,6 +49,9 @@ const listCourseOfflineLectureSlice = createSlice({
     setTotalForm: (state, action) => {
       state.totalForm = action.payload;
     },
+    setTotalEditForm: (state, action) => {
+      state.totalEditForm = action.payload;
+    },
     setOfflineCourseRequest: (state, action: PayloadAction<OfflineCourse>) => {
       state.offlineCourseRequest = action.payload;
     },
@@ -159,6 +162,7 @@ export const {
   setEditCourseInstruction,
   setSelectedCourseId,
   setTotalForm,
+  setTotalEditForm,
   setOfflineCourseRequest,
   setPageOfflineCourse,
   setOfflineCourseStatus,
